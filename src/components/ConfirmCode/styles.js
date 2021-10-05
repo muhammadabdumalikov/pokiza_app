@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet, } from "react-native";
+import { Dimensions, StyleSheet } from "react-native";
 
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
@@ -29,6 +29,13 @@ export const styles = StyleSheet.create({
     },
     focusCell: {
         borderColor: "#000",
+    },
+    forgotPass: {
+        textDecorationLine: "underline",
+        width: "100%",
+        textAlign: "center",
+        color: "#007AFF",
+        fontSize: 12,
     },
     sendCodeWrapper: {
         position: "absolute",

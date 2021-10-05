@@ -42,7 +42,7 @@ const ConfirmCode = () => {
                 )}
             />
 
-            <TouchableOpacity style={styles.resend}>
+            <TouchableOpacity>
                 <Text style={styles.forgotPass}>Resend</Text>
             </TouchableOpacity>
 

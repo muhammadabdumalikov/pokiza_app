@@ -4,12 +4,19 @@ import { Text } from "react-native";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState(null);
+    const [name, setName] = useState();
     const [phoneNumber, setPhoneNumber] = useState();
+    const [surname, setSurname] = useState();
+    const [age, setAge] = useState();
+    const [gender, setGender] = useState();
 
     return (
         <AuthContext.Provider
             value={{
+                name,
+                setName,
+                surname,
+                setSurname,
                 phoneNumber,
                 setPhoneNumber,
                 login: async (password) => {
