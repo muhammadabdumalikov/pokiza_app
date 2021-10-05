@@ -5,7 +5,7 @@ import {
     Ionicons,
     MaterialIcons,
     MaterialCommunityIcons,
-} from "react-native-vector-icons";
+} from '@expo/vector-icons';
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import HomeScreen from "../screens/HomeScreen/HomeScreen";

@@ -1,15 +1,24 @@
-import React from "react";
-import { View, Text, Pressable, TextInput, ScrollView, SafeAreaView, TouchableOpacity } from "react-native";
-import FormInput from "../../components/FormInput/FormInput";
-// import { withSafeArea } from 'react-native-safe-area'
+import React, { useContext, useState } from "react";
+import {
+    View,
+    Text,
+    TextInput,
+    ScrollView,
+    SafeAreaView,
+    TouchableOpacity,
+} from "react-native";
 
+import { AuthContext } from "../../navigation/AuthProvider.js";
+
+import ConfirmCode from "../../components/ConfirmCode/index.jsx";
 import styles from "./styles";
 
-// const SafeAreaView = withSafeArea(View, 'margin', 'all')
-
 export default function () {
+    const { phoneNumber, setPhoneNumber } = useContext(AuthContext);
+    let initialNumber;
+
     return (
-        <SafeAreaView>
+        <SafeAreaView style={styles.area}>
             <ScrollView contentContainerStyle={styles.container}>
                 <View style={styles.logoBox}>
                     <Text style={styles.signIn}>Sign In</Text>
@@ -18,20 +27,46 @@ export default function () {
                         denouncing pleasure
                     </Text>
                 </View>
-                <View style={styles.signInBox}>
+                {phoneNumber ? (
+                   <ConfirmCode/>
+                ) : (
+                    <View style={styles.signInBox}>
+                        <View
+                            style={styles.inputContainer}
+                            behavior={
+                                Platform.OS === "ios" ? "padding" : "height"
+                            }
+                        >
+                            <View style={styles.preTextWrapperStyle}>
+                                <Text style={styles.preText}>Number</Text>
+                            </View>
+                            <TextInput
+                                style={styles.input}
+                                numberOfLines={1}
+                                placeholder="Enter phone number"
+                                placeholderTextColor="#B8B8BB"
+                                onChangeText={(number) =>
+                                    (initialNumber = number)
+                                }
+                                keyboardType="phone-pad"
+                                // autoFocus={true}
+                                maxLength={9}
+                            />
+                        </View>
+                        <TouchableOpacity style={styles.forgotPassWrapper}>
+                            <Text style={styles.forgotPass}>
+                                Forgot Password?
+                            </Text>
+                        </TouchableOpacity>
 
-                    <FormInput preText="Number" placeholderText="Enter phone number"/>
-
-                    <TouchableOpacity style={styles.forgotPassWrapper}>
-                        <Text style={styles.forgotPass}>
-                            Forgot Password?
-                        </Text>
-                    </TouchableOpacity>
-
-                    <TouchableOpacity style={styles.sendCodeWrapper}>
-                        <Text style={styles.sendCodeText}>Send code</Text>
-                    </TouchableOpacity>
-                </View>
+                        <TouchableOpacity
+                            style={styles.sendCodeWrapper}
+                            onPress={() => setPhoneNumber(initialNumber)}
+                        >
+                            <Text style={styles.sendCodeText}>Send code</Text>
+                        </TouchableOpacity>
+                    </View>
+                )}
             </ScrollView>
         </SafeAreaView>
     );

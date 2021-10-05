@@ -2,8 +2,8 @@ import React, { useContext, useState, useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { AuthContext } from "./AuthProvider";
 
-import AuthStack from "./AuthStack";
-import AppStack from "./AppStack";
+// import AppStack from "./AppStack";
+import SignInScreen from "../screens/SignInScreen/SignInScreen";
 
 export default Routes = () => {
     const { user, setUser } = useContext(AuthContext);
@@ -15,7 +15,7 @@ export default Routes = () => {
 
     return (
         <NavigationContainer>
-            {user ? <AppStack /> : <AuthStack />}
+             <SignInScreen />
         </NavigationContainer>
     );
 };

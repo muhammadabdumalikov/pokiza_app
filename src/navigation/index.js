@@ -1,5 +1,5 @@
 import React from "react";
-import { AuthProvider } from "./AuthProvider.android.js";
+import { AuthProvider } from "./AuthProvider.js";
 import Routes from "./Routes";
 
 export default function Providers(props) {
