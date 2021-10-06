@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet, SafeAreaView, Platform } from "react-native";
+import { Dimensions, StyleSheet,  Platform } from "react-native";
 import Constants from "expo-constants";
 
 const statusBarHeight = Constants.statusBarHeight;
@@ -11,6 +11,7 @@ export default StyleSheet.create({
         flex: 1,
     },
     container: {
+        height: height,
         width: width,
         paddingTop: Platform.OS === "android" ? statusBarHeight : 0,
     },
@@ -18,7 +19,7 @@ export default StyleSheet.create({
         height: height * 0.5,
         alignItems: "center",
         paddingHorizontal: 76,
-        // backgroundColor: "#F5F5F5",
+        backgroundColor: "#F5F5F5",
     },
     signIn: {
         width: 80,

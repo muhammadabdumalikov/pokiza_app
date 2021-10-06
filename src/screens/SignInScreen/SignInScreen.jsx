@@ -13,25 +13,26 @@ import { AuthContext } from "../../navigation/AuthProvider.js";
 import ConfirmCode from "../../components/ConfirmCode/index.jsx";
 import styles from "./styles";
 import AddNumber from "../../components/AddNumber/index.jsx";
+import PersonalData from "../../components/PersonalData/index.jsx";
+
 
 export default function () {
-    const { phoneNumber } = useContext(AuthContext);
+    const { phoneNumber, code } = useContext(AuthContext);
 
     return (
-        <SafeAreaView style={styles.area}>
+        <SafeAreaView>
             <ScrollView contentContainerStyle={styles.container}>
                 <View style={styles.logoBox}>
                     <Text style={styles.signIn}>Sign In</Text>
-                    <Text style={styles.signInDescription}>
-                        But I must explain to you how all this mistaken idea of
-                        denouncing pleasure
-                    </Text>
+                    {code ? null : (
+                        <Text style={styles.signInDescription}>
+                            But I must explain to you how all this mistaken idea
+                            of denouncing pleasure
+                        </Text>
+                    )}
                 </View>
-                {phoneNumber ? (
-                   <ConfirmCode/>
-                ) : (
-                    <AddNumber/>
-                )}
+                {code ? <PersonalData /> : null}
+                {phoneNumber ? <ConfirmCode/> : <AddNumber/>}
             </ScrollView>
         </SafeAreaView>
     );

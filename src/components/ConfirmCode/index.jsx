@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { View, Text, TouchableOpacity } from "react-native";
 
 import {
@@ -7,8 +7,8 @@ import {
     useBlurOnFulfill,
     useClearByFocusCell,
 } from "react-native-confirmation-code-field";
-
-import { styles } from "./styles"
+import { AuthContext } from "../../navigation/AuthProvider.js";
+import { styles } from "./styles";
 
 const CELL_COUNT = 4;
 
@@ -19,6 +19,7 @@ const ConfirmCode = () => {
         value,
         setValue,
     });
+    const { setCode } = useContext(AuthContext);
 
     return (
         <View style={styles.root}>
@@ -26,7 +27,9 @@ const ConfirmCode = () => {
                 ref={ref}
                 {...props}
                 value={value}
-                onChangeText={setValue}
+                onChangeText={(value) => {
+                    setValue(value)
+                }}
                 cellCount={CELL_COUNT}
                 rootStyle={styles.codeFiledRoot}
                 keyboardType="number-pad"
@@ -51,7 +54,11 @@ const ConfirmCode = () => {
                     ...styles.sendCodeWrapper,
                     backgroundColor: value.length < 4 ? "#AAADB0" : "#007AFF",
                 }}
-                onPress={() => setPhoneNumber(initialNumber)}
+                onPress={() => {
+                    if (value.length > 3) {
+                        setCode(value);
+                    }
+                }}
             >
                 <Text style={styles.sendCodeText}>Confirm</Text>
             </TouchableOpacity>
