@@ -1,160 +1,145 @@
 import React from "react";
-import { View, TouchableOpacity, Text } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import {
     Ionicons,
     MaterialIcons,
     MaterialCommunityIcons,
-} from '@expo/vector-icons';
+    FontAwesome,
+} from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
-import HomeScreen from "../screens/HomeScreen/HomeScreen";
+import OrderScreen from "../screens/ClientScreens/OrdersScreen";
+import { Dimensions } from "react-native";
 
-const Tab = createBottomTabNavigator();
+const ClientTab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-const HomeStack = ({ navigation }) => (
-    <Stack.Navigator>
+const OrdersStack = ({ navigation }) => (
+    <Stack.Navigator screenOptions={{}}>
         <Stack.Screen
-            name="Ipeyol Homepage"
-            component={HomeScreen}
+            name="OrdersScreen"
+            component={OrderScreen}
             options={{
+                headerTitle: "ID: #3493843",
                 headerTitleAlign: "center",
                 headerTitleStyle: {
                     fontSize: 18,
+                    top: 25,
+                    textAlign: "center"
                 },
                 headerStyle: {
                     shadowColor: "#fff",
                     elevation: 0,
+                    height: Dimensions.get("window").height / 5.8
                 },
             }}
         />
     </Stack.Navigator>
 );
 
-const MessageStack = ({ navigation }) => (
-    <Stack.Navigator>
-        <Stack.Screen name="Messages" component={MessagesScreen} />
-        <Stack.Screen
-            name="Chat"
-            component={ChatScreen}
-            options={({ route }) => ({
-                title: route.params.userName,
-                headerBackTitleVisible: false,
-            })}
-        />
-    </Stack.Navigator>
-);
+// const MessageStack = ({ navigation }) => (
+//     <Stack.Navigator>
+//         <Stack.Screen name="Messages" component={MessagesScreen} />
+//         <Stack.Screen
+//             name="Chat"
+//             component={ChatScreen}
+//             options={({ route }) => ({
+//                 title: route.params.userName,
+//                 headerBackTitleVisible: false,
+//             })}
+//         />
+//     </Stack.Navigator>
+// );
 
-const ProfileStack = ({ navigation }) => (
-    <Stack.Navigator>
-        <Stack.Screen
-            name="Profile"
-            component={ProfileScreen}
-            options={{
-                headerShown: false,
-            }}
-        />
-        <Stack.Screen
-            name="EditProfile"
-            component={EditProfileScreen}
-            options={{
-                headerTitle: "Edit Profile",
-                headerBackTitleVisible: false,
-                headerTitleAlign: "center",
-                headerStyle: {
-                    backgroundColor: "#fff",
-                    shadowColor: "#fff",
-                    elevation: 0,
-                },
-            }}
-        />
-    </Stack.Navigator>
-);
+// const ProfileStack = ({ navigation }) => (
+//     <Stack.Navigator>
+//         <Stack.Screen
+//             name="Profile"
+//             component={ProfileScreen}
+//             options={{
+//                 headerShown: false,
+//             }}
+//         />
+//         <Stack.Screen
+//             name="EditProfile"
+//             component={EditProfileScreen}
+//             options={{
+//                 headerTitle: "Edit Profile",
+//                 headerBackTitleVisible: false,
+//                 headerTitleAlign: "center",
+//                 headerStyle: {
+//                     backgroundColor: "#fff",
+//                     shadowColor: "#fff",
+//                     elevation: 0,
+//                 },
+//             }}
+//         />
+//     </Stack.Navigator>
+// );
 
 const AppStack = () => {
-    const getTabBarVisibility = (route) => {
-        const routeName = route.state
-            ? route.state.routes[route.state.index].name
-            : "";
-
-        if (routeName === "Chat") {
-            return false;
-        }
-        return true;
-    };
-
     return (
-        <Tab.Navigator
-            initialRouteName="Home"
+        <ClientTab.Navigator
+            initialRouteName="Orders"
             screenOptions={{
-                tabBarShowLabel: false,
-                tabBarActiveTintColor: "#2e64e5",
+                tabBarShowLabel: true,
+                tabBarActiveTintColor: "#007AFF",
                 headerShown: false,
+                tabBarStyle: {
+                    height: 70,
+                }
             }}
         >
-            <Tab.Screen
-                name="Category"
-                component={MessageStack}
+            <ClientTab.Screen
+                name="Orders"
+                component={OrdersStack}
                 options={({ route }) => ({
-                    tabBarVisible: getTabBarVisibility(route),
-                    // Or Hide tabbar when push!
-                    // https://github.com/react-navigation/react-navigation/issues/7677
-                    // tabBarVisible: route.state && route.state.index === 0,
-                    // tabBarLabel: 'Home',
                     tabBarIcon: ({ color, size }) => (
-                        <MaterialIcons name="menu" size={24} color="black" />
+                        <MaterialIcons name="reorder" size={32} color={color} />
                     ),
                 })}
             />
-            <Tab.Screen
-                name="Home"
-                component={HomeStack}
+            <ClientTab.Screen
+                name="Notice"
+                component={OrdersStack}
                 options={({ route }) => ({
-                    tabBarLabel: "Home",
-                    // tabBarVisible: route.state && route.state.index === 0,
                     tabBarIcon: ({ color, size }) => (
-                        <MaterialCommunityIcons
-                            name="home-outline"
+                        <MaterialIcons
+                            name="notifications-none"
                             color={color}
-                            size={size}
+                            size={32}
                         />
                     ),
                 })}
             />
-            <Tab.Screen
-                name="Messages"
-                component={MessageStack}
+            <ClientTab.Screen
+                name="Location"
+                component={OrdersStack}
                 options={({ route }) => ({
-                    tabBarVisible: getTabBarVisibility(route),
-                    // Or Hide tabbar when push!
-                    // https://github.com/react-navigation/react-navigation/issues/7677
-                    // tabBarVisible: route.state && route.state.index === 0,
-                    // tabBarLabel: 'Home',
                     tabBarIcon: ({ color, size }) => (
-                        <Ionicons
-                            name="chatbox-ellipses-outline"
+                        <MaterialIcons
+                            name="location-history"
+                            size={32}
                             color={color}
-                            size={size}
                         />
                     ),
                 })}
             />
-            <Tab.Screen
-                name="Profile"
-                component={ProfileStack}
+            <ClientTab.Screen
+                name="Settings"
+                component={OrdersStack}
                 options={{
                     // tabBarLabel: 'Home',
                     tabBarIcon: ({ color, size }) => (
-                        <Ionicons
-                            name="person-outline"
+                        <MaterialIcons
+                            name="settings"
+                            size={32}
                             color={color}
-                            size={size}
                         />
                     ),
                 }}
             />
-        </Tab.Navigator>
+        </ClientTab.Navigator>
     );
 };
 

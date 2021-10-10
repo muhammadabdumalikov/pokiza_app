@@ -15,9 +15,10 @@ const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
 
 const PersonalData = () => {
-    const { setFirstName, setLastName, setAge, setGender } = useContext(AuthContext);
-    const [selectedAge, setSelectedAge] = useState();
-    const [selectedGender, setSelectedGender] = useState();
+    const { setFirstName, setLastName, setAge, setGender } =
+        useContext(AuthContext);
+    let [selectedAge, setSelectedAge] = useState("");
+    let [selectedGender, setSelectedGender] = useState();
     let firstname;
     let lastname;
 
@@ -79,9 +80,10 @@ const PersonalData = () => {
                 <Picker
                     style={{ height: 50, width: 120 }}
                     selectedValue={selectedAge}
-                    onValueChange={(itemValue, itemIndex) =>
-                        setSelectedAge(itemValue)
-                    }
+                    onValueChange={(itemValue, itemIndex) => {
+                        console.log(selectedAge)
+                        setSelectedAge(itemValue);
+                    }}
                 >
                     <Picker.Item label="18" value="18" />
                     <Picker.Item label="20" value="20" />
@@ -104,12 +106,12 @@ const PersonalData = () => {
                 <Picker
                     style={{ height: 50, width: 120 }}
                     selectedValue={selectedGender}
-                    onValueChange={(itemValue, itemIndex) =>
-                        setSelectedGender(itemValue)
-                    }
+                    onValueChange={(itemValue, itemIndex) => {
+                        setSelectedGender(itemValue);
+                    }}
                 >
                     <Picker.Item label="Male" value="male" />
-                    <Picker.Item label="Female" value="female"/>
+                    <Picker.Item label="Female" value="female" />
                 </Picker>
             </View>
 
@@ -117,9 +119,9 @@ const PersonalData = () => {
                 style={styles.sendCodeWrapper}
                 onPress={() => {
                     setAge(selectedAge)
-                    setGender(selectedGender)
-                    setFirstName(firstname)
-                    setLastName(lastname)
+                    setGender(selectedGender);
+                    setFirstName(firstname);
+                    setLastName(lastname);
                 }}
             >
                 <Text style={styles.sendCodeText}>Send code</Text>

@@ -9,7 +9,11 @@ export const AuthProvider = ({ children }) => {
     const [lastName, setLastName] = useState();
     const [age, setAge] = useState();
     const [gender, setGender] = useState();
-    const [code, setCode] = useState(null)
+    const [code, setCode] = useState(null);
+    const [state, setState] = useState();
+    const [region, setRegion] = useState();
+    const [area, setArea] = useState();
+    const [branch, setBranch] = useState();
 
     return (
         <AuthContext.Provider
@@ -26,6 +30,14 @@ export const AuthProvider = ({ children }) => {
                 setPhoneNumber,
                 code,
                 setCode,
+                state,
+                setState,
+                region,
+                setRegion,
+                area,
+                setArea,
+                branch,
+                setBranch,
                 login: async (password) => {
                     try {
                     } catch (e) {

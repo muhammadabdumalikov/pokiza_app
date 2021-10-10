@@ -14,10 +14,11 @@ import ConfirmCode from "../../components/ConfirmCode/index.jsx";
 import styles from "./styles";
 import AddNumber from "../../components/AddNumber/index.jsx";
 import PersonalData from "../../components/PersonalData/index.jsx";
+import AddAdressData from "../../components/AddAdress/index.jsx";
 
 
 export default function () {
-    const { phoneNumber, code } = useContext(AuthContext);
+    const { phoneNumber, code, firstName } = useContext(AuthContext);
 
     return (
         <SafeAreaView>
@@ -31,8 +32,10 @@ export default function () {
                         </Text>
                     )}
                 </View>
+                <AddAdressData/>
+                {/* {firstName ? <AddAdressData/> : null}
                 {code ? <PersonalData /> : null}
-                {phoneNumber ? <ConfirmCode/> : <AddNumber/>}
+                {phoneNumber ? <ConfirmCode/> : <AddNumber/>} */}
             </ScrollView>
         </SafeAreaView>
     );
