@@ -20,6 +20,8 @@ import SettingsScreen from "../screens/ClientScreens/SettingsScreen";
 const ClientTab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
+const StaffTab = createBottomTabNavigator()
+
 const OrdersStack = ({ navigation, route }) => {
     return (
         <Stack.Navigator screenOptions={{}}>
