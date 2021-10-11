@@ -38,12 +38,12 @@ export const styles = StyleSheet.create({
     },
     ordersList: {
         marginBottom: 16,
-        borderRadius: 5,
+        borderRadius: 10,
     },
     orderBox: {
         height: height / 7.96,
         width: width / 1.09,
-        borderRadius: 5,
+        borderRadius: 10,
         justifyContent: "space-around",
         marginBottom: 16,
         backgroundColor: "white",
@@ -76,7 +76,7 @@ export const styles = StyleSheet.create({
         width: width / 1.09,
         height: height / 9.12,
         backgroundColor: "white",
-        borderRadius: 5,
+        borderRadius: 10,
         // borderWidth: .2,
         overflow: "hidden",
         marginBottom: 8

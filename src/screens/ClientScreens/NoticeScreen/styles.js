@@ -11,7 +11,7 @@ export const styles = StyleSheet.create({
         width: width / 1.09,
         height: height / 14.5,
         backgroundColor: "#fff",
-        borderRadius: 5,
+        borderRadius: 10,
         overflow: "hidden",
         flexDirection: "row",
         justifyContent: "space-between",
