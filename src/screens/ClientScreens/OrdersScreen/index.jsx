@@ -4,14 +4,16 @@ import { MaterialIcons } from "@expo/vector-icons";
 
 import { styles } from "./styles";
 
-const OrderScreen = () => {
+const OrderScreen = ({navigation}) => {
     return (
+        // Orders with scrollable view ------------------------------------
         <ScrollView
             style={styles.container}
             contentContainerStyle={styles.contentStyle}
             showsVerticalScrollIndicator={false}
         >
-            <View style={styles.orderBox}>
+            {/* Order box ---------------------------------------------------*/}
+            <TouchableOpacity style={styles.orderBox} onPress={()=> navigation.navigate("OrderDetailScreen", {id: "ID: #329304"})}>
                 <View style={styles.orderNumber}>
                     <Text style={styles.orderNumberStyle}>Last Order</Text>
                     <Text style={styles.orderNumberStyle}>#10293</Text>
@@ -24,7 +26,7 @@ const OrderScreen = () => {
                     <Text style={styles.orderNumberAbout}>Last Order</Text>
                     <Text style={styles.orderNumberAbout}>#10293</Text>
                 </View>
-            </View>
+            </TouchableOpacity>
             <View style={styles.orderBox}>
                 <View style={styles.orderNumber}>
                     <Text style={styles.orderNumberStyle}>Last Order</Text>

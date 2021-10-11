@@ -1,4 +1,5 @@
 import React from "react";
+import { Text, TouchableOpacity } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import {
     Ionicons,
@@ -10,32 +11,64 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import OrderScreen from "../screens/ClientScreens/OrdersScreen";
 import { Dimensions } from "react-native";
+import OrderDetailScreen from "../screens/ClientScreens/OrderDetailScreen";
 
 const ClientTab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-const OrdersStack = ({ navigation }) => (
-    <Stack.Navigator screenOptions={{}}>
-        <Stack.Screen
-            name="OrdersScreen"
-            component={OrderScreen}
-            options={{
-                headerTitle: "ID: #3493843",
-                headerTitleAlign: "center",
-                headerTitleStyle: {
-                    fontSize: 18,
-                    top: 25,
-                    textAlign: "center"
-                },
-                headerStyle: {
-                    shadowColor: "#fff",
-                    elevation: 0,
-                    height: Dimensions.get("window").height / 5.8
-                },
-            }}
-        />
-    </Stack.Navigator>
-);
+const OrdersStack = ({ navigation, route }) => {
+    // console.log(route)
+    return (
+        <Stack.Navigator screenOptions={{}}>
+            <Stack.Screen
+                name="OrdersScreen"
+                component={OrderScreen}
+                options={{
+                    headerTitle: "ID: #3493843",
+                    headerTitleAlign: "center",
+                    headerTitleStyle: {
+                        fontSize: 18,
+                        top: 25,
+                        textAlign: "center",
+                    },
+                    headerStyle: {
+                        shadowColor: "#fff",
+                        elevation: 0,
+                        height: Dimensions.get("window").height / 5.8,
+                    },
+                }}
+            />
+            <Stack.Screen
+                name="OrderDetailScreen"
+                component={OrderDetailScreen}
+                options={({ route }) => ({
+                    headerTitleAlign: "center",
+                    headerTitleStyle: {
+                        fontSize: 18,
+                        top: 25,
+                        textAlign: "center",
+                    },
+                    headerStyle: {
+                        shadowColor: "#fff",
+                        elevation: 0,
+                        height: Dimensions.get("window").height / 5.8,
+                    },
+                    title: route.params.id,
+                    headerRight: () => (
+                        <TouchableOpacity style={{ marginRight: 20 }}>
+                            <MaterialIcons
+                                name="call"
+                                size={24}
+                                color="#007AFF"
+                            />
+                        </TouchableOpacity>
+                    ),
+                    headerLeft: () => null,
+                })}
+            />
+        </Stack.Navigator>
+    );
+};
 
 // const MessageStack = ({ navigation }) => (
 //     <Stack.Navigator>
@@ -87,7 +120,7 @@ const AppStack = () => {
                 headerShown: false,
                 tabBarStyle: {
                     height: 70,
-                }
+                },
             }}
         >
             <ClientTab.Screen

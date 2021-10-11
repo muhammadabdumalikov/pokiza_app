@@ -23,7 +23,8 @@ export const styles = StyleSheet.create({
         borderRadius: 2,
         justifyContent: "space-between",
         marginBottom: 16,
-        backgroundColor: "white"
+        backgroundColor: "white",
+        overflow: "hidden"
     },
     orderNumber: {
         flexDirection: "row",
