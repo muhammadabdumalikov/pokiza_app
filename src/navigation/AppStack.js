@@ -119,7 +119,7 @@ const AppStack = () => {
                 tabBarActiveTintColor: "#007AFF",
                 headerShown: false,
                 tabBarStyle: {
-                    height: 70,
+                    height: Dimensions.get("window").height / 9.78,
                 },
             }}
         >

@@ -8,18 +8,19 @@ export const styles = StyleSheet.create({
         flex: 1,
         width: width,
         height: "100%",
+        position: "relative"
     },
     contentStyle: {
         alignItems: "center",
         padding: 16,
-        height: "100%",
     },
     sumLine: {
         width: width / 1.09,
-        height: 24,
+        height: 29,
         flexDirection: "row",
         justifyContent: "space-between",
-        marginBottom: 23,
+        alignItems: "center",
+        marginHorizontal: width/23.43
     },
     sumText: {
         fontSize: 14,
@@ -36,7 +37,9 @@ export const styles = StyleSheet.create({
         fontWeight: "bold",
         fontSize: 18,
     },
-    ordersList: {},
+    ordersList: {
+        marginBottom: 16
+    },
     orderBox: {
         height: height / 7.96,
         width: width / 1.09,
@@ -70,13 +73,16 @@ export const styles = StyleSheet.create({
     },
     orderDetailBox: {
         flexDirection: "row",
+        width: width / 1.09,
         height: height / 9.12,
         backgroundColor: "white",
         borderRadius: 5,
-        overflow: "hidden"
+        // borderWidth: .2,
+        overflow: "hidden",
+        marginBottom: 8
     },
     orderDetailTextContent: {
-        width: width / 1.09 - 89,
+        width: (width / 1.09) - (width/4.21),
         flexDirection: "row",
         paddingHorizontal: 24,
         paddingVertical: 14,
@@ -106,7 +112,7 @@ export const styles = StyleSheet.create({
         fontWeight: "bold"
     },
     orderImage: {
-        width: 89,
+        width: width / 4.21,
         height: "100%",
         backgroundColor: "gray"
     },
