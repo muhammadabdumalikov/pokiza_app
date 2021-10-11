@@ -6,6 +6,7 @@ import {
     MaterialIcons,
     MaterialCommunityIcons,
     FontAwesome,
+    Feather,
 } from "@expo/vector-icons";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
@@ -14,6 +15,7 @@ import { Dimensions } from "react-native";
 import OrderDetailScreen from "../screens/ClientScreens/OrderDetailScreen";
 import NoticesScreen from "../screens/ClientScreens/NoticeScreen";
 import LocationScreen from "../screens/ClientScreens/LocationScreen";
+import SettingsScreen from "../screens/ClientScreens/SettingsScreen";
 
 const ClientTab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -57,11 +59,7 @@ const OrdersStack = ({ navigation, route }) => {
                     title: route.params.id,
                     headerRight: () => (
                         <TouchableOpacity style={{ marginRight: 20 }}>
-                            <MaterialIcons
-                                name="call"
-                                size={24}
-                                color="#007AFF"
-                            />
+                            <Feather name="phone" size={24} color="#007AFF" />
                         </TouchableOpacity>
                     ),
                     headerLeft: () => null,
@@ -92,11 +90,7 @@ const NoticesStack = ({ navigation, route }) => {
                     // title: route.params.id,
                     headerRight: () => (
                         <TouchableOpacity style={{ marginRight: 20 }}>
-                            <MaterialIcons
-                                name="call"
-                                size={24}
-                                color="#007AFF"
-                            />
+                            <Feather name="phone" size={24} color="#007AFF" />
                         </TouchableOpacity>
                     ),
                     headerLeft: () => null,
@@ -127,11 +121,38 @@ const LocationStack = ({ navigation, route }) => {
                     // title: route.params.id,
                     headerRight: () => (
                         <TouchableOpacity style={{ marginRight: 20 }}>
-                            <MaterialIcons
-                                name="call"
-                                size={24}
-                                color="#007AFF"
-                            />
+                            <Feather name="phone" size={24} color="#007AFF" />
+                        </TouchableOpacity>
+                    ),
+                    headerLeft: () => null,
+                })}
+            />
+        </Stack.Navigator>
+    );
+};
+
+const SettingsStack = ({ navigation, route }) => {
+    return (
+        <Stack.Navigator screenOptions={{}}>
+            <Stack.Screen
+                name="SettingsScreen"
+                component={SettingsScreen}
+                options={({ route }) => ({
+                    headerTitleAlign: "center",
+                    headerTitleStyle: {
+                        fontSize: 18,
+                        top: 25,
+                        textAlign: "center",
+                    },
+                    headerStyle: {
+                        shadowColor: "#fff",
+                        elevation: 0,
+                        height: Dimensions.get("window").height / 5.8,
+                    },
+                    // title: route.params.id,
+                    headerRight: () => (
+                        <TouchableOpacity style={{ marginRight: 20 }}>
+                            <Feather name="phone" size={24} color="#007AFF" />
                         </TouchableOpacity>
                     ),
                     headerLeft: () => null,
@@ -191,7 +212,7 @@ const AppStack = () => {
                 headerShown: false,
                 tabBarStyle: {
                     height: Dimensions.get("window").height / 9.78,
-                    paddingBottom: 20
+                    paddingBottom: 20,
                 },
             }}
         >
@@ -200,7 +221,7 @@ const AppStack = () => {
                 component={OrdersStack}
                 options={({ route }) => ({
                     tabBarIcon: ({ color, size }) => (
-                        <MaterialIcons name="reorder" size={32} color={color} />
+                        <Feather name="menu" size={24} color={color} />
                     ),
                 })}
             />
@@ -209,11 +230,7 @@ const AppStack = () => {
                 component={NoticesStack}
                 options={({ route }) => ({
                     tabBarIcon: ({ color, size }) => (
-                        <MaterialIcons
-                            name="notifications-none"
-                            color={color}
-                            size={32}
-                        />
+                        <Feather name="bell" size={24} color={color} />
                     ),
                 })}
             />
@@ -222,25 +239,17 @@ const AppStack = () => {
                 component={LocationStack}
                 options={({ route }) => ({
                     tabBarIcon: ({ color, size }) => (
-                        <MaterialIcons
-                            name="location-history"
-                            size={32}
-                            color={color}
-                        />
+                        <Feather name="map" size={24} color={color} />
                     ),
                 })}
             />
             <ClientTab.Screen
                 name="Settings"
-                component={OrdersStack}
+                component={SettingsStack}
                 options={{
                     // tabBarLabel: 'Home',
                     tabBarIcon: ({ color, size }) => (
-                        <MaterialIcons
-                            name="settings"
-                            size={32}
-                            color={color}
-                        />
+                        <Feather name="user" size={24} color={color} />
                     ),
                 }}
             />
