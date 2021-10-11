@@ -12,12 +12,12 @@ import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import OrderScreen from "../screens/ClientScreens/OrdersScreen";
 import { Dimensions } from "react-native";
 import OrderDetailScreen from "../screens/ClientScreens/OrderDetailScreen";
+import NoticesScreen from "../screens/ClientScreens/NoticeScreen";
 
 const ClientTab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
 const OrdersStack = ({ navigation, route }) => {
-    // console.log(route)
     return (
         <Stack.Navigator screenOptions={{}}>
             <Stack.Screen
@@ -54,6 +54,76 @@ const OrdersStack = ({ navigation, route }) => {
                         height: Dimensions.get("window").height / 5.8,
                     },
                     title: route.params.id,
+                    headerRight: () => (
+                        <TouchableOpacity style={{ marginRight: 20 }}>
+                            <MaterialIcons
+                                name="call"
+                                size={24}
+                                color="#007AFF"
+                            />
+                        </TouchableOpacity>
+                    ),
+                    headerLeft: () => null,
+                })}
+            />
+        </Stack.Navigator>
+    );
+};
+
+const NoticesStack = ({ navigation, route }) => {
+    return (
+        <Stack.Navigator screenOptions={{}}>
+            <Stack.Screen
+                name="NoticesScreen"
+                component={NoticesScreen}
+                options={({ route }) => ({
+                    headerTitleAlign: "center",
+                    headerTitleStyle: {
+                        fontSize: 18,
+                        top: 25,
+                        textAlign: "center",
+                    },
+                    headerStyle: {
+                        shadowColor: "#fff",
+                        elevation: 0,
+                        height: Dimensions.get("window").height / 5.8,
+                    },
+                    // title: route.params.id,
+                    headerRight: () => (
+                        <TouchableOpacity style={{ marginRight: 20 }}>
+                            <MaterialIcons
+                                name="call"
+                                size={24}
+                                color="#007AFF"
+                            />
+                        </TouchableOpacity>
+                    ),
+                    headerLeft: () => null,
+                })}
+            />
+        </Stack.Navigator>
+    );
+};
+
+const LocationStack = ({ navigation, route }) => {
+    return (
+        <Stack.Navigator screenOptions={{}}>
+            <Stack.Screen
+                name="LocationScreen"
+                component={NoticesScreen}
+                options={({ route }) => ({
+                    headerTitleAlign: "center",
+                    headerTitleStyle: {
+                        fontSize: 18,
+                        top: 25,
+                        textAlign: "center",
+                    },
+                    headerStyle: {
+                        shadowColor: "#fff",
+                        elevation: 0,
+                        height: Dimensions.get("window").height / 5.8,
+                    },
+                    // title: route.params.id,
                     headerRight: () => (
                         <TouchableOpacity style={{ marginRight: 20 }}>
                             <MaterialIcons
@@ -120,6 +190,7 @@ const AppStack = () => {
                 headerShown: false,
                 tabBarStyle: {
                     height: Dimensions.get("window").height / 9.78,
+                    paddingBottom: 20
                 },
             }}
         >
@@ -133,8 +204,8 @@ const AppStack = () => {
                 })}
             />
             <ClientTab.Screen
-                name="Notice"
-                component={OrdersStack}
+                name="Notices"
+                component={NoticesStack}
                 options={({ route }) => ({
                     tabBarIcon: ({ color, size }) => (
                         <MaterialIcons

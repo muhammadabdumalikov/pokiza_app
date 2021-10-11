@@ -8,7 +8,6 @@ export const styles = StyleSheet.create({
         flex: 1,
         width: width,
         height: "100%",
-        position: "relative"
     },
     contentStyle: {
         alignItems: "center",
@@ -38,7 +37,8 @@ export const styles = StyleSheet.create({
         fontSize: 18,
     },
     ordersList: {
-        marginBottom: 16
+        marginBottom: 16,
+        borderRadius: 5,
     },
     orderBox: {
         height: height / 7.96,
