@@ -13,6 +13,7 @@ import OrderScreen from "../screens/ClientScreens/OrdersScreen";
 import { Dimensions } from "react-native";
 import OrderDetailScreen from "../screens/ClientScreens/OrderDetailScreen";
 import NoticesScreen from "../screens/ClientScreens/NoticeScreen";
+import LocationScreen from "../screens/ClientScreens/LocationScreen";
 
 const ClientTab = createBottomTabNavigator();
 const Stack = createStackNavigator();
@@ -110,7 +111,7 @@ const LocationStack = ({ navigation, route }) => {
         <Stack.Navigator screenOptions={{}}>
             <Stack.Screen
                 name="LocationScreen"
-                component={NoticesScreen}
+                component={LocationScreen}
                 options={({ route }) => ({
                     headerTitleAlign: "center",
                     headerTitleStyle: {
@@ -218,7 +219,7 @@ const AppStack = () => {
             />
             <ClientTab.Screen
                 name="Location"
-                component={OrdersStack}
+                component={LocationStack}
                 options={({ route }) => ({
                     tabBarIcon: ({ color, size }) => (
                         <MaterialIcons
