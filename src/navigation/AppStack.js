@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, TouchableOpacity } from "react-native";
+import { Text, TouchableOpacity, Dimensions } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import {
     Ionicons,
@@ -11,16 +11,15 @@ import {
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 
 import OrderScreen from "../screens/ClientScreens/OrdersScreen";
-import { Dimensions } from "react-native";
 import OrderDetailScreen from "../screens/ClientScreens/OrderDetailScreen";
 import NoticesScreen from "../screens/ClientScreens/NoticeScreen";
 import LocationScreen from "../screens/ClientScreens/LocationScreen";
 import SettingsScreen from "../screens/ClientScreens/SettingsScreen";
 
+const height = Dimensions.get("window").height;
+
 const ClientTab = createBottomTabNavigator();
 const Stack = createStackNavigator();
-
-const StaffTab = createBottomTabNavigator()
 
 const OrdersStack = ({ navigation, route }) => {
     return (
@@ -33,10 +32,11 @@ const OrdersStack = ({ navigation, route }) => {
                     headerTitleAlign: "center",
                     headerTitleStyle: {
                         fontSize: 18,
-                        top: 25,
+                        top: height/32.48,
                         textAlign: "center",
                     },
                     headerStyle: {
+                        backgroundColor: "#F4F4F5",
                         shadowColor: "#fff",
                         elevation: 0,
                         height: Dimensions.get("window").height / 5.8,
@@ -50,10 +50,11 @@ const OrdersStack = ({ navigation, route }) => {
                     headerTitleAlign: "center",
                     headerTitleStyle: {
                         fontSize: 18,
-                        top: 25,
+                        top: height/32.48,
                         textAlign: "center",
                     },
                     headerStyle: {
+                        backgroundColor: "#F4F4F5",
                         shadowColor: "#fff",
                         elevation: 0,
                         height: Dimensions.get("window").height / 5.8,
@@ -81,10 +82,11 @@ const NoticesStack = ({ navigation, route }) => {
                     headerTitleAlign: "center",
                     headerTitleStyle: {
                         fontSize: 18,
-                        top: 25,
+                        top: height/32.48,
                         textAlign: "center",
                     },
                     headerStyle: {
+                        backgroundColor: "#F4F4F5",
                         shadowColor: "#fff",
                         elevation: 0,
                         height: Dimensions.get("window").height / 5.8,
@@ -112,10 +114,11 @@ const LocationStack = ({ navigation, route }) => {
                     headerTitleAlign: "center",
                     headerTitleStyle: {
                         fontSize: 18,
-                        top: 25,
+                        top: height/32.48,
                         textAlign: "center",
                     },
                     headerStyle: {
+                        backgroundColor: "#F4F4F5",
                         shadowColor: "#fff",
                         elevation: 0,
                         height: Dimensions.get("window").height / 5.8,
@@ -143,10 +146,11 @@ const SettingsStack = ({ navigation, route }) => {
                     headerTitleAlign: "center",
                     headerTitleStyle: {
                         fontSize: 18,
-                        top: 25,
+                        top: height/32.48,
                         textAlign: "center",
                     },
                     headerStyle: {
+                        backgroundColor: "#F4F4F5",
                         shadowColor: "#fff",
                         elevation: 0,
                         height: Dimensions.get("window").height / 5.8,
@@ -214,7 +218,8 @@ const AppStack = () => {
                 headerShown: false,
                 tabBarStyle: {
                     height: Dimensions.get("window").height / 9.78,
-                    paddingBottom: 20,
+                    paddingBottom: height/40.6,
+                    backgroundColor: "#F4F4F5",
                 },
             }}
         >

@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text, TouchableOpacity } from "react-native";
+import { View, Text, TouchableOpacity, ScrollView } from "react-native";
 import {
     MaterialIcons,
     MaterialCommunityIcons,
@@ -11,7 +11,7 @@ import { styles } from "./styles";
 
 const SettingsScreen = () => {
     return (
-        <View style={styles.container}>
+        <ScrollView style={styles.container} contentContainerStyle={styles.containerContent} showsVerticalScrollIndicator={false}>
 
             <View style={styles.settingsBox}>
                 <TouchableOpacity style={styles.oneSettingBox}>
@@ -50,7 +50,7 @@ const SettingsScreen = () => {
             <TouchableOpacity style={styles.aboutUsWrapper}>
                 <Text style={styles.aboutUs}>About us</Text>
             </TouchableOpacity>
-        </View>
+        </ScrollView>
     );
 };
 
