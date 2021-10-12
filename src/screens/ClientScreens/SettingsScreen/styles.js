@@ -3,17 +3,15 @@ import { Dimensions, StyleSheet } from "react-native";
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
 
-console.log(height)
-
 export const styles = StyleSheet.create({
     container: {
         padding: 16,
-        height: height < 550 ? 550 : "100%",
+        height: "100%",
         backgroundColor: "#fff"
     },
     containerContent: {
-        height: height < 600 ? 500 : "100%",
-        backgroundColor: "#fff"
+        height: height < 600 ? 450 : "100%",
+        // backgroundColor: "#fff"
     },
     settingsBox: {
         width: width / 1.09,

@@ -8,7 +8,8 @@ export const styles = StyleSheet.create({
         padding: 16,
         height: "100%",
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
+        backgroundColor: "#fff"
     },
     txt: {
         color: "#1976D2"

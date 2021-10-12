@@ -7,7 +7,8 @@ export const styles = StyleSheet.create({
     container: {
         flex: 1,
         width: width,
-        height: "100%"
+        height: "100%",
+        backgroundColor: "#fff"
     },
     contentStyle: {
         alignItems: "center",
@@ -22,7 +23,7 @@ export const styles = StyleSheet.create({
         borderRadius: 10,
         justifyContent: "space-between",
         marginBottom: 16,
-        backgroundColor: "white",
+        backgroundColor: "#F4F4F5",
         overflow: "hidden"
     },
     orderNumber: {
