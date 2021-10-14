@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
         flex: 1,
         width: width,
         height: "100%",
-        backgroundColor: "#fff"
+        backgroundColor: "#fff",
     },
     contentStyle: {
         alignItems: "center",
