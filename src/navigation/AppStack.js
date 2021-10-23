@@ -168,46 +168,6 @@ const SettingsStack = ({ navigation, route }) => {
     );
 };
 
-// const MessageStack = ({ navigation }) => (
-//     <Stack.Navigator>
-//         <Stack.Screen name="Messages" component={MessagesScreen} />
-//         <Stack.Screen
-//             name="Chat"
-//             component={ChatScreen}
-//             options={({ route }) => ({
-//                 title: route.params.userName,
-//                 headerBackTitleVisible: false,
-//             })}
-//         />
-//     </Stack.Navigator>
-// );
-
-// const ProfileStack = ({ navigation }) => (
-//     <Stack.Navigator>
-//         <Stack.Screen
-//             name="Profile"
-//             component={ProfileScreen}
-//             options={{
-//                 headerShown: false,
-//             }}
-//         />
-//         <Stack.Screen
-//             name="EditProfile"
-//             component={EditProfileScreen}
-//             options={{
-//                 headerTitle: "Edit Profile",
-//                 headerBackTitleVisible: false,
-//                 headerTitleAlign: "center",
-//                 headerStyle: {
-//                     backgroundColor: "#fff",
-//                     shadowColor: "#fff",
-//                     elevation: 0,
-//                 },
-//             }}
-//         />
-//     </Stack.Navigator>
-// );
-
 const AppStack = () => {
     return (
         <ClientTab.Navigator

@@ -3,8 +3,8 @@ import { NavigationContainer } from "@react-navigation/native";
 import { AuthContext } from "./AuthProvider";
 
 // import AppStack from "./AppStack";
-import SignInScreen from "../screens/SignInScreen/SignInScreen";
 import AppStack from "./AppStack";
+import AuthStack from "./AuthStack";
 
 export default Routes = () => {
     const { user, setUser } = useContext(AuthContext);
@@ -16,8 +16,8 @@ export default Routes = () => {
 
     return (
         <NavigationContainer>
-             {/* <SignInScreen /> */}
-             <AppStack/>
+            <AuthStack/>
+             {/* <AppStack/> */}
         </NavigationContainer>
     );
 };
