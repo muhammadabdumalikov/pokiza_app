@@ -41,14 +41,14 @@ export default StyleSheet.create({
         textAlign: "center",
     },
     personalDataBox: {
-        backgroundColor: "#000",
         alignItems: "center",
         position: "relative",
         height: height * 0.55,
+        alignItems: "center",
     },
     inputContainer: {
         marginTop: 5,
-        marginBottom: 10,
+        marginBottom: 5,
         width: "100%",
         height: height / 15,
         borderBottomColor: "#ccc",
@@ -112,6 +112,7 @@ export default StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         borderRadius: 10,
+        marginTop: 47
     },
     sendCodeText: {
         color: "#fff",
