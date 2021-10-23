@@ -8,10 +8,10 @@ const height = Dimensions.get("window").height;
 export default StyleSheet.create({
     container: {
         flex: 1,
-        height: "100%"
+        height: "100%",
+        backgroundColor: "white",
     },
     content: {
-        // height: "100%",
         width: width,
         paddingTop: Platform.OS === "android" ? statusBarHeight : 0,
     },

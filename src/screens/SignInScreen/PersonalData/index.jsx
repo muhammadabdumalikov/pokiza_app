@@ -137,6 +137,7 @@ const PersonalData = ({ navigation }) => {
                         setGender(selectedGender);
                         setFirstName(firstname);
                         setLastName(lastname);
+                        navigation.navigate("AddAddress")
                     }}
                 >
                     <Text style={styles.sendCodeText}>Send code</Text>

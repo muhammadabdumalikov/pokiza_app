@@ -9,6 +9,8 @@ export default StyleSheet.create({
     container: {
         flex: 1,
         height: "100%",
+        backgroundColor: "white",
+
     },
     content: {
         // height: "100%",
