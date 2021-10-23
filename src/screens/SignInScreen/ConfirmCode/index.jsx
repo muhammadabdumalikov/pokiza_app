@@ -19,7 +19,7 @@ import styles from "./styles";
 
 const CELL_COUNT = 4;
 
-const ConfirmCode = () => {
+const ConfirmCode = ({navigation}) => {
     const [value, setValue] = useState("");
     const ref = useBlurOnFulfill({ value, cellCount: CELL_COUNT });
     const [props, getCellOnLayoutHandler] = useClearByFocusCell({
@@ -76,6 +76,7 @@ const ConfirmCode = () => {
                         if (value.length > 3) {
                             setCode(value);
                         }
+                        navigation.navigate("PersonalData")
                     }}
                 >
                     <Text style={styles.sendCodeText}>Confirm</Text>

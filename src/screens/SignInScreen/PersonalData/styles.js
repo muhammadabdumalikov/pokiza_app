@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet, Platform } from "react-native";
+import { Dimensions, StyleSheet,  Platform } from "react-native";
 import Constants from "expo-constants";
 
 const statusBarHeight = Constants.statusBarHeight;
@@ -8,7 +8,7 @@ const height = Dimensions.get("window").height;
 export default StyleSheet.create({
     container: {
         flex: 1,
-        height: "100%",
+        height: "100%"
     },
     content: {
         // height: "100%",
@@ -16,7 +16,7 @@ export default StyleSheet.create({
         paddingTop: Platform.OS === "android" ? statusBarHeight : 0,
     },
     logoBox: {
-        height: height * 0.45,
+        height: height*.45,
         alignItems: "center",
         paddingHorizontal: 76,
         backgroundColor: "#F5F5F5",
@@ -39,31 +39,59 @@ export default StyleSheet.create({
         fontSize: 12,
         textAlign: "center",
     },
-    root: {
-        height: height * 0.55,
-        width: "100%",
+    personalDataBox: {
+        backgroundColor: "white",
         alignItems: "center",
         position: "relative",
-        justifyContent: "center",
+        height: height * 0.55,
     },
-    codeFiledRoot: {
+    inputContainer: {
         position: "absolute",
-        bottom: height / 3.47,
-        justifyContent: "space-between",
-        width: 208,
+        marginTop: 5,
+        marginBottom: 10,
+        width: "100%",
+        height: height / 15,
+        borderBottomColor: "#ccc",
+        borderBottomWidth: 1,
+        borderRadius: 3,
+        flexDirection: "row",
+        alignItems: "center",
+        backgroundColor: "#fff",
     },
-    cell: {
-        width: 40,
-        height: 60,
-        lineHeight: 50,
-        fontSize: 24,
-        borderWidth: 2,
-        borderRadius: 10,
-        borderColor: "#00000030",
-        textAlign: "center",
+    preTextWrapperStyle: {
+        padding: 10,
+        height: "100%",
+        justifyContent: "center",
+        alignItems: "center",
+        width: width * .3,
     },
-    focusCell: {
-        borderColor: "#000",
+    preText: {
+        fontSize: 16,
+    },
+    input: {
+        width: "100%",
+        padding: 10,
+        flex: 1,
+        fontSize: 16,
+        color: "#666",
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    inputField: {
+        padding: 10,
+        marginTop: 5,
+        marginBottom: 10,
+        width: height / 1.5,
+        height: height / 15,
+        fontSize: 16,
+        borderRadius: 8,
+        borderWidth: 1,
+    },
+    forgotPassWrapper: {
+        width: 105,
+        position: "absolute",
+        bottom: height / 3.87,
+        right: width / 16.3,
     },
     forgotPass: {
         textDecorationLine: "underline",
