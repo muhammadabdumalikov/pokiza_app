@@ -10,14 +10,11 @@ export default Routes = () => {
     const { user, setUser } = useContext(AuthContext);
     const [initializing, setInitializing] = useState(true);
 
-    useEffect(() => {
-      
-    }, []);
+    useEffect(() => {}, []);
 
     return (
         <NavigationContainer>
-            <AuthStack/>
-             {/* <AppStack/> */}
+            {user ? <AppStack /> : <AuthStack />}
         </NavigationContainer>
     );
 };

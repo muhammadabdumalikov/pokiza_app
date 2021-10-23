@@ -14,10 +14,13 @@ export const AuthProvider = ({ children }) => {
     const [region, setRegion] = useState();
     const [area, setArea] = useState();
     const [branch, setBranch] = useState();
+    const [user, setUser] = useState();
 
     return (
         <AuthContext.Provider
             value={{
+                user,
+                setUser,
                 firstName,
                 setFirstName,
                 lastName,

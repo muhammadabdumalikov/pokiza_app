@@ -17,7 +17,7 @@ const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
 
 const AddAddress = ({ navigation }) => {
-    const { setRegion, setBranch, setArea, setState } = useContext(AuthContext);
+    const { setRegion, setBranch, setArea, setState, setUser } = useContext(AuthContext);
     const [selectedState, setSelectedState] = useState();
     const [selectedRegion, setSelectedRegion] = useState();
     const [selectedArea, setSelectedArea] = useState();
@@ -140,7 +140,9 @@ const AddAddress = ({ navigation }) => {
 
                 <TouchableOpacity
                     style={styles.sendCodeWrapper}
-                    onPress={() => {}}
+                    onPress={() => {
+                        setUser("test")
+                    }}
                 >
                     <Text style={styles.sendCodeText}>Send code</Text>
                 </TouchableOpacity>
