@@ -11,12 +11,12 @@ export default StyleSheet.create({
         height: "100%"
     },
     content: {
-        height: "100%",
+        // height: "100%",
         width: width,
         paddingTop: Platform.OS === "android" ? statusBarHeight : 0,
     },
     logoBox: {
-        height: "45%",
+        height: height*.45,
         alignItems: "center",
         paddingHorizontal: 76,
         backgroundColor: "#F5F5F5",
@@ -43,7 +43,7 @@ export default StyleSheet.create({
         backgroundColor: "#fff",
         alignItems: "center",
         position: "relative",
-        height: "55%",
+        height: height*.55,
     },
     inputContainer: {
         position: "absolute",
