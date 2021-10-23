@@ -73,6 +73,7 @@ export default StyleSheet.create({
         textAlign: "center",
         color: "#007AFF",
         fontSize: 12,
+        marginTop: 30
     },
     sendCodeWrapper: {
         position: "absolute",
