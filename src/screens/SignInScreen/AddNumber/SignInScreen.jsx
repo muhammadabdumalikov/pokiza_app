@@ -12,7 +12,7 @@ import { AuthContext } from "../../../navigation/AuthProvider";
 
 import styles from "./styles";
 
-export default function () {
+export default function ({navigation}) {
     const { setPhoneNumber } = useContext(AuthContext);
     let initialNumber;
 
@@ -53,7 +53,10 @@ export default function () {
 
                 <TouchableOpacity
                     style={styles.sendCodeWrapper}
-                    onPress={() => setPhoneNumber(initialNumber)}
+                    onPress={() => {
+                        setPhoneNumber(initialNumber);
+                        navigation.navigate("ConfirmCode")
+                    }}
                 >
                     <Text style={styles.sendCodeText}>Send code</Text>
                 </TouchableOpacity>
