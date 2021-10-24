@@ -9,13 +9,21 @@ import {
 } from "react-native";
 
 import { AuthContext } from "../../../navigation/AuthProvider";
-
+import { request } from "../../../helpers/request.js";
 import styles from "./styles";
 
-export default function ({navigation}) {
-    const { setPhoneNumber } = useContext(AuthContext);
-    let initialNumber;
+const LOGIN = `
+mutation ($phoneNumber: String!){
+    enterClientPhone(phoneNumber: $phoneNumber){
+      status
+      data
+      message
+    }
+  }
+`;
 
+export default function ({ navigation }) {
+    const {phoneNumber, setPhoneNumber} = useContext(AuthContext)
     return (
         <ScrollView
             style={styles.container}
@@ -41,10 +49,10 @@ export default function ({navigation}) {
                         numberOfLines={1}
                         placeholder="Enter phone number"
                         placeholderTextColor="#B8B8BB"
-                        onChangeText={(number) => (initialNumber = number)}
+                        onChangeText={(number) => setPhoneNumber(number)}
                         keyboardType="phone-pad"
                         // autoFocus={true}
-                        maxLength={9}
+                        maxLength={12}
                     />
                 </View>
                 <TouchableOpacity style={styles.forgotPassWrapper}>
@@ -53,9 +61,17 @@ export default function ({navigation}) {
 
                 <TouchableOpacity
                     style={styles.sendCodeWrapper}
-                    onPress={() => {
-                        setPhoneNumber(initialNumber);
-                        navigation.navigate("ConfirmCode")
+                    onPress={async () => {
+                        try {
+                            let data = await request(LOGIN, {
+                                phoneNumber: phoneNumber,
+                            });
+                            if (data.enterClientPhone.status == 200) {
+                                navigation.navigate("ConfirmCode");
+                            }
+                        } catch (error) {
+                            console.log(error);
+                        }
                     }}
                 >
                     <Text style={styles.sendCodeText}>Send code</Text>

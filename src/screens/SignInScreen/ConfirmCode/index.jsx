@@ -13,20 +13,39 @@ import {
     useBlurOnFulfill,
     useClearByFocusCell,
 } from "react-native-confirmation-code-field";
-import { AuthContext } from "../../../navigation/AuthProvider";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import { AuthContext } from "../../../navigation/AuthProvider";
+import { request } from "../../../helpers/request";
 import styles from "./styles";
 
 const CELL_COUNT = 4;
 
-const ConfirmCode = ({navigation}) => {
+const CODE_QUERY = `mutation ($phoneNumber: String!, $password: String!){
+    enterClientPassword(phoneNumber: $phoneNumber, password: $password){
+      status
+      message
+      data
+      token
+      permissions{
+        branchId
+        branchName
+        permissionsList{
+          permissionAction
+          permissionModel
+        }
+      }
+    }
+  }`;
+
+const ConfirmCode = ({ navigation }) => {
     const [value, setValue] = useState("");
     const ref = useBlurOnFulfill({ value, cellCount: CELL_COUNT });
     const [props, getCellOnLayoutHandler] = useClearByFocusCell({
         value,
         setValue,
     });
-    const { setCode } = useContext(AuthContext);
+    const { setCode, phoneNumber } = useContext(AuthContext);
     return (
         <ScrollView
             style={styles.container}
@@ -72,11 +91,19 @@ const ConfirmCode = ({navigation}) => {
                         backgroundColor:
                             value.length < 4 ? "#AAADB0" : "#007AFF",
                     }}
-                    onPress={() => {
-                        if (value.length > 3) {
-                            setCode(value);
+                    onPress={async() => {
+                        try {
+                            let data = await request(CODE_QUERY, {
+                                phoneNumber: phoneNumber,
+                                password: value,
+                            });
+                            if(data.enterClientPassword.status == 200){
+                                await AsyncStorage.setItem('user_token', data.enterClientPassword.token)
+                                navigation.navigate("PersonalData");
+                            }
+                        } catch (error) {
+                            console.log(error)
                         }
-                        navigation.navigate("PersonalData")
                     }}
                 >
                     <Text style={styles.sendCodeText}>Confirm</Text>
@@ -84,6 +111,6 @@ const ConfirmCode = ({navigation}) => {
             </View>
         </ScrollView>
     );
-}
+};
 
-export default ConfirmCode
+export default ConfirmCode;

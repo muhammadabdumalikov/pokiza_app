@@ -1,7 +1,6 @@
 import React from "react";
 import { View, Text, ScrollView, TouchableOpacity, Image } from "react-native";
 import { MaterialIcons } from "@expo/vector-icons";
-import { ProgressBar } from "@react-native-community/progress-bar-android";
 
 import { styles } from "./styles";
 
