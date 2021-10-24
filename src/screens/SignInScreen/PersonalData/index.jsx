@@ -13,16 +13,15 @@ import { Picker } from "@react-native-picker/picker";
 
 import { AuthContext } from "../../../navigation/AuthProvider";
 import styles from "./styles";
+import { request } from "../../../helpers/request";
 
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
 
 
 const PersonalData = ({ navigation }) => {
-    const { setFirstName, setLastName, setAge, setGender } =
+    const { setFirstName, setLastName, age, setAge, gender, setGender } =
         useContext(AuthContext);
-    let [selectedAge, setSelectedAge] = useState("");
-    let [selectedGender, setSelectedGender] = useState();
     let firstname;
     let lastname;
 
@@ -55,7 +54,7 @@ const PersonalData = ({ navigation }) => {
                         onChangeText={(value) => (firstname = value)}
                         keyboardType="default"
                         // autoFocus={true}
-                        maxLength={9}
+                        maxLength={20}
                     />
                 </View>
 
@@ -75,7 +74,7 @@ const PersonalData = ({ navigation }) => {
                         onChangeText={(value) => (lastname = value)}
                         keyboardType="default"
                         // autoFocus={true}
-                        maxLength={9}
+                        maxLength={20}
                     />
                 </View>
 
@@ -92,17 +91,16 @@ const PersonalData = ({ navigation }) => {
                     <View style={styles.preTextWrapperStyle}>
                         <Text style={styles.preText}>Age</Text>
                     </View>
-                    <Picker
-                        style={{ height: 50, width: 120 }}
-                        selectedValue={selectedAge}
-                        onValueChange={(itemValue, itemIndex) => {
-                            console.log(selectedAge);
-                            setSelectedAge(itemValue);
-                        }}
-                    >
-                        <Picker.Item label="18" value="18" />
-                        <Picker.Item label="20" value="20" />
-                    </Picker>
+                    <TextInput
+                        style={{height: "100%", width: "50%"}}
+                        numberOfLines={1}
+                        placeholder="20"
+                        placeholderTextColor="#B8B8BB"
+                        onChangeText={(value) => (setAge(value))}
+                        keyboardType="numeric"
+                        // autoFocus={true}
+                        maxLength={3}
+                    />
                 </View>
 
                 {/* Gender input --------------------------------------------- */}
@@ -120,9 +118,9 @@ const PersonalData = ({ navigation }) => {
                     </View>
                     <Picker
                         style={{ height: 50, width: 120 }}
-                        selectedValue={selectedGender}
+                        selectedValue={gender}
                         onValueChange={(itemValue, itemIndex) => {
-                            setSelectedGender(itemValue);
+                            setGender(itemValue);
                         }}
                     >
                         <Picker.Item label="Male" value="male" />
@@ -133,11 +131,12 @@ const PersonalData = ({ navigation }) => {
                 <TouchableOpacity
                     style={styles.sendCodeWrapper}
                     onPress={() => {
-                        setAge(selectedAge);
-                        setGender(selectedGender);
                         setFirstName(firstname);
                         setLastName(lastname);
-                        navigation.navigate("AddAddress")
+                        console.log(age, gender, firstname, lastname)
+                        if(age&&gender&&firstname&&lastname){
+                            navigation.navigate("AddAddress")
+                        }
                     }}
                 >
                     <Text style={styles.sendCodeText}>Send code</Text>
