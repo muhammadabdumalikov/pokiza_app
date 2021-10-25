@@ -66,6 +66,7 @@ export default function ({ navigation }) {
                             let data = await request(LOGIN, {
                                 phoneNumber: phoneNumber,
                             });
+                            console.log(data)
                             if (data.enterClientPhone.status == 200) {
                                 navigation.navigate("ConfirmCode");
                             }

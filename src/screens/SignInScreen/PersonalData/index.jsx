@@ -10,7 +10,6 @@ import {
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 
-
 import { AuthContext } from "../../../navigation/AuthProvider";
 import styles from "./styles";
 import { request } from "../../../helpers/request";
@@ -18,10 +17,11 @@ import { request } from "../../../helpers/request";
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
 
-
 const PersonalData = ({ navigation }) => {
-    const { setFirstName, setLastName, age, setAge, gender, setGender } =
-        useContext(AuthContext);
+    const { age, setAge, gender, setGender } = useContext(AuthContext);
+    const [selectedFirstname, setSelectedFirstname] = useState("");
+    const [selectedLastname, setSelectedLastname] = useState("");
+    const [selectedGender, setSelectedGender] = useState("male")
     let firstname;
     let lastname;
 
@@ -51,7 +51,7 @@ const PersonalData = ({ navigation }) => {
                         numberOfLines={1}
                         placeholder="Enter first name"
                         placeholderTextColor="#B8B8BB"
-                        onChangeText={(value) => (firstname = value)}
+                        onChangeText={(value) => setSelectedFirstname(value)}
                         keyboardType="default"
                         // autoFocus={true}
                         maxLength={20}
@@ -71,7 +71,7 @@ const PersonalData = ({ navigation }) => {
                         numberOfLines={1}
                         placeholder="Enter last name"
                         placeholderTextColor="#B8B8BB"
-                        onChangeText={(value) => (lastname = value)}
+                        onChangeText={(value) => (setSelectedLastname(value))}
                         keyboardType="default"
                         // autoFocus={true}
                         maxLength={20}
@@ -92,11 +92,11 @@ const PersonalData = ({ navigation }) => {
                         <Text style={styles.preText}>Age</Text>
                     </View>
                     <TextInput
-                        style={{height: "100%", width: "50%"}}
+                        style={{ height: "100%", width: "50%" }}
                         numberOfLines={1}
                         placeholder="20"
                         placeholderTextColor="#B8B8BB"
-                        onChangeText={(value) => (setAge(value))}
+                        onChangeText={(value) => setAge(value)}
                         keyboardType="numeric"
                         // autoFocus={true}
                         maxLength={3}
@@ -131,11 +131,19 @@ const PersonalData = ({ navigation }) => {
                 <TouchableOpacity
                     style={styles.sendCodeWrapper}
                     onPress={() => {
-                        setFirstName(firstname);
-                        setLastName(lastname);
-                        console.log(age, gender, firstname, lastname)
-                        if(age&&gender&&firstname&&lastname){
-                            navigation.navigate("AddAddress")
+                        console.log(
+                            age,
+                            gender,
+                            selectedFirstname,
+                            selectedLastname
+                        );
+                        if (
+                            age &&
+                            gender &&
+                            selectedFirstname &&
+                            selectedLastname
+                        ) {
+                            navigation.navigate("AddAddress");
                         }
                     }}
                 >

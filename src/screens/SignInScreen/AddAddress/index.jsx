@@ -12,12 +12,47 @@ import { Picker } from "@react-native-picker/picker";
 
 import { AuthContext } from "../../../navigation/AuthProvider";
 import styles from "./styles";
+import { request } from "../../../helpers/request";
+
+const ADDRESS_QUERY = `mutation(
+    $firstName: String!
+    $lastName: String
+    $secondContact: String
+    $age: Int!
+    $gender: Int!
+    $branchId: ID!
+    $addressId: ID!
+  ) {
+    registerClient(
+      firstName: $firstName
+      lastName: $lastName
+      age: $age
+      gender: $gender
+      secondContact: $secondContact
+      branchId: $branchId
+      addressId: $addressId
+    ) {
+      status
+      message
+      data
+      token
+      permissions {
+        branchId
+        branchName
+        permissionsList {
+          permissionAction
+          permissionModel
+        }
+      }
+    }
+  }
+  `
 
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
 
 const AddAddress = ({ navigation }) => {
-    const { setRegion, setBranch, setArea, setState, setUser } = useContext(AuthContext);
+    const { firstName, lastName, gender, age } = useContext(AuthContext);
     const [selectedState, setSelectedState] = useState();
     const [selectedRegion, setSelectedRegion] = useState();
     const [selectedArea, setSelectedArea] = useState();
@@ -141,7 +176,17 @@ const AddAddress = ({ navigation }) => {
                 <TouchableOpacity
                     style={styles.sendCodeWrapper}
                     onPress={() => {
-                        setUser("test")
+                        try {
+                            let data = request(ADDRESS_QUERY, {
+                                firstName: firstName,
+                                lastName: lastName,
+                                age: age,
+                                gender: gender,
+                                selected
+                            })
+                        } catch (error) {
+                            
+                        }
                     }}
                 >
                     <Text style={styles.sendCodeText}>Send code</Text>
