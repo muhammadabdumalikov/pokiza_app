@@ -131,12 +131,6 @@ const PersonalData = ({ navigation }) => {
                 <TouchableOpacity
                     style={styles.sendCodeWrapper}
                     onPress={() => {
-                        console.log(
-                            age,
-                            gender,
-                            selectedFirstname,
-                            selectedLastname
-                        );
                         if (
                             age &&
                             gender &&

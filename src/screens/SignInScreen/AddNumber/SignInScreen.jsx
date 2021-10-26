@@ -11,8 +11,10 @@ import {
 import { AuthContext } from "../../../navigation/AuthProvider";
 import { request } from "../../../helpers/request.js";
 import styles from "./styles";
+import gql from "graphql-tag";
+import { useMutation } from "@apollo/client";
 
-const LOGIN = `
+const LOGIN = gql`
 mutation ($phoneNumber: String!){
     enterClientPhone(phoneNumber: $phoneNumber){
       status
@@ -23,7 +25,38 @@ mutation ($phoneNumber: String!){
 `;
 
 export default function ({ navigation }) {
-    const {phoneNumber, setPhoneNumber} = useContext(AuthContext)
+    const {phoneNumber, setPhoneNumber} = useContext(AuthContext);
+    const [login, {loading}] = useMutation(LOGIN);
+    
+    const handleLoginPress = () => {
+        login({
+            variables: {
+                phoneNumber: phoneNumber,
+            }
+        })
+            .then(({data}) => {
+                console.log(data);
+                if (data.enterClientPhone.status == 200) {
+                    navigation.navigate("ConfirmCode");
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+
+        // try {
+        //     let data = await request(LOGIN, {
+        //         phoneNumber: phoneNumber,
+        //     });
+        //     console.log(data)
+        //     if (data.enterClientPhone.status == 200) {
+        //         navigation.navigate("ConfirmCode");
+        //     }
+        // } catch (error) {
+        //     console.log(error);
+        // }
+    }
+
     return (
         <ScrollView
             style={styles.container}
@@ -61,19 +94,8 @@ export default function ({ navigation }) {
 
                 <TouchableOpacity
                     style={styles.sendCodeWrapper}
-                    onPress={async () => {
-                        try {
-                            let data = await request(LOGIN, {
-                                phoneNumber: phoneNumber,
-                            });
-                            console.log(data)
-                            if (data.enterClientPhone.status == 200) {
-                                navigation.navigate("ConfirmCode");
-                            }
-                        } catch (error) {
-                            console.log(error);
-                        }
-                    }}
+                    onPress={handleLoginPress}
+                    disabled={loading}
                 >
                     <Text style={styles.sendCodeText}>Send code</Text>
                 </TouchableOpacity>

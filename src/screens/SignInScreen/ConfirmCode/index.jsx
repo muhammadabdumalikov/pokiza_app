@@ -18,10 +18,12 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AuthContext } from "../../../navigation/AuthProvider";
 import { request } from "../../../helpers/request";
 import styles from "./styles";
+import gql from "graphql-tag";
+import { useMutation } from "@apollo/client";
 
 const CELL_COUNT = 4;
 
-const CODE_QUERY = `mutation ($phoneNumber: String!, $password: String!){
+const CODE_QUERY = gql`mutation ($phoneNumber: String!, $password: String!){
     enterClientPassword(phoneNumber: $phoneNumber, password: $password){
       status
       message
@@ -39,6 +41,7 @@ const CODE_QUERY = `mutation ($phoneNumber: String!, $password: String!){
   }`;
 
 const ConfirmCode = ({ navigation }) => {
+    const [verify, {loading}] = useMutation(CODE_QUERY);
     const [value, setValue] = useState("");
     const ref = useBlurOnFulfill({ value, cellCount: CELL_COUNT });
     const [props, getCellOnLayoutHandler] = useClearByFocusCell({
@@ -46,6 +49,26 @@ const ConfirmCode = ({ navigation }) => {
         setValue,
     });
     const { setCode, phoneNumber } = useContext(AuthContext);
+
+    
+    const handleSubmit = () => {
+        verify({
+            variables: {
+                phoneNumber: phoneNumber,
+                password: value,
+            }
+        })
+            .then(({data}) => {
+                if(data.enterClientPassword.status == 200){
+                    AsyncStorage.setItem('user_token', data.enterClientPassword.token)
+                    navigation.navigate("PersonalData");
+                }
+            })
+            .catch((err) => {
+                console.log(error)
+            });
+    }
+
     return (
         <ScrollView
             style={styles.container}
@@ -91,20 +114,7 @@ const ConfirmCode = ({ navigation }) => {
                         backgroundColor:
                             value.length < 4 ? "#AAADB0" : "#007AFF",
                     }}
-                    onPress={async() => {
-                        try {
-                            let data = await request(CODE_QUERY, {
-                                phoneNumber: phoneNumber,
-                                password: value,
-                            });
-                            if(data.enterClientPassword.status == 200){
-                                await AsyncStorage.setItem('user_token', data.enterClientPassword.token)
-                                navigation.navigate("PersonalData");
-                            }
-                        } catch (error) {
-                            console.log(error)
-                        }
-                    }}
+                    onPress={handleSubmit}
                 >
                     <Text style={styles.sendCodeText}>Confirm</Text>
                 </TouchableOpacity>

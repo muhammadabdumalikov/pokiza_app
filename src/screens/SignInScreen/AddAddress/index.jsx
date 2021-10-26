@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
     View,
     Text,
@@ -9,6 +9,7 @@ import {
     Dimensions,
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { AuthContext } from "../../../navigation/AuthProvider";
 import styles from "./styles";
@@ -30,7 +31,7 @@ const ADDRESS_QUERY = `mutation(
       gender: $gender
       secondContact: $secondContact
       branchId: $branchId
-      addressId: $addressId
+      addressId: 5
     ) {
       status
       message
@@ -46,20 +47,38 @@ const ADDRESS_QUERY = `mutation(
       }
     }
   }
-  `
+  `;
+
+  const GET_STATE_QUERY = `{
+    states {
+      stateId
+      stateName
+    }
+  }`
 
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
 
 const AddAddress = ({ navigation }) => {
-    const { firstName, lastName, gender, age } = useContext(AuthContext);
+    const { firstName, lastName, gender, age, setUser } = useContext(AuthContext);
     const [selectedState, setSelectedState] = useState();
     const [selectedRegion, setSelectedRegion] = useState();
     const [selectedArea, setSelectedArea] = useState();
     const [selectedBranch, setSelectedBranch] = useState();
+    let [userToken, setUserToken] = useState("")
     let state;
     let region;
     let branch;
+
+    async function fetchData() {
+        const value = await AsyncStorage.getItem('user_token')
+        let states = await request(GET_STATE_QUERY, null, userToken);
+        setUserToken(value)
+    }
+
+    useEffect(() => {
+        fetchData();
+    }, []);
 
     return (
         <ScrollView
@@ -177,16 +196,15 @@ const AddAddress = ({ navigation }) => {
                     style={styles.sendCodeWrapper}
                     onPress={() => {
                         try {
-                            let data = request(ADDRESS_QUERY, {
-                                firstName: firstName,
-                                lastName: lastName,
-                                age: age,
-                                gender: gender,
-                                selected
-                            })
-                        } catch (error) {
-                            
-                        }
+                            // let data = request(ADDRESS_QUERY, {
+                            //     firstName: firstName,
+                            //     lastName: lastName,
+                            //     age: age,
+                            //     gender: gender,
+                            //     selected,
+                            // });
+                            setUser('aaa')
+                        } catch (error) {}
                     }}
                 >
                     <Text style={styles.sendCodeText}>Send code</Text>
