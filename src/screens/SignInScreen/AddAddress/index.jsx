@@ -72,7 +72,19 @@ const GET_AREAS_QUERY = `query($regionId: ID!){
     }
   }`;
 
-const GET_NEIGHBORHOOD_QUERY = ``
+const GET_NEIGHBORHOOD_QUERY = `query($regionId: ID!){
+    neighborhoods(regionId: $regionId){
+      neighborhoodId
+      neighborhoodName
+    }
+  }`;
+
+  const GET_STREET_QUERY = `query($neighborhoodId: ID!){
+    neighborhoods(neighborhoodId: $neighborhoodId){
+      streetId
+      streetName
+    }
+  }`;
 
 const GET_BRANCHES_QUERY = `{
     branches{
@@ -154,6 +166,43 @@ const AddAddress = ({ navigation }) => {
         fetchAreas();
     }, [selectedRegion]);
 
+    useEffect(() => {
+        async function fetchNeighborhood() {
+            try {
+                setNeighborhood(
+                    await request(
+                        GET_NEIGHBORHOOD_QUERY,
+                        { regionId: selectedRegion },
+                        userToken
+                    )
+                );
+                console.log(areas);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        fetchNeighborhood();
+    }, [selectedRegion]);
+
+    useEffect(() => {
+        async function fetchStreet() {
+            try {
+                setStreet(
+                    await request(
+                        GET_STREET_QUERY,
+                        { neighborhoodId: selectedNeighborhood },
+                        userToken
+                    )
+                );
+                console.log(areas);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        fetchStreet();
+    }, [selectedNeighborhood]);
+
+    console.log(neighborhood);
     return (
         <ScrollView
             style={styles.container}
