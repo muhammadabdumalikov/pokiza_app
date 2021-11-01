@@ -71,11 +71,11 @@ export default StyleSheet.create({
     },
     pickerStyle: {
         height: 50,
-        width: "30%",
+        width: "35%",
     },
     input: {
         width: "100%",
-        padding: 10,
+        paddingLeft: 24,
         flex: 1,
         fontSize: 16,
         color: "#666",

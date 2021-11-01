@@ -7,6 +7,7 @@ import {
     SafeAreaView,
     TouchableOpacity,
     Dimensions,
+    ActivityIndicator,
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -49,167 +50,283 @@ const ADDRESS_QUERY = `mutation(
   }
   `;
 
-  const GET_STATE_QUERY = `{
+const GET_STATE_QUERY = `{
     states {
       stateId
       stateName
     }
-  }`
+  }`;
+
+const GET_REGION_QUERY = `
+query($stateId: ID!){
+    regions(stateId: $stateId){
+      regionId
+      regionName
+    }
+  }`;
+
+const GET_AREAS_QUERY = `query($regionId: ID!){
+    areas(regionId: $regionId){
+      areaId
+      areaName
+    }
+  }`;
+
+const GET_BRANCHES_QUERY = `{
+    branches{
+      branchId
+      branchName
+    }
+  }`;
 
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
 
 const AddAddress = ({ navigation }) => {
-    const { firstName, lastName, gender, age, setUser } = useContext(AuthContext);
+    const { firstName, lastName, gender, age, setUser } =
+        useContext(AuthContext);
     const [selectedState, setSelectedState] = useState();
+    let [states, setStates] = useState();
     const [selectedRegion, setSelectedRegion] = useState();
+    let [regions, setRegions] = useState();
     const [selectedArea, setSelectedArea] = useState();
+    let [areas, setAreas] = useState();
     const [selectedBranch, setSelectedBranch] = useState();
-    let [userToken, setUserToken] = useState("")
+    let [branches, setBranches] = useState();
+    let [isLoading, setLoading] = useState(true);
+    let [userToken, setUserToken] = useState("");
     let state;
     let region;
     let branch;
 
-    async function fetchData() {
-        const value = await AsyncStorage.getItem('user_token')
-        let states = await request(GET_STATE_QUERY, null, userToken);
-        setUserToken(value)
-    }
-
     useEffect(() => {
+        async function fetchData() {
+            try {
+                const value = await AsyncStorage.getItem("user_token");
+                setUserToken(value);
+                setStates(await request(GET_STATE_QUERY, null, value));
+                setBranches(await request(GET_BRANCHES_QUERY, null, value));
+                setLoading(false);
+            } catch (error) {
+                console.log(error);
+            }
+        }
         fetchData();
     }, []);
+
+    useEffect(() => {
+        async function fetchRegions() {
+            try {
+                setRegions(
+                    await request(
+                        GET_REGION_QUERY,
+                        { stateId: selectedState },
+                        userToken
+                    )
+                );
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        fetchRegions();
+    }, [selectedState]);
+
+    useEffect(() => {
+        async function fetchAreas() {
+            try {
+                setAreas(
+                    await request(
+                        GET_AREAS_QUERY,
+                        { regionId: selectedRegion },
+                        userToken
+                    )
+                );
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        fetchAreas();
+    }, [selectedRegion]);
 
     return (
         <ScrollView
             style={styles.container}
             contentContainerStyle={styles.content}
         >
-            <View style={styles.logoBox}>
-                <Text style={styles.signIn}>Sign In</Text>
-                <Text style={styles.signInDescription}>
-                    But I must explain to you how all this mistaken idea of
-                    denouncing pleasure
-                </Text>
-            </View>
-            <View style={styles.personalDataBox}>
-                {/* State input ------------------------------------ */}
-                <View
-                    style={styles.inputContainer}
-                    behavior={Platform.OS === "ios" ? "padding" : "height"}
-                >
-                    <View style={styles.preTextWrapperStyle}>
-                        <Text style={styles.preText}>State</Text>
+            {isLoading ? (
+                <ActivityIndicator
+                    size="large"
+                    color="#00ff00"
+                    style={{ alignSelf: "center" }}
+                />
+            ) : (
+                <View style={{ flex: 1 }}>
+                    <View style={styles.logoBox}>
+                        <Text style={styles.signIn}>Sign In</Text>
+                        <Text style={styles.signInDescription}>
+                            But I must explain to you how all this mistaken idea
+                            of denouncing pleasure
+                        </Text>
                     </View>
-                    <Picker
-                        style={styles.pickerStyle}
-                        selectedValue={selectedState}
-                        onValueChange={(itemValue, itemIndex) =>
-                            setSelectedState(itemValue)
-                        }
-                    >
-                        <Picker.Item label="18" value="18" />
-                        <Picker.Item label="20" value="20" />
-                    </Picker>
-                </View>
+                    <View style={styles.personalDataBox}>
+                        {/* State input ------------------------------------ */}
+                        <View
+                            style={styles.inputContainer}
+                            behavior={
+                                Platform.OS === "ios" ? "padding" : "height"
+                            }
+                        >
+                            <View style={styles.preTextWrapperStyle}>
+                                <Text style={styles.preText}>State</Text>
+                            </View>
+                            <Picker
+                                style={styles.pickerStyle}
+                                selectedValue={selectedState}
+                                onValueChange={(itemValue, itemIndex) => {
+                                    setSelectedState(itemValue);
+                                }}
+                            >
+                                {states.states.map((value) => (
+                                    <Picker.Item
+                                        key={value.stateId}
+                                        label={value.stateName}
+                                        value={value.stateId}
+                                    />
+                                ))}
+                            </Picker>
+                        </View>
 
-                {/* Region input ------------------------------------------ */}
-                <View
-                    style={styles.inputContainer}
-                    behavior={Platform.OS === "ios" ? "padding" : "height"}
-                >
-                    <View style={styles.preTextWrapperStyle}>
-                        <Text style={styles.preText}>Region</Text>
-                    </View>
-                    <Picker
-                        style={styles.pickerStyle}
-                        selectedValue={selectedRegion}
-                        onValueChange={(itemValue, itemIndex) =>
-                            setSelectedRegion(itemValue)
-                        }
-                    >
-                        <Picker.Item label="18" value="18" />
-                        <Picker.Item label="20" value="20" />
-                    </Picker>
-                </View>
+                        {/* Region input ------------------------------------------ */}
+                        <View
+                            style={styles.inputContainer}
+                            behavior={
+                                Platform.OS === "ios" ? "padding" : "height"
+                            }
+                        >
+                            <View style={styles.preTextWrapperStyle}>
+                                <Text style={styles.preText}>Region</Text>
+                            </View>
+                            <Picker
+                                style={styles.pickerStyle}
+                                selectedValue={selectedRegion}
+                                onValueChange={(itemValue, itemIndex) => {
+                                    setSelectedRegion(itemValue);
+                                }}
+                            >
+                                {regions
+                                    ? regions.regions.map((value) => (
+                                          <Picker.Item
+                                              key={value.regionId}
+                                              label={value.regionName}
+                                              value={value.regionId}
+                                          />
+                                      ))
+                                    : []}
+                            </Picker>
+                        </View>
 
-                {/* Area input ------------------------------------------ */}
-                <View
-                    style={styles.inputContainer}
-                    behavior={Platform.OS === "ios" ? "padding" : "height"}
-                >
-                    <View style={styles.preTextWrapperStyle}>
-                        <Text style={styles.preText}>Area</Text>
-                    </View>
-                    <Picker
-                        style={styles.pickerStyle}
-                        selectedValue={selectedArea}
-                        onValueChange={(itemValue, itemIndex) =>
-                            setSelectedArea(itemValue)
-                        }
-                    >
-                        <Picker.Item label="18" value="18" />
-                        <Picker.Item label="20" value="20" />
-                    </Picker>
-                </View>
+                        {/* Area input ------------------------------------------ */}
+                        <View
+                            style={styles.inputContainer}
+                            behavior={
+                                Platform.OS === "ios" ? "padding" : "height"
+                            }
+                        >
+                            <View style={styles.preTextWrapperStyle}>
+                                <Text style={styles.preText}>Area</Text>
+                            </View>
+                            <Picker
+                                style={styles.pickerStyle}
+                                selectedValue={selectedArea}
+                                onValueChange={(itemValue, itemIndex) =>
+                                    setSelectedArea(itemValue)
+                                }
+                            >
+                                {areas
+                                    ? areas.areas.map((value) => (
+                                          <Picker.Item
+                                              key={value.areaId}
+                                              label={value.areaName}
+                                              value={value.areaId}
+                                          />
+                                      ))
+                                    : []}
+                            </Picker>
+                        </View>
 
-                {/* Area options --------------------------------------------- */}
-                <View
-                    style={styles.inputContainer}
-                    behavior={Platform.OS === "ios" ? "padding" : "height"}
-                >
-                    <View style={styles.preTextWrapperStyle}>
-                        <Text style={styles.preText}>Name</Text>
-                    </View>
-                    <TextInput
-                        style={styles.input}
-                        numberOfLines={1}
-                        placeholder="Enter first name"
-                        placeholderTextColor="#B8B8BB"
-                        onChangeText={(value) => (firstname = value)}
-                        keyboardType="default"
-                        // autoFocus={true}
-                        maxLength={9}
-                    />
-                </View>
-                {/* Age input ----------------------------------------------- */}
-                <View
-                    style={styles.inputContainer}
-                    behavior={Platform.OS === "ios" ? "padding" : "height"}
-                >
-                    <View style={styles.preTextWrapperStyle}>
-                        <Text style={styles.preText}>Area</Text>
-                    </View>
-                    <Picker
-                        style={styles.pickerStyle}
-                        selectedValue={selectedArea}
-                        onValueChange={(itemValue, itemIndex) =>
-                            setSelectedArea(itemValue)
-                        }
-                    >
-                        <Picker.Item label="18" value="18" />
-                        <Picker.Item label="20" value="20" />
-                    </Picker>
-                </View>
+                        {/* Area options --------------------------------------------- */}
+                        <View
+                            style={styles.inputContainer}
+                            behavior={
+                                Platform.OS === "ios" ? "padding" : "height"
+                            }
+                        >
+                            <TextInput
+                                style={styles.input}
+                                numberOfLines={1}
+                                placeholder="Enter target to find easy"
+                                placeholderTextColor="#B8B8BB"
+                                onChangeText={(value) => (firstname = value)}
+                                keyboardType="default"
+                                // autoFocus={true}
+                                maxLength={9}
+                            />
+                        </View>
+                        {/* Branch input ----------------------------------------------- */}
+                        <View
+                            style={styles.inputContainer}
+                            behavior={
+                                Platform.OS === "ios" ? "padding" : "height"
+                            }
+                        >
+                            <View style={styles.preTextWrapperStyle}>
+                                <Text style={styles.preText}>Branch</Text>
+                            </View>
+                            <Picker
+                                style={styles.pickerStyle}
+                                selectedValue={selectedArea}
+                                onValueChange={(itemValue, itemIndex) =>
+                                    setSelectedArea(itemValue)
+                                }
+                            >
+                                {branches.branches.map((value) => (
+                                    <Picker.Item
+                                        key={value.branchId}
+                                        label={value.branchName}
+                                        value={value.branchName}
+                                    />
+                                ))}
+                            </Picker>
+                        </View>
 
-                <TouchableOpacity
-                    style={styles.sendCodeWrapper}
-                    onPress={() => {
-                        try {
-                            // let data = request(ADDRESS_QUERY, {
-                            //     firstName: firstName,
-                            //     lastName: lastName,
-                            //     age: age,
-                            //     gender: gender,
-                            //     selected,
-                            // });
-                            setUser('aaa')
-                        } catch (error) {}
-                    }}
-                >
-                    <Text style={styles.sendCodeText}>Send code</Text>
-                </TouchableOpacity>
-            </View>
+                        <TouchableOpacity
+                            style={styles.sendCodeWrapper}
+                            onPress={async () => {
+                                try {
+                                    // let data = request(ADDRESS_QUERY, {
+                                    //     firstName: firstName,
+                                    //     lastName: lastName,
+                                    //     age: age,
+                                    //     gender: gender,
+                                    //     selected,
+                                    // });
+                                    let states = await request(
+                                        GET_STATE_QUERY,
+                                        null,
+                                        userToken
+                                    );
+                                    console.log(states, userToken);
+                                    // setUser('aaa')
+                                } catch (error) {
+                                    console.log(error);
+                                }
+                            }}
+                        >
+                            <Text style={styles.sendCodeText}>Send code</Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            )}
         </ScrollView>
     );
 };
