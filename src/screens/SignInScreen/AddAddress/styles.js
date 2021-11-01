@@ -17,13 +17,13 @@ export default StyleSheet.create({
         paddingTop: Platform.OS === "android" ? statusBarHeight : 0,
     },
     logoBox: {
-        height: height * 0.45,
+        height: height * 0.25,
         alignItems: "center",
         paddingHorizontal: 76,
         backgroundColor: "#F5F5F5",
     },
     signIn: {
-        top: height / 2.96,
+        top: height / 7.96,
         width: 80,
         height: 32,
         fontWeight: "bold",
@@ -34,7 +34,7 @@ export default StyleSheet.create({
     },
     signInDescription: {
         position: "absolute",
-        top: height / 2.56,
+        top: height / 5.56,
         width: 223,
         height: 32,
         fontSize: 12,
@@ -43,7 +43,7 @@ export default StyleSheet.create({
     personalDataBox: {
         alignItems: "center",
         position: "relative",
-        height: height * 0.55,
+        height: height * 0.75,
         alignItems: "center",
     },
     inputContainer: {

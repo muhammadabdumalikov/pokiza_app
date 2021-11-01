@@ -254,6 +254,64 @@ const AddAddress = ({ navigation }) => {
                             </Picker>
                         </View>
 
+                        {/* Region input ------------------------------------------ */}
+                        <View
+                            style={styles.inputContainer}
+                            behavior={
+                                Platform.OS === "ios" ? "padding" : "height"
+                            }
+                        >
+                            <View style={styles.preTextWrapperStyle}>
+                                <Text style={styles.preText}>Region</Text>
+                            </View>
+                            <Picker
+                                style={styles.pickerStyle}
+                                selectedValue={selectedRegion}
+                                onValueChange={(itemValue, itemIndex) => {
+                                    setSelectedRegion(itemValue);
+                                }}
+                            >
+                                {regions
+                                    ? regions.regions.map((value) => (
+                                          <Picker.Item
+                                              key={value.regionId}
+                                              label={value.regionName}
+                                              value={value.regionId}
+                                          />
+                                      ))
+                                    : []}
+                            </Picker>
+                        </View>
+
+                        {/* Region input ------------------------------------------ */}
+                        <View
+                            style={styles.inputContainer}
+                            behavior={
+                                Platform.OS === "ios" ? "padding" : "height"
+                            }
+                        >
+                            <View style={styles.preTextWrapperStyle}>
+                                <Text style={styles.preText}>Region</Text>
+                            </View>
+                            <Picker
+                                style={styles.pickerStyle}
+                                selectedValue={selectedRegion}
+                                onValueChange={(itemValue, itemIndex) => {
+                                    setSelectedRegion(itemValue);
+                                }}
+                            >
+                                {regions
+                                    ? regions.regions.map((value) => (
+                                          <Picker.Item
+                                              key={value.regionId}
+                                              label={value.regionName}
+                                              value={value.regionId}
+                                          />
+                                      ))
+                                    : []}
+                            </Picker>
+                        </View>
+
                         {/* Area options --------------------------------------------- */}
                         <View
                             style={styles.inputContainer}
