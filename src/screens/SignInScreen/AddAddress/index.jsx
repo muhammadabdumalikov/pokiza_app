@@ -79,8 +79,8 @@ const GET_NEIGHBORHOOD_QUERY = `query($regionId: ID!){
     }
   }`;
 
-  const GET_STREET_QUERY = `query($neighborhoodId: ID!){
-    neighborhoods(neighborhoodId: $neighborhoodId){
+  const GET_STREET_QUERY = `query($neighborhood: ID!){
+    streets(neighborhoodId: $neighborhood){
       streetId
       streetName
     }
@@ -176,7 +176,6 @@ const AddAddress = ({ navigation }) => {
                         userToken
                     )
                 );
-                console.log(areas);
             } catch (error) {
                 console.log(error);
             }
@@ -194,7 +193,6 @@ const AddAddress = ({ navigation }) => {
                         userToken
                     )
                 );
-                console.log(areas);
             } catch (error) {
                 console.log(error);
             }
@@ -202,7 +200,6 @@ const AddAddress = ({ navigation }) => {
         fetchStreet();
     }, [selectedNeighborhood]);
 
-    console.log(neighborhood);
     return (
         <ScrollView
             style={styles.container}
@@ -327,7 +324,7 @@ const AddAddress = ({ navigation }) => {
                                 }}
                             >
                                 {neighborhood
-                                    ? neighborhood.neighborhood.map((value) => (
+                                    ? neighborhood.neighborhoods.map((value) => (
                                           <Picker.Item
                                               key={value.neighborhoodId}
                                               label={value.neighborhoodName}
@@ -356,7 +353,7 @@ const AddAddress = ({ navigation }) => {
                                 }}
                             >
                                 {street
-                                    ? street.street.map((value) => (
+                                    ? street.streets.map((value) => (
                                           <Picker.Item
                                               key={value.streetId}
                                               label={value.streetName}
