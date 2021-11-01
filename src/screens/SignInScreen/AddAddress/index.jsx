@@ -72,6 +72,8 @@ const GET_AREAS_QUERY = `query($regionId: ID!){
     }
   }`;
 
+const GET_NEIGHBORHOOD_QUERY = ``
+
 const GET_BRANCHES_QUERY = `{
     branches{
       branchId
@@ -91,6 +93,10 @@ const AddAddress = ({ navigation }) => {
     let [regions, setRegions] = useState();
     const [selectedArea, setSelectedArea] = useState();
     let [areas, setAreas] = useState();
+    const [selectedNeighborhood, setSelectedNeighborhood] = useState();
+    let [neighborhood, setNeighborhood] = useState();
+    const [selectedStreet, setSelectedStreet] = useState();
+    let [street, setStreet] = useState();
     const [selectedBranch, setSelectedBranch] = useState();
     let [branches, setBranches] = useState();
     let [isLoading, setLoading] = useState(true);
@@ -254,7 +260,7 @@ const AddAddress = ({ navigation }) => {
                             </Picker>
                         </View>
 
-                        {/* Region input ------------------------------------------ */}
+                        {/* Neighborhood input ------------------------------------------ */}
                         <View
                             style={styles.inputContainer}
                             behavior={
@@ -262,28 +268,28 @@ const AddAddress = ({ navigation }) => {
                             }
                         >
                             <View style={styles.preTextWrapperStyle}>
-                                <Text style={styles.preText}>Region</Text>
+                                <Text style={styles.preText}>Neighborhood</Text>
                             </View>
                             <Picker
                                 style={styles.pickerStyle}
-                                selectedValue={selectedRegion}
+                                selectedValue={selectedNeighborhood}
                                 onValueChange={(itemValue, itemIndex) => {
-                                    setSelectedRegion(itemValue);
+                                    setSelectedNeighborhood(itemValue);
                                 }}
                             >
-                                {regions
-                                    ? regions.regions.map((value) => (
+                                {neighborhood
+                                    ? neighborhood.neighborhood.map((value) => (
                                           <Picker.Item
-                                              key={value.regionId}
-                                              label={value.regionName}
-                                              value={value.regionId}
+                                              key={value.neighborhoodId}
+                                              label={value.neighborhoodName}
+                                              value={value.neighborhoodId}
                                           />
                                       ))
                                     : []}
                             </Picker>
                         </View>
 
-                        {/* Region input ------------------------------------------ */}
+                        {/* Street input ------------------------------------------ */}
                         <View
                             style={styles.inputContainer}
                             behavior={
@@ -291,21 +297,21 @@ const AddAddress = ({ navigation }) => {
                             }
                         >
                             <View style={styles.preTextWrapperStyle}>
-                                <Text style={styles.preText}>Region</Text>
+                                <Text style={styles.preText}>Street</Text>
                             </View>
                             <Picker
                                 style={styles.pickerStyle}
-                                selectedValue={selectedRegion}
+                                selectedValue={selectedStreet}
                                 onValueChange={(itemValue, itemIndex) => {
-                                    setSelectedRegion(itemValue);
+                                    setSelectedStreet(itemValue);
                                 }}
                             >
-                                {regions
-                                    ? regions.regions.map((value) => (
+                                {street
+                                    ? street.street.map((value) => (
                                           <Picker.Item
-                                              key={value.regionId}
-                                              label={value.regionName}
-                                              value={value.regionId}
+                                              key={value.streetId}
+                                              label={value.streetName}
+                                              value={value.streetId}
                                           />
                                       ))
                                     : []}

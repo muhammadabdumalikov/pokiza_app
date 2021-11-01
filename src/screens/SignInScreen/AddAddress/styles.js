@@ -60,14 +60,15 @@ export default StyleSheet.create({
         justifyContent: "space-between",
     },
     preTextWrapperStyle: {
-        padding: 10,
+        paddingLeft: 24,
         height: "100%",
         justifyContent: "center",
         alignItems: "center",
-        width: width * 0.3,
+        width: width * 0.4,
     },
     preText: {
         fontSize: 16,
+        width: "100%"
     },
     pickerStyle: {
         height: 50,
