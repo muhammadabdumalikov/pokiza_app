@@ -15,6 +15,7 @@ import OrderDetailScreen from "../screens/ClientScreens/OrderDetailScreen";
 import NoticesScreen from "../screens/ClientScreens/NoticeScreen";
 import LocationScreen from "../screens/ClientScreens/LocationScreen";
 import SettingsScreen from "../screens/ClientScreens/SettingsScreen";
+import AddOrderScreen from "../screens/ClientScreens/OrdersScreen/AddOrderScreen";
 
 const height = Dimensions.get("window").height;
 
@@ -67,6 +68,33 @@ const OrdersStack = ({ navigation, route }) => {
                     ),
                     headerLeft: () => null,
                 })}
+                
+            />
+             <Stack.Screen
+                name="AddOrderScreen"
+                component={AddOrderScreen}
+                options={({ route }) => ({
+                    headerTitleAlign: "center",
+                    headerTitleStyle: {
+                        fontSize: 18,
+                        top: height/32.48,
+                        textAlign: "center",
+                    },
+                    headerStyle: {
+                        backgroundColor: "#F4F4F5",
+                        shadowColor: "#fff",
+                        elevation: 0,
+                        height: Dimensions.get("window").height / 5.8,
+                    },
+                    title: route.params.id,
+                    headerRight: () => (
+                        <TouchableOpacity style={{ marginRight: 20 }}>
+                            <Feather name="phone" size={24} color="#007AFF" />
+                        </TouchableOpacity>
+                    ),
+                    headerLeft: () => null,
+                })}
+                
             />
         </Stack.Navigator>
     );
