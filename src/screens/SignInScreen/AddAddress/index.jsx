@@ -79,8 +79,8 @@ const GET_NEIGHBORHOOD_QUERY = `query($regionId: ID!){
     }
   }`;
 
-  const GET_STREET_QUERY = `query($neighborhood: ID!){
-    streets(neighborhoodId: $neighborhood){
+const GET_STREET_QUERY = `query($neighborhoodId: ID!){
+    streets(neighborhoodId: $neighborhoodId ){
       streetId
       streetName
     }
@@ -113,9 +113,8 @@ const AddAddress = ({ navigation }) => {
     let [branches, setBranches] = useState();
     let [isLoading, setLoading] = useState(true);
     let [userToken, setUserToken] = useState("");
-    let state;
-    let region;
-    let branch;
+    let target;
+    let homeNUmber;
 
     useEffect(() => {
         async function fetchData() {
@@ -193,7 +192,6 @@ const AddAddress = ({ navigation }) => {
                         userToken
                     )
                 );
-                console.log(street)
             } catch (error) {
                 console.log(error);
             }
@@ -207,19 +205,17 @@ const AddAddress = ({ navigation }) => {
             contentContainerStyle={styles.content}
         >
             {isLoading ? (
-                <ActivityIndicator
-                    size="large"
-                    color="#00ff00"
-                    style={{ alignSelf: "center" }}
-                />
+                <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+                    <ActivityIndicator
+                        size="large"
+                        color="#00ff00"
+                        style={{ alignSelf: "center" }}
+                    />
+                </View>
             ) : (
                 <View style={{ flex: 1 }}>
                     <View style={styles.logoBox}>
                         <Text style={styles.signIn}>Sign In</Text>
-                        <Text style={styles.signInDescription}>
-                            But I must explain to you how all this mistaken idea
-                            of denouncing pleasure
-                        </Text>
                     </View>
                     <View style={styles.personalDataBox}>
                         {/* State input ------------------------------------ */}
@@ -325,13 +321,15 @@ const AddAddress = ({ navigation }) => {
                                 }}
                             >
                                 {neighborhood
-                                    ? neighborhood.neighborhoods.map((value) => (
-                                          <Picker.Item
-                                              key={value.neighborhoodId}
-                                              label={value.neighborhoodName}
-                                              value={value.neighborhoodId}
-                                          />
-                                      ))
+                                    ? neighborhood.neighborhoods.map(
+                                          (value) => (
+                                              <Picker.Item
+                                                  key={value.neighborhoodId}
+                                                  label={value.neighborhoodName}
+                                                  value={value.neighborhoodId}
+                                              />
+                                          )
+                                      )
                                     : []}
                             </Picker>
                         </View>
@@ -365,7 +363,7 @@ const AddAddress = ({ navigation }) => {
                             </Picker>
                         </View>
 
-                        {/* Area options --------------------------------------------- */}
+                        {/* Target options --------------------------------------------- */}
                         <View
                             style={styles.inputContainer}
                             behavior={
@@ -377,12 +375,32 @@ const AddAddress = ({ navigation }) => {
                                 numberOfLines={1}
                                 placeholder="Enter target to find easy"
                                 placeholderTextColor="#B8B8BB"
-                                onChangeText={(value) => (firstname = value)}
+                                onChangeText={(value) => (target = value)}
                                 keyboardType="default"
                                 // autoFocus={true}
                                 maxLength={9}
                             />
                         </View>
+
+                        {/* Home Number input ----------------------------------------------------- */}
+                        <View
+                            style={styles.inputContainer}
+                            behavior={
+                                Platform.OS === "ios" ? "padding" : "height"
+                            }
+                        >
+                            <TextInput
+                                style={styles.input}
+                                numberOfLines={1}
+                                placeholder="Enter your home number"
+                                placeholderTextColor="#B8B8BB"
+                                onChangeText={(value) => (homeNUmber = value)}
+                                keyboardType="default"
+                                // autoFocus={true}
+                                maxLength={9}
+                            />
+                        </View>
+
                         {/* Branch input ----------------------------------------------- */}
                         <View
                             style={styles.inputContainer}
