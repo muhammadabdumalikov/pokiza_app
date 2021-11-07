@@ -86,10 +86,12 @@ const GET_STREET_QUERY = `query($neighborhoodId: ID!){
     }
   }`;
 
-const GET_BRANCHES_QUERY = `{
-    branches{
-      branchId
-      branchName
+const GET_BRANCHES_QUERY = `query($regionId: ID!){
+    regions(regionId: $regionId){
+      branch{
+        branchId
+        branchName
+      }
     }
   }`;
 
@@ -125,14 +127,13 @@ const MUTATION_REGISTER_CLIENT = `mutation(
       token
     }
   }
-  `
+  `;
 
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
 
 const AddAddress = ({ navigation }) => {
-    const { firstName, lastName, gender, age } =
-        useContext(AuthContext);
+    const { firstName, lastName, gender, age } = useContext(AuthContext);
     const [selectedState, setSelectedState] = useState();
     let [states, setStates] = useState();
     const [selectedRegion, setSelectedRegion] = useState();
@@ -156,7 +157,6 @@ const AddAddress = ({ navigation }) => {
                 const value = await AsyncStorage.getItem("user_token");
                 setUserToken(value);
                 setStates(await request(GET_STATE_QUERY, null, value));
-                setBranches(await request(GET_BRANCHES_QUERY, null, value));
                 setLoading(false);
             } catch (error) {
                 console.log(error);
@@ -232,6 +232,23 @@ const AddAddress = ({ navigation }) => {
         }
         fetchStreet();
     }, [selectedNeighborhood]);
+
+    useEffect(() => {
+        async function fetchBranches() {
+            try {
+                setBranches(
+                    await request(
+                        GET_BRANCHES_QUERY,
+                        { regionId: selectedRegion },
+                        userToken
+                    )
+                );
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        fetchBranches();
+    }, [selectedRegion]);
 
     return (
         <ScrollView
@@ -453,18 +470,27 @@ const AddAddress = ({ navigation }) => {
                             </View>
                             <Picker
                                 style={styles.pickerStyle}
-                                selectedValue={selectedArea}
+                                selectedValue={selectedBranch}
                                 onValueChange={(itemValue, itemIndex) =>
-                                    setSelectedArea(itemValue)
+                                    setSelectedBranch(itemValue)
                                 }
                             >
-                                {branches.branches.map((value) => (
+                                {branches ? (
                                     <Picker.Item
-                                        key={value.branchId}
-                                        label={value.branchName}
-                                        value={value.branchName}
+                                        key={
+                                            branches.regions[0].branch.branchId
+                                        }
+                                        label={
+                                            branches.regions[0].branch
+                                                .branchName
+                                        }
+                                        value={
+                                            branches.regions[0].branch.branchId
+                                        }
                                     />
-                                ))}
+                                ) : (
+                                    []
+                                )}
                             </Picker>
                         </View>
 
@@ -486,8 +512,26 @@ const AddAddress = ({ navigation }) => {
                                         },
                                         userToken
                                     );
-                                    // let registerClient = await request(MUTATION_REGISTER_CLIENT, {firstName: })
-                                    console.log(firstName, lastName, gender, age);
+                                    let registerClient = await request(
+                                        MUTATION_REGISTER_CLIENT,
+                                        {
+                                            firstName: firstName,
+                                            lastName: lastName,
+                                            age: age,
+                                            gender: gender,
+                                            secondContact: null,
+                                            branchId: selectedBranch,
+                                            addressId: addAddress.addAddress.data.address_id
+                                        },
+                                        userToken
+                                    );
+                                    console.log(firstName, lastName, age, gender, selectedBranch, addAddress.addAddress.data.address_id)
+                                    console.log(registerClient);
+                                    console.log(selectedState,
+                                        selectedRegion,
+                                        selectedNeighborhood,
+                                        selectedStreet,
+                                        selectedArea)
                                     // setUser('aaa')
                                 } catch (error) {
                                     console.log(error);

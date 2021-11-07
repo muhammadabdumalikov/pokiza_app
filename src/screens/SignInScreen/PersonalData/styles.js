@@ -46,11 +46,10 @@ export default StyleSheet.create({
         alignItems: "center",
         position: "relative",
         height: height * 0.55,
+        paddingVertical : 30
     },
     inputContainer: {
-        position: "absolute",
-        marginTop: 5,
-        marginBottom: 10,
+        flex: 1,
         width: "100%",
         height: height / 15,
         borderBottomColor: "#ccc",
@@ -59,9 +58,9 @@ export default StyleSheet.create({
         flexDirection: "row",
         alignItems: "center",
         backgroundColor: "#fff",
+        justifyContent: "space-between"
     },
     preTextWrapperStyle: {
-        padding: 10,
         height: "100%",
         justifyContent: "center",
         alignItems: "center",
@@ -69,6 +68,10 @@ export default StyleSheet.create({
     },
     preText: {
         fontSize: 16,
+    },
+    pickerStyle: {
+        height: 50,
+        width: "35%",
     },
     input: {
         width: "100%",
@@ -90,10 +93,8 @@ export default StyleSheet.create({
         borderWidth: 1,
     },
     forgotPassWrapper: {
+        flex: 1,
         width: 105,
-        position: "absolute",
-        bottom: height / 3.87,
-        right: width / 16.3,
     },
     forgotPass: {
         textDecorationLine: "underline",
@@ -103,11 +104,10 @@ export default StyleSheet.create({
         fontSize: 12,
     },
     sendCodeWrapper: {
-        position: "absolute",
-        bottom: height / 14,
         backgroundColor: "#007AFF",
         width: 344,
         height: 50,
+        marginTop: 30,
         justifyContent: "center",
         alignItems: "center",
         borderRadius: 10,

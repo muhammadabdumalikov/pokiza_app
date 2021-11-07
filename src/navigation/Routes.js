@@ -5,6 +5,7 @@ import { AuthContext } from "./AuthProvider";
 // import AppStack from "./AppStack";
 import AppStack from "./AppStack";
 import AuthStack from "./AuthStack";
+import PersonalData from "../screens/SignInScreen/PersonalData";
 
 export default Routes = () => {
     const { user, setUser } = useContext(AuthContext);
@@ -14,8 +15,8 @@ export default Routes = () => {
 
     return (
         <NavigationContainer>
-            {user ? <AppStack /> : <AuthStack />}
-            {/* <AppStack /> */}
+            {/* {user ? <AppStack /> : <AuthStack />} */}
+            <PersonalData/>
         </NavigationContainer>
     );
 };
