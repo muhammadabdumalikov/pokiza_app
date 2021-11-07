@@ -93,11 +93,45 @@ const GET_BRANCHES_QUERY = `{
     }
   }`;
 
+const MUTATION_ADD_ADDRESS = `mutation($stateId: ID! ,$regionId: ID!, $neighborhoodId: ID!, $streetId: ID!, $areaId: ID, $target: String, $homeNumber: Int){ 
+    addAddress (stateId: $stateId, regionId: $regionId, neighborhoodId: $neighborhoodId, streetId: $streetId, areaId: $areaId, target: $target, homeNumber: $homeNumber){
+      status
+      message
+      data
+    }
+  }`;
+
+const MUTATION_REGISTER_CLIENT = `mutation(
+    $firstName: String!
+    $lastName: String
+    $secondContact: String
+    $age: Int!
+    $gender: Int!
+    $branchId: ID!
+    $addressId: ID!
+  ) {
+    registerClient(
+      firstName: $firstName
+      lastName: $lastName
+      age: $age
+      gender: $gender
+      secondContact: $secondContact
+      branchId: $branchId
+      addressId: $addressId
+    ) {
+      status
+      message
+      data
+      token
+    }
+  }
+  `
+
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
 
 const AddAddress = ({ navigation }) => {
-    const { firstName, lastName, gender, age, setUser } =
+    const { firstName, lastName, gender, age } =
         useContext(AuthContext);
     const [selectedState, setSelectedState] = useState();
     let [states, setStates] = useState();
@@ -114,7 +148,7 @@ const AddAddress = ({ navigation }) => {
     let [isLoading, setLoading] = useState(true);
     let [userToken, setUserToken] = useState("");
     let target;
-    let homeNUmber;
+    let homeNumber;
 
     useEffect(() => {
         async function fetchData() {
@@ -205,7 +239,13 @@ const AddAddress = ({ navigation }) => {
             contentContainerStyle={styles.content}
         >
             {isLoading ? (
-                <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+                <View
+                    style={{
+                        flex: 1,
+                        justifyContent: "center",
+                        alignItems: "center",
+                    }}
+                >
                     <ActivityIndicator
                         size="large"
                         color="#00ff00"
@@ -394,7 +434,7 @@ const AddAddress = ({ navigation }) => {
                                 numberOfLines={1}
                                 placeholder="Enter your home number"
                                 placeholderTextColor="#B8B8BB"
-                                onChangeText={(value) => (homeNUmber = value)}
+                                onChangeText={(value) => (homeNumber = value)}
                                 keyboardType="default"
                                 // autoFocus={true}
                                 maxLength={9}
@@ -432,19 +472,22 @@ const AddAddress = ({ navigation }) => {
                             style={styles.sendCodeWrapper}
                             onPress={async () => {
                                 try {
-                                    // let data = request(ADDRESS_QUERY, {
-                                    //     firstName: firstName,
-                                    //     lastName: lastName,
-                                    //     age: age,
-                                    //     gender: gender,
-                                    //     selected,
-                                    // });
-                                    let states = await request(
-                                        GET_STATE_QUERY,
-                                        null,
+                                    let addAddress = await request(
+                                        MUTATION_ADD_ADDRESS,
+                                        {
+                                            stateId: selectedState,
+                                            regionId: selectedRegion,
+                                            neighborhoodId:
+                                                selectedNeighborhood,
+                                            streetId: selectedStreet,
+                                            areaId: selectedArea,
+                                            target: target,
+                                            homeNumber: homeNumber,
+                                        },
                                         userToken
                                     );
-                                    console.log(states, userToken);
+                                    // let registerClient = await request(MUTATION_REGISTER_CLIENT, {firstName: })
+                                    console.log(firstName, lastName, gender, age);
                                     // setUser('aaa')
                                 } catch (error) {
                                     console.log(error);

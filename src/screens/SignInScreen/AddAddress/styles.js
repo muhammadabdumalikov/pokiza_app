@@ -105,7 +105,7 @@ export default StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         borderRadius: 10,
-        marginTop: 47
+        marginTop: 30
     },
     sendCodeText: {
         color: "#fff",
