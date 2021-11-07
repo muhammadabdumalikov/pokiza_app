@@ -18,7 +18,7 @@ const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
 
 const PersonalData = ({ navigation }) => {
-    const { age, setAge, gender, setGender } = useContext(AuthContext);
+    const { age, setAge, gender, setGender, setFirstName, setLastName } = useContext(AuthContext);
     const [selectedFirstname, setSelectedFirstname] = useState("");
     const [selectedLastname, setSelectedLastname] = useState("");
     const [selectedGender, setSelectedGender] = useState("male")
@@ -137,6 +137,8 @@ const PersonalData = ({ navigation }) => {
                             selectedFirstname &&
                             selectedLastname
                         ) {
+                            setFirstName(selectedFirstname)
+                            setLastName(selectedLastname)
                             navigation.navigate("AddAddress");
                         }
                     }}
