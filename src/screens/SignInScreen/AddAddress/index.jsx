@@ -193,6 +193,7 @@ const AddAddress = ({ navigation }) => {
                         userToken
                     )
                 );
+                console.log(street)
             } catch (error) {
                 console.log(error);
             }

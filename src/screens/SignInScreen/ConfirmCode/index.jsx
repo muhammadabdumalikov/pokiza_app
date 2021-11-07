@@ -114,6 +114,7 @@ const ConfirmCode = ({ navigation }) => {
                         backgroundColor:
                             value.length < 4 ? "#AAADB0" : "#007AFF",
                     }}
+                    disabled={value.length < 4 ? true : false}
                     onPress={handleSubmit}
                 >
                     <Text style={styles.sendCodeText}>Confirm</Text>
