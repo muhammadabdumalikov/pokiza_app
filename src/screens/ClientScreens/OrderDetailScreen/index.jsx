@@ -1,6 +1,6 @@
 import React from "react";
 import { View, Text, ScrollView, TouchableOpacity, Image } from "react-native";
-import { MaterialIcons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 
 import { styles } from "./styles";
 
@@ -204,8 +204,11 @@ const OrderDetailScreen = ({ navigation, route }) => {
                     </View>
                 </View>
             </ScrollView>
-            <TouchableOpacity style={styles.fab}>
-                <MaterialIcons name="add" size={32} color="white" />
+            <TouchableOpacity
+                style={styles.fab}
+                onPress={() => navigation.goBack()}
+            >
+                <Ionicons name="ios-arrow-back" size={28} color="white" />
             </TouchableOpacity>
         </View>
     );

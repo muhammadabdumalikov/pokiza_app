@@ -2,7 +2,6 @@ import React, { useContext, useState, useEffect } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { AuthContext } from "./AuthProvider";
 
-// import AppStack from "./AppStack";
 import AppStack from "./AppStack";
 import AuthStack from "./AuthStack";
 import PersonalData from "../screens/SignInScreen/PersonalData";
@@ -16,7 +15,8 @@ export default Routes = () => {
     return (
         <NavigationContainer>
             {/* {user ? <AppStack /> : <AuthStack />} */}
-            <PersonalData/>
+            {/* <PersonalData/> */}
+            <AppStack />
         </NavigationContainer>
     );
 };
