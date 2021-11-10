@@ -19,7 +19,6 @@ const GET_ORDERS = gql`
 
 const OrderScreen = ({navigation}) => {
     // const [getOrders, {data, loading, error}] = useLazyQuery(GET_ORDERS);
-    const { data, loading, error } = useQuery(GET_ORDERS)
     // const [data, setData] = useState()
 
     // useEffect(() => {
@@ -40,7 +39,6 @@ const OrderScreen = ({navigation}) => {
     //     console.log(data, error);
     // }, [data]);
 
-    console.log(data)
     
     return (
         // Orders with scrollable view ------------------------------------
