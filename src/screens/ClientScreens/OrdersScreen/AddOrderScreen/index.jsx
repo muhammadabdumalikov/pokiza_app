@@ -398,7 +398,7 @@ const AddOrderScreen = ({ navigation }) => {
                         </View>
                         <View style={styles.dateAddInfoWrapper}>
                             <Text style={styles.dateAddInfo}>
-                                Haydovchi qachon kelishini xohlaysiz?
+                               <Text style={styles.attention}>*</Text> Haydovchi qachon kelishini xohlaysiz?
                             </Text>
                         </View>
                         <View style={styles.dateInfoBox}>

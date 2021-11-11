@@ -25,7 +25,7 @@ const styles = StyleSheet.create({
         padding: 15,
         borderWidth: 1,
         borderRadius: 10,
-        borderColor: "gray"
+        borderColor: "gray",
     },
     inputContainer: {
         flex: 1,
@@ -52,13 +52,17 @@ const styles = StyleSheet.create({
         borderRadius: 10,
         borderColor: "gray",
         marginTop: 10,
-        marginBottom: 10
+        marginBottom: 10,
     },
-    dateAddInfoWrapper:{
-        marginBottom: 10
+    dateAddInfoWrapper: {
+        marginBottom: 10,
     },
     dateAddInfo: {
-        fontSize: 10
+        fontSize: 11,
+    },
+    attention: {
+        color: "red",
+        fontSize: 14,
     },
     dateInfoBox: {
         flex: 2,
