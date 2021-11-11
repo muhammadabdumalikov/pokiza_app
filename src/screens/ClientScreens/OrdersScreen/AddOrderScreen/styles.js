@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
     contentStyle: {
         padding: 16,
         paddingBottom: 100,
-        height: height
+        height: height,
     },
     infoBox: {
         flex: 2,
@@ -31,8 +31,17 @@ const styles = StyleSheet.create({
         borderBottomWidth: 0.5,
         borderBottomColor: "gray",
     },
+    preTextWrapperStyle: {
+        flex: 1,
+        height: "100%",
+        justifyContent: "center",
+        width: width * 0.3,
+    },
+    preText: {
+        fontSize: 16,
+    },
     tariffBox: {
-        flex: 2 ,
+        flex: 2,
         paddingBottom: 20,
         paddingTop: 20,
     },
@@ -41,7 +50,7 @@ const styles = StyleSheet.create({
         paddingBottom: 20,
         paddingTop: 20,
         borderTopColor: "gray",
-        borderTopWidth: .9,
+        borderTopWidth: 0.9,
     },
     sendCodeWrapper: {
         backgroundColor: "#2196F3",
@@ -76,10 +85,10 @@ const styles = StyleSheet.create({
         shadowRadius: 4,
         elevation: 5,
         overflow: "hidden",
-        marginBottom: 10 
+        marginBottom: 10,
     },
-    genderModalWrapper:{
-        height: "15%"
+    genderModalWrapper: {
+        height: "15%",
     },
     contenModalView: {
         flex: 1,
@@ -87,11 +96,11 @@ const styles = StyleSheet.create({
     },
     modalView: {
         padding: 16,
-        alignItems: "center", 
+        alignItems: "center",
     },
     buttonOpen: {
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
     },
     buttonClose: {
         backgroundColor: "#2196F3",
@@ -103,14 +112,14 @@ const styles = StyleSheet.create({
         elevation: 2,
     },
     textStyle: {
-        color: 'gray',
+        color: "gray",
         textAlign: "center",
     },
     modalText: {
         textAlign: "center",
     },
     hideModalButton: {
-        color: "white"
+        color: "white",
     },
     fab: {
         width: 64,
