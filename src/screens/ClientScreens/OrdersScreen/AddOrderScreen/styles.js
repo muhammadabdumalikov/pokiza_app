@@ -21,13 +21,12 @@ const styles = StyleSheet.create({
     infoBox: {
         flex: 2,
         backgroundColor: "red",
-       
     },
     inputContainer: {
         flex: 1,
         width: "100%",
         flexDirection: "row",
-        justifyContent: "space-around",
+        justifyContent: "space-between",
         alignItems: "center",
         borderBottomWidth: 0.5,
         borderBottomColor: "gray",
@@ -56,6 +55,62 @@ const styles = StyleSheet.create({
     sendCodeText: {
         color: "#fff",
         fontSize: 17,
+    },
+    centeredView: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: 22,
+    },
+    modalWrapper: {
+        width: "70%",
+        height: "30%",
+        shadowColor: "#000",
+        borderRadius: 20,
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        backgroundColor: "white",
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+        overflow: "hidden",
+        marginBottom: 10 
+    },
+    genderModalWrapper:{
+        height: "15%"
+    },
+    contenModalView: {
+        flex: 1,
+        height: "100%",
+    },
+    modalView: {
+        padding: 16,
+        alignItems: "center", 
+    },
+    buttonOpen: {
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    buttonClose: {
+        backgroundColor: "#2196F3",
+        height: 30,
+        width: "33%",
+        alignItems: "center",
+        justifyContent: "center",
+        borderRadius: 15,
+        elevation: 2,
+    },
+    textStyle: {
+        color: 'gray',
+        textAlign: "center",
+    },
+    modalText: {
+        textAlign: "center",
+    },
+    hideModalButton: {
+        color: "white"
     },
     fab: {
         width: 64,
