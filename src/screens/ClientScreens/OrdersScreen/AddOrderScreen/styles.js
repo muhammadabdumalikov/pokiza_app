@@ -6,14 +6,18 @@ const height = Dimensions.get("window").height;
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        width: width,
         height: "100%",
         backgroundColor: "#fff",
     },
     contentStyle: {
         alignItems: "center",
         padding: 16,
-        height: "100%",
+        // height: "100%",
+    },
+    informationBox: {
+        flex: 2,
+        width: "100%",
+        backgroundColor: "red"
     },
     inputContainer: {
         flex: 1,
