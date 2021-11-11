@@ -18,7 +18,7 @@ const AddOrderScreen = ({ navigation }) => {
                 contentContainerStyle={styles.contentStyle}
                 showsVerticalScrollIndicator={false}
             >
-                <View styles={styles.dateInfoBox}>
+                <View styles={styles.infoBox}>
                     <View style={styles.inputContainer}>
                         <Text>1</Text>
                         <TextInput placeholder="Abdujalilov Abdulaziz"/>
