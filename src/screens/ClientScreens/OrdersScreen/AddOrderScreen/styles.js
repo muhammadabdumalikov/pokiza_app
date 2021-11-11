@@ -15,27 +15,35 @@ const styles = StyleSheet.create({
     },
     contentStyle: {
         padding: 16,
-        paddingBottom: 100
+        paddingBottom: 100,
+        height: height
     },
-    informationBox: {
-        flex: 2,
+    infoBox: {
+        height: "50%",
         backgroundColor: "red",
+        paddingBottom: 20,
+        paddingTop: 20,
     },
     inputContainer: {
-        height: 100,
+        flex: 1,
         width: "100%",
         flexDirection: "row",
-        justifyContent: "center",
+        justifyContent: "space-around",
         alignItems: "center",
         borderBottomWidth: 0.5,
         borderBottomColor: "gray",
     },
     tariffBox: {
-        flex: 1,
+        height: "25%",
         borderBottomColor: "gray",
         borderBottomWidth: 1,
         borderTopColor: "gray",
         borderTopWidth: 1,
+        paddingBottom: 20,
+        paddingTop: 20,
+    },
+    dateInfoBox: {
+        height: "25%",
         paddingBottom: 20,
         paddingTop: 20,
     },

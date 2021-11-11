@@ -18,10 +18,10 @@ const AddOrderScreen = ({ navigation }) => {
                 contentContainerStyle={styles.contentStyle}
                 showsVerticalScrollIndicator={false}
             >
-                <View styles={styles.informationBox}>
+                <View styles={styles.dateInfoBox}>
                     <View style={styles.inputContainer}>
                         <Text>1</Text>
-                        <TextInput />
+                        <TextInput placeholder="Abdujalilov Abdulaziz"/>
                     </View>
                     <View style={styles.inputContainer}>
                         <Text>1</Text>
@@ -42,6 +42,17 @@ const AddOrderScreen = ({ navigation }) => {
                 </View>
 
                 <View style={styles.tariffBox}>
+                    <View style={styles.inputContainer}>
+                        <Text>1</Text>
+                        <TextInput />
+                    </View>
+                    <View style={styles.inputContainer}>
+                        <Text>1</Text>
+                        <TextInput />
+                    </View>
+                </View>
+
+                <View style={styles.dateInfoBox}>
                     <View style={styles.inputContainer}>
                         <Text>1</Text>
                         <TextInput />
