@@ -1,16 +1,72 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
     View,
     Text,
     ScrollView,
     TextInput,
     TouchableOpacity,
+    Modal
 } from "react-native";
 import { MaterialIcons, Ionicons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import styles from "./styles";
 
 const AddOrderScreen = ({ navigation }) => {
+    const [selectedState, setSelectedState] = useState();
+    let [states, setStates] = useState();
+    const [selectedRegion, setSelectedRegion] = useState();
+    let [regions, setRegions] = useState();
+    let [isLoading, setLoading] = useState(true);
+
+    const GET_STATE_QUERY = `{
+        states {
+          stateId
+          stateName
+        }
+      }`;
+
+    const GET_REGION_QUERY = `
+    query($stateId: ID!){
+        regions(stateId: $stateId){
+          regionId
+          regionName
+        }
+      }`;
+
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const value = await AsyncStorage.getItem("user_token");
+                setUserToken(value);
+                setClients(await request(ALL_CLIENTS_QUERY, null, value));
+                setStates(await request(GET_STATE_QUERY, null, value));
+                setLoading(false);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        fetchData();
+    }, []);
+
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                setRegions(
+                    await request(
+                        GET_REGION_QUERY,
+                        { stateId: selectedState.stateId },
+                        userToken
+                    )
+                );
+                setSelectedRegion(null);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        fetchData();
+    }, [selectedState]);
+
     const modalState = ({ item }) => {
         return (
             <TouchableOpacity
