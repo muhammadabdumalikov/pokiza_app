@@ -9,48 +9,33 @@ const styles = StyleSheet.create({
     },
     container: {
         flex: 1,
+        width: width,
         height: "100%",
         backgroundColor: "#fff",
     },
     contentStyle: {
-        alignItems: "center",
         padding: 16,
-        // height: "100%",
     },
     informationBox: {
         flex: 2,
-        width: "100%",
-        backgroundColor: "red"
+        backgroundColor: "red",
     },
     inputContainer: {
-        flex: 1,
+        height: 100,
         width: "100%",
         justifyContent: "center",
         alignItems: "center",
-        borderBottomWidth: .9,
-        borderBottomColor: "gray"
+        borderBottomWidth: 0.5,
+        borderBottomColor: "gray",
     },
-    orderBox: {
-        height: height / 6.94,
-        width: width / 1.09,
-        paddingHorizontal: 24,
-        paddingVertical: 14,
-        borderRadius: 10,
-        justifyContent: "space-between",
-        marginBottom: 16,
-        backgroundColor: "#F4F4F5",
-        overflow: "hidden",
-    },
-    orderNumber: {
-        flexDirection: "row",
-        justifyContent: "space-between",
-    },
-    orderNumberStyle: {
-        fontWeight: "bold",
-        fontSize: 18,
-    },
-    orderNumberAbout: {
-        fontSize: 12,
+    tariffBox: {
+        flex: 1,
+        borderBottomColor: "gray",
+        borderBottomWidth: 1,
+        borderTopColor: "gray",
+        borderTopWidth:1,
+        paddingBottom: 20,
+        paddingTop: 20
     },
     fab: {
         width: 64,

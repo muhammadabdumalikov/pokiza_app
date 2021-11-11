@@ -40,6 +40,17 @@ const AddOrderScreen = ({ navigation }) => {
                         <TextInput />
                     </View>
                 </View>
+
+                <View style={styles.tariffBox}>
+                    <View style={styles.inputContainer}>
+                        <Text>1</Text>
+                        <TextInput />
+                    </View>
+                    <View style={styles.inputContainer}>
+                        <Text>1</Text>
+                        <TextInput />
+                    </View>
+                </View>
             </ScrollView>
             <TouchableOpacity
                 style={styles.fab}
