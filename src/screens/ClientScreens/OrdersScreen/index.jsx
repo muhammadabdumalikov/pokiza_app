@@ -90,7 +90,7 @@ const OrderScreen = ({navigation}) => {
                     <Text style={styles.orderNumberAbout}>#10293</Text>
                 </View>
             </View>
-            <TouchableOpacity style={styles.fab}>
+            <TouchableOpacity style={styles.fab} onPress={()=> navigation.navigate("AddOrderScreen", {id: "ID: #329304"})}>
                 <MaterialIcons name="add" size={32} color="white" />
             </TouchableOpacity>
         </ScrollView>
