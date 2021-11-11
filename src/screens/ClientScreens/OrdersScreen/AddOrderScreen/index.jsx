@@ -18,10 +18,17 @@ const AddOrderScreen = ({ navigation }) => {
                 contentContainerStyle={styles.contentStyle}
                 showsVerticalScrollIndicator={false}
             >
-                <View styles={styles.infoBox}>
+                <View
+                    style={{
+                        flex: 6,
+                        borderBottomColor: "gray",
+                        borderBottomWidth: .9,
+                        paddingBottom: 20
+                    }}
+                >
                     <View style={styles.inputContainer}>
                         <Text>1</Text>
-                        <TextInput placeholder="Abdujalilov Abdulaziz"/>
+                        <TextInput />
                     </View>
                     <View style={styles.inputContainer}>
                         <Text>1</Text>

@@ -21,10 +21,10 @@ const styles = StyleSheet.create({
     infoBox: {
         flex: 2,
         backgroundColor: "red",
-        borderBottomColor: "gray",
-        borderBottomWidth: 1,
+       
     },
     inputContainer: {
+        flex: 1,
         width: "100%",
         flexDirection: "row",
         justifyContent: "space-around",
@@ -33,16 +33,16 @@ const styles = StyleSheet.create({
         borderBottomColor: "gray",
     },
     tariffBox: {
-        flex: 1,
+        flex: 2 ,
         paddingBottom: 20,
         paddingTop: 20,
     },
     dateInfoBox: {
-        flex: 1,
+        flex: 2,
         paddingBottom: 20,
         paddingTop: 20,
         borderTopColor: "gray",
-        borderTopWidth: 1,
+        borderTopWidth: .9,
     },
     sendCodeWrapper: {
         backgroundColor: "#2196F3",
