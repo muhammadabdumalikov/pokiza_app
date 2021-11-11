@@ -54,6 +54,12 @@ const styles = StyleSheet.create({
         marginTop: 10,
         marginBottom: 10
     },
+    dateAddInfoWrapper:{
+        marginBottom: 10
+    },
+    dateAddInfo: {
+        fontSize: 10
+    },
     dateInfoBox: {
         flex: 2,
         padding: 15,

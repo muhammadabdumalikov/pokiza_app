@@ -396,12 +396,14 @@ const AddOrderScreen = ({ navigation }) => {
                                 <TextInput />
                             </View>
                         </View>
-
+                        <View style={styles.dateAddInfoWrapper}>
+                            <Text style={styles.dateAddInfo}>
+                                Haydovchi qachon kelishini xohlaysiz?
+                            </Text>
+                        </View>
                         <View style={styles.dateInfoBox}>
                             <View style={styles.inputContainer}>
-                                <Text style={styles.preText}>
-                                    Sana:
-                                </Text>
+                                <Text style={styles.preText}>Sana:</Text>
                                 <TextInput />
                             </View>
                             <View
@@ -410,9 +412,7 @@ const AddOrderScreen = ({ navigation }) => {
                                     borderBottomWidth: 0,
                                 }}
                             >
-                                <Text style={styles.preText}>
-                                    Soat:
-                                </Text>
+                                <Text style={styles.preText}>Soat:</Text>
                                 <TextInput />
                             </View>
                         </View>
