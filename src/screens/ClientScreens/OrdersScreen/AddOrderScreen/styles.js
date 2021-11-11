@@ -19,8 +19,13 @@ const styles = StyleSheet.create({
         height: height,
     },
     infoBox: {
-        flex: 2,
-        backgroundColor: "red",
+        flex: 6,
+        borderBottomColor: "gray",
+        borderBottomWidth: 0.9,
+        padding: 15,
+        borderWidth: 1,
+        borderRadius: 10,
+        borderColor: "gray"
     },
     inputContainer: {
         flex: 1,
@@ -42,15 +47,19 @@ const styles = StyleSheet.create({
     },
     tariffBox: {
         flex: 2,
-        paddingBottom: 20,
-        paddingTop: 20,
+        padding: 15,
+        borderWidth: 1,
+        borderRadius: 10,
+        borderColor: "gray",
+        marginTop: 10,
+        marginBottom: 10
     },
     dateInfoBox: {
         flex: 2,
-        paddingBottom: 20,
-        paddingTop: 20,
-        borderTopColor: "gray",
-        borderTopWidth: 0.9,
+        padding: 15,
+        borderWidth: 1,
+        borderRadius: 10,
+        borderColor: "gray",
     },
     sendCodeWrapper: {
         backgroundColor: "#2196F3",

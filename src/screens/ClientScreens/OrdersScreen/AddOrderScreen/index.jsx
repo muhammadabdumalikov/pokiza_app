@@ -135,7 +135,7 @@ const AddOrderScreen = ({ navigation }) => {
     };
 
     const modalArea = ({ item }) => {
-        console.log(item)
+        console.log(item);
 
         return (
             <TouchableOpacity
@@ -174,14 +174,7 @@ const AddOrderScreen = ({ navigation }) => {
                         contentContainerStyle={styles.contentStyle}
                         showsVerticalScrollIndicator={false}
                     >
-                        <View
-                            style={{
-                                flex: 6,
-                                borderBottomColor: "gray",
-                                borderBottomWidth: 0.9,
-                                paddingBottom: 20,
-                            }}
-                        >
+                        <View style={styles.infoBox}>
                             <View style={styles.inputContainer}>
                                 <Text style={styles.preText}>Ism:</Text>
                                 <TextInput placeholder="Abdujalilov Abdulaziz" />
@@ -192,7 +185,7 @@ const AddOrderScreen = ({ navigation }) => {
                             </View>
                             <View style={styles.inputContainer}>
                                 <View style={styles.preTextWrapperStyle}>
-                                    <Text style={styles.preText}>Viloyat</Text>
+                                    <Text style={styles.preText}>Viloyat:</Text>
                                 </View>
                                 <Modal
                                     animationType="slide"
@@ -247,13 +240,13 @@ const AddOrderScreen = ({ navigation }) => {
                                     <Text style={styles.textStyle}>
                                         {selectedState != undefined
                                             ? selectedState.stateName
-                                            : "Viloyatni kiriting"}
+                                            : "Viloyatni tanlang"}
                                     </Text>
                                 </Pressable>
                             </View>
                             <View style={styles.inputContainer}>
                                 <View style={styles.preTextWrapperStyle}>
-                                    <Text style={styles.preText}>Tuman</Text>
+                                    <Text style={styles.preText}>Tuman:</Text>
                                 </View>
                                 <Modal
                                     animationType="slide"
@@ -312,22 +305,25 @@ const AddOrderScreen = ({ navigation }) => {
                                     <Text style={styles.textStyle}>
                                         {selectedRegion != undefined
                                             ? selectedRegion.regionName
-                                            : "Tumanni kiriting"}
+                                            : "Tumanni tanlang"}
                                     </Text>
                                 </Pressable>
                             </View>
-                            <View style={styles.inputContainer}>
+                            <View
+                                style={{
+                                    ...styles.inputContainer,
+                                    borderBottomWidth: 0,
+                                }}
+                            >
                                 <View style={styles.preTextWrapperStyle}>
-                                    <Text style={styles.preText}>Hudud</Text>
+                                    <Text style={styles.preText}>Hudud:</Text>
                                 </View>
                                 <Modal
                                     animationType="slide"
                                     transparent={true}
                                     visible={areaModalVisible}
                                     onRequestClose={() => {
-                                        setAreaModalVisible(
-                                            !areaModalVisible
-                                        );
+                                        setAreaModalVisible(!areaModalVisible);
                                     }}
                                 >
                                     <View style={styles.centeredView}>
@@ -377,7 +373,7 @@ const AddOrderScreen = ({ navigation }) => {
                                     <Text style={styles.textStyle}>
                                         {selectedArea != undefined
                                             ? selectedArea.areaName
-                                            : "Hududni kiriting"}
+                                            : "Hududni tanlang"}
                                     </Text>
                                 </Pressable>
                             </View>
@@ -385,22 +381,38 @@ const AddOrderScreen = ({ navigation }) => {
 
                         <View style={styles.tariffBox}>
                             <View style={styles.inputContainer}>
-                                <Text>1</Text>
+                                <Text style={styles.preText}>Tariff:</Text>
                                 <TextInput />
                             </View>
-                            <View style={styles.inputContainer}>
-                                <Text>1</Text>
+                            <View
+                                style={{
+                                    ...styles.inputContainer,
+                                    borderBottomWidth: 0,
+                                }}
+                            >
+                                <Text style={styles.preText}>
+                                    Zaxira telefoni:
+                                </Text>
                                 <TextInput />
                             </View>
                         </View>
 
                         <View style={styles.dateInfoBox}>
                             <View style={styles.inputContainer}>
-                                <Text>1</Text>
+                                <Text style={styles.preText}>
+                                    Sana:
+                                </Text>
                                 <TextInput />
                             </View>
-                            <View style={styles.inputContainer}>
-                                <Text>1</Text>
+                            <View
+                                style={{
+                                    ...styles.inputContainer,
+                                    borderBottomWidth: 0,
+                                }}
+                            >
+                                <Text style={styles.preText}>
+                                    Soat:
+                                </Text>
                                 <TextInput />
                             </View>
                         </View>
