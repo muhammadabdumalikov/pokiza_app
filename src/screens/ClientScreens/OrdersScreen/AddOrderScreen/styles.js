@@ -4,6 +4,9 @@ const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
 
 const styles = StyleSheet.create({
+    containerWrapper: {
+        flex: 1,
+    },
     container: {
         flex: 1,
         height: "100%",
