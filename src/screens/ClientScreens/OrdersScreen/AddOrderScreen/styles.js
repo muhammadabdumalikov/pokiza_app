@@ -15,6 +15,7 @@ const styles = StyleSheet.create({
     },
     contentStyle: {
         padding: 16,
+        paddingBottom: 100
     },
     informationBox: {
         flex: 2,
@@ -23,6 +24,7 @@ const styles = StyleSheet.create({
     inputContainer: {
         height: 100,
         width: "100%",
+        flexDirection: "row",
         justifyContent: "center",
         alignItems: "center",
         borderBottomWidth: 0.5,
@@ -33,9 +35,22 @@ const styles = StyleSheet.create({
         borderBottomColor: "gray",
         borderBottomWidth: 1,
         borderTopColor: "gray",
-        borderTopWidth:1,
+        borderTopWidth: 1,
         paddingBottom: 20,
-        paddingTop: 20
+        paddingTop: 20,
+    },
+    sendCodeWrapper: {
+        backgroundColor: "#2196F3",
+        width: 344,
+        height: 50,
+        justifyContent: "center",
+        alignItems: "center",
+        borderRadius: 10,
+        marginTop: 30,
+    },
+    sendCodeText: {
+        color: "#fff",
+        fontSize: 17,
     },
     fab: {
         width: 64,

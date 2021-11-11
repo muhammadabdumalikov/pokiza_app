@@ -51,6 +51,9 @@ const AddOrderScreen = ({ navigation }) => {
                         <TextInput />
                     </View>
                 </View>
+                <TouchableOpacity style={styles.sendCodeWrapper}>
+                    <Text style={styles.sendCodeText}>Buyurtma berish</Text>
+                </TouchableOpacity>
             </ScrollView>
             <TouchableOpacity
                 style={styles.fab}
