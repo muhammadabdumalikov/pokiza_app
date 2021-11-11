@@ -5,7 +5,7 @@ import {
     ScrollView,
     TextInput,
     TouchableOpacity,
-    Modal
+    Modal,
 } from "react-native";
 import { MaterialIcons, Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -18,6 +18,10 @@ const AddOrderScreen = ({ navigation }) => {
     const [selectedRegion, setSelectedRegion] = useState();
     let [regions, setRegions] = useState();
     let [isLoading, setLoading] = useState(true);
+    let [userToken, setUserToken] = useState();
+
+    const [stateModalVisible, setStateModalVisible] = useState(false);
+    const [regionModalVisible, setRegionModalVisible] = useState(false);
 
     const GET_STATE_QUERY = `{
         states {
