@@ -4,6 +4,9 @@ const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
 
 export const styles = StyleSheet.create({
+    containerWrapper: {
+        flex: 1,
+    },
     container: {
         flex: 1,
         width: width,
@@ -13,7 +16,6 @@ export const styles = StyleSheet.create({
     contentStyle: {
         alignItems: "center",
         padding: 16,
-        height: "100%"
     },
     orderBox: {
         height: height / 6.94,

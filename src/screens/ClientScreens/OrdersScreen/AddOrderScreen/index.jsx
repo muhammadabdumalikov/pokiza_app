@@ -10,32 +10,34 @@ import { MaterialIcons, Ionicons } from "@expo/vector-icons";
 
 import styles from "./styles";
 
-const AddOrderScreen = ({navigation}) => {
+const AddOrderScreen = ({ navigation }) => {
     return (
         <ScrollView
             style={styles.container}
             contentContainerStyle={styles.contentStyle}
             showsVerticalScrollIndicator={false}
         >
-            <View style={styles.inputContainer}>
-                <Text>1</Text>
-                <TextInput />
-            </View>
-            <View style={styles.inputContainer}>
-                <Text>1</Text>
-                <TextInput />
-            </View>
-            <View style={styles.inputContainer}>
-                <Text>1</Text>
-                <TextInput />
-            </View>
-            <View style={styles.inputContainer}>
-                <Text>1</Text>
-                <TextInput />
-            </View>
-            <View style={styles.inputContainer}>
-                <Text>1</Text>
-                <TextInput />
+            <View styles={styles.informationBox}>
+                <View style={styles.inputContainer}>
+                    <Text>1</Text>
+                    <TextInput />
+                </View>
+                <View style={styles.inputContainer}>
+                    <Text>1</Text>
+                    <TextInput />
+                </View>
+                <View style={styles.inputContainer}>
+                    <Text>1</Text>
+                    <TextInput />
+                </View>
+                <View style={styles.inputContainer}>
+                    <Text>1</Text>
+                    <TextInput />
+                </View>
+                <View style={styles.inputContainer}>
+                    <Text>1</Text>
+                    <TextInput />
+                </View>
             </View>
             <TouchableOpacity
                 style={styles.fab}
