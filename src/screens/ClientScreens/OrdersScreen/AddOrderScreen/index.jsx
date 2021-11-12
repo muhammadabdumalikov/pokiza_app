@@ -181,7 +181,11 @@ const AddOrderScreen = ({ navigation }) => {
                         <View style={styles.infoBox}>
                             <View style={styles.inputContainer}>
                                 <Text style={styles.preText}>Ism:</Text>
-                                <TextInput placeholder="Abdujalilov Abdulaziz" />
+                                <TextInput placeholder="Abdulaziz" />
+                            </View>
+                            <View style={styles.inputContainer}>
+                                <Text style={styles.preText}>Familiya:</Text>
+                                <TextInput placeholder="Abdujalilov" />
                             </View>
                             <View style={styles.inputContainer}>
                                 <Text style={styles.preText}>Telefon:</Text>
