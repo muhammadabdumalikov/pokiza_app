@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import { MaterialIcons, Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 import styles from "./styles";
 import { request } from "../../../../helpers/request";
@@ -26,6 +27,11 @@ const AddOrderScreen = ({ navigation }) => {
     let [isLoading, setLoading] = useState(true);
     let [userToken, setUserToken] = useState();
 
+    let [selectedDate, setSelectedDate] = useState(
+        new Date().toLocaleDateString()
+    );
+
+    const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
     const [stateModalVisible, setStateModalVisible] = useState(false);
     const [regionModalVisible, setRegionModalVisible] = useState(false);
     const [areaModalVisible, setAreaModalVisible] = useState(false);
@@ -135,8 +141,6 @@ const AddOrderScreen = ({ navigation }) => {
     };
 
     const modalArea = ({ item }) => {
-        console.log(item);
-
         return (
             <TouchableOpacity
                 style={{ width: "80%", paddingVertical: 15 }}
@@ -398,25 +402,55 @@ const AddOrderScreen = ({ navigation }) => {
                         </View>
                         <View style={styles.dateAddInfoWrapper}>
                             <Text style={styles.dateAddInfo}>
-                               <Text style={styles.attention}>*</Text> Haydovchi qachon kelishini xohlaysiz?
+                                <Text style={styles.attention}>*</Text>{" "}
+                                Haydovchi qachon kelishini xohlaysiz?
                             </Text>
                         </View>
                         <View style={styles.dateInfoBox}>
-                            <View style={styles.inputContainer}>
-                                <Text style={styles.preText}>Sana:</Text>
-                                <TextInput />
-                            </View>
                             <View
                                 style={{
                                     ...styles.inputContainer,
                                     borderBottomWidth: 0,
                                 }}
                             >
-                                <Text style={styles.preText}>Soat:</Text>
-                                <TextInput />
+                                <Text style={styles.preText}>Sana:</Text>
+                                <TouchableOpacity
+                                    onPress={() =>
+                                        setDatePickerVisibility(true)
+                                    }
+                                >
+                                    <Text
+                                        style={{
+                                            fontSize: 15,
+                                            color: "#2196F3",
+                                        }}
+                                    >
+                                        {selectedDate}
+                                    </Text>
+                                </TouchableOpacity>
                             </View>
+                            {/* Modal DatePickers -------------------------------------------- */}
+                            <DateTimePickerModal
+                                isVisible={isDatePickerVisible}
+                                mode="datetime"
+                                onCancel={() => setDatePickerVisibility(false)}
+                                onConfirm={(date) => {
+                                    setSelectedDate(date.toLocaleString());
+                                    setDatePickerVisibility(false);
+                                }}
+                            />
                         </View>
-                        <TouchableOpacity style={styles.sendCodeWrapper}>
+                        <TouchableOpacity
+                            style={styles.sendCodeWrapper}
+                            onPress={() => {
+                                console.log(
+                                    selectedState,
+                                    selectedRegion,
+                                    selectedArea,
+                                    selectedDate
+                                );
+                            }}
+                        >
                             <Text style={styles.sendCodeText}>
                                 Buyurtma berish
                             </Text>

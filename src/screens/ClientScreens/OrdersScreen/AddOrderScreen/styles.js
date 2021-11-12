@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
         fontSize: 14,
     },
     dateInfoBox: {
-        flex: 2,
+        flex: 1,
         padding: 15,
         borderWidth: 1,
         borderRadius: 10,
