@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
         height: height,
     },
     infoBox: {
-        flex: 6,
+        flex: 5,
         borderBottomColor: "gray",
         borderBottomWidth: 0.9,
         padding: 15,
@@ -46,8 +46,8 @@ const styles = StyleSheet.create({
         fontSize: 16,
     },
     tariffBox: {
-        flex: 2,
-        padding: 15,
+        flex: 1,
+        paddingHorizontal: 10,
         borderWidth: 1,
         borderRadius: 10,
         borderColor: "gray",
@@ -66,7 +66,7 @@ const styles = StyleSheet.create({
     },
     dateInfoBox: {
         flex: 1,
-        padding: 15,
+        paddingHorizontal: 10,
         borderWidth: 1,
         borderRadius: 10,
         borderColor: "gray",
@@ -106,7 +106,7 @@ const styles = StyleSheet.create({
         overflow: "hidden",
         marginBottom: 10,
     },
-    genderModalWrapper: {
+    tariffModalWrapper: {
         height: "15%",
     },
     contenModalView: {

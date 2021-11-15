@@ -31,10 +31,18 @@ const AddOrderScreen = ({ navigation }) => {
         new Date().toLocaleDateString()
     );
 
+    let [selectedTariff, setSelectedTariff] = useState();
+
     const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
     const [stateModalVisible, setStateModalVisible] = useState(false);
     const [regionModalVisible, setRegionModalVisible] = useState(false);
     const [areaModalVisible, setAreaModalVisible] = useState(false);
+    const [tariffModalVisible, setTariffModalVisible] = useState(false)
+
+    const tariffs = [
+        { id: "1", tariffName: "Tezkor" },
+        { id: "2", tariffName: "Oddiy" },
+    ];
 
     const GET_STATE_QUERY = `{
         states {
@@ -155,6 +163,21 @@ const AddOrderScreen = ({ navigation }) => {
             </TouchableOpacity>
         );
     };
+    const modalTariff = ({ item }) => {
+        return (
+            <TouchableOpacity
+                style={{ width: "80%", paddingVertical: 15 }}
+                onPress={() => {
+                    setSelectedTariff(item);
+                    setTariffModalVisible(!tariffModalVisible);
+                }}
+            >
+                <Text style={{ flex: 1, fontSize: 15, color: "#2196F3" }}>
+                    {item.tariffName}
+                </Text>
+            </TouchableOpacity>
+        );
+    };
     return (
         <>
             {isLoading ? (
@@ -186,10 +209,6 @@ const AddOrderScreen = ({ navigation }) => {
                             <View style={styles.inputContainer}>
                                 <Text style={styles.preText}>Familiya:</Text>
                                 <TextInput placeholder="Abdujalilov" />
-                            </View>
-                            <View style={styles.inputContainer}>
-                                <Text style={styles.preText}>Telefon:</Text>
-                                <TextInput placeholder="+99896084443" />
                             </View>
                             <View style={styles.inputContainer}>
                                 <View style={styles.preTextWrapperStyle}>
@@ -388,20 +407,64 @@ const AddOrderScreen = ({ navigation }) => {
                         </View>
 
                         <View style={styles.tariffBox}>
-                            <View style={styles.inputContainer}>
+                            <View style={{...styles.inputContainer, borderBottomWidth: 0}}>
                                 <Text style={styles.preText}>Tariff:</Text>
-                                <TextInput />
-                            </View>
-                            <View
-                                style={{
-                                    ...styles.inputContainer,
-                                    borderBottomWidth: 0,
-                                }}
-                            >
-                                <Text style={styles.preText}>
-                                    Zaxira telefoni:
-                                </Text>
-                                <TextInput />
+                                <Modal
+                                    animationType="slide"
+                                    transparent={true}
+                                    visible={tariffModalVisible}
+                                    onRequestClose={() => {
+                                        setTariffModalVisible(
+                                            !tariffModalVisible
+                                        );
+                                    }}
+                                >
+                                    <View style={styles.centeredView}>
+                                        <View style={[styles.modalWrapper, styles.tariffModalWrapper]}>
+                                            <FlatList
+                                                data={tariffs}
+                                                renderItem={modalTariff}
+                                                keyExtractor={(item) =>
+                                                    item.id
+                                                }
+                                                contentContainerStyle={
+                                                    styles.modalView
+                                                }
+                                                style={styles.contenModalView}
+                                                showsVerticalScrollIndicator={
+                                                    false
+                                                }
+                                            />
+                                        </View>
+                                        <Pressable
+                                            style={[
+                                                styles.button,
+                                                styles.buttonClose,
+                                            ]}
+                                            onPress={() =>
+                                                setTariffModalVisible(
+                                                    !tariffModalVisible
+                                                )
+                                            }
+                                        >
+                                            <Text
+                                                style={styles.hideModalButton}
+                                            >
+                                                Hide Modal
+                                            </Text>
+                                        </Pressable>
+                                    </View>
+                                </Modal>
+                                <Pressable
+                                    style={styles.buttonOpen}
+                                    onPress={() => setTariffModalVisible(true)}
+                                >
+                                    <Text style={styles.textStyle}>
+                                        {selectedTariff != undefined
+                                            ? selectedTariff.tariffName
+                                            : "Tariffni tanlang"}
+                                    </Text>
+                                </Pressable>
                             </View>
                         </View>
                         <View style={styles.dateAddInfoWrapper}>
