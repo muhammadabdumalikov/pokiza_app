@@ -8,6 +8,7 @@ import {
     TouchableOpacity,
     Dimensions,
     ActivityIndicator,
+    Image,
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -272,67 +273,79 @@ const AddAddress = ({ navigation }) => {
             ) : (
                 <View style={{ flex: 1 }}>
                     <View style={styles.logoBox}>
-                        <Text style={styles.signIn}>Tizimga kirish</Text>
+                        <Image
+                            source={require("../../../../assets/logo.png")}
+                            style={styles.logo}
+                            resizeMode="contain"
+                        />
+                        <View style={styles.signInWrapper}>
+                            <Text style={styles.signIn}>Tizimga kirish</Text>
+                            <Text style={styles.signInDescription}>
+                                Tizimga kirish uchun telefon raqamingizni
+                                kiriting.
+                            </Text>
+                        </View>
                     </View>
                     <View style={styles.personalDataBox}>
-                        {/* State input ------------------------------------ */}
-                        <View
-                            style={styles.inputContainer}
-                            behavior={
-                                Platform.OS === "ios" ? "padding" : "height"
-                            }
-                        >
-                            <View style={styles.preTextWrapperStyle}>
-                                <Text style={styles.preText}>Viloyat</Text>
-                            </View>
-                            <Picker
-                                style={styles.pickerStyle}
-                                selectedValue={selectedState}
-                                onValueChange={(itemValue, itemIndex) => {
-                                    setSelectedState(itemValue);
-                                }}
+                        <View style={styles.infoWrapper}>
+                            {/* State input ------------------------------------ */}
+                            <View
+                                style={styles.inputContainer}
+                                behavior={
+                                    Platform.OS === "ios" ? "padding" : "height"
+                                }
                             >
-                                {states.states.map((value) => (
-                                    <Picker.Item
-                                        key={value.stateId}
-                                        label={value.stateName}
-                                        value={value.stateId}
-                                    />
-                                ))}
-                            </Picker>
-                        </View>
-
-                        {/* Region input ------------------------------------------ */}
-                        <View
-                            style={styles.inputContainer}
-                            behavior={
-                                Platform.OS === "ios" ? "padding" : "height"
-                            }
-                        >
-                            <View style={styles.preTextWrapperStyle}>
-                                <Text style={styles.preText}>Tuman</Text>
+                                <View style={styles.preTextWrapperStyle}>
+                                    <Text style={styles.preText}>Viloyat</Text>
+                                </View>
+                                <Picker
+                                    style={styles.pickerStyle}
+                                    selectedValue={selectedState}
+                                    onValueChange={(itemValue, itemIndex) => {
+                                        setSelectedState(itemValue);
+                                    }}
+                                >
+                                    {states.states.map((value) => (
+                                        <Picker.Item
+                                            key={value.stateId}
+                                            label={value.stateName}
+                                            value={value.stateId}
+                                        />
+                                    ))}
+                                </Picker>
                             </View>
-                            <Picker
-                                style={styles.pickerStyle}
-                                selectedValue={selectedRegion}
-                                onValueChange={(itemValue, itemIndex) => {
-                                    setSelectedRegion(itemValue);
-                                }}
-                            >
-                                {regions
-                                    ? regions.regions.map((value) => (
-                                          <Picker.Item
-                                              key={value.regionId}
-                                              label={value.regionName}
-                                              value={value.regionId}
-                                          />
-                                      ))
-                                    : []}
-                            </Picker>
-                        </View>
 
-                        {/* Area input ------------------------------------------ */}
-                        <View
+                            {/* Region input ------------------------------------------ */}
+                            <View
+                                style={styles.inputContainer}
+                                behavior={
+                                    Platform.OS === "ios" ? "padding" : "height"
+                                }
+                            >
+                                <View style={styles.preTextWrapperStyle}>
+                                    <Text style={styles.preText}>Tuman</Text>
+                                </View>
+                                <Picker
+                                    style={styles.pickerStyle}
+                                    selectedValue={selectedRegion}
+                                    onValueChange={(itemValue, itemIndex) => {
+                                        setSelectedRegion(itemValue);
+                                    }}
+                                >
+                                    {regions
+                                        ? regions.regions.map((value) => (
+                                              <Picker.Item
+                                                  key={value.regionId}
+                                                  label={value.regionName}
+                                                  value={value.regionId}
+                                              />
+                                          ))
+                                        : []}
+                                </Picker>
+                            </View>
+
+                            {/* Area input ------------------------------------------ */}
+                            {/* <View
                             style={styles.inputContainer}
                             behavior={
                                 Platform.OS === "ios" ? "padding" : "height"
@@ -358,10 +371,10 @@ const AddAddress = ({ navigation }) => {
                                       ))
                                     : []}
                             </Picker>
-                        </View>
+                        </View> */}
 
-                        {/* Neighborhood input ------------------------------------------ */}
-                        <View
+                            {/* Neighborhood input ------------------------------------------ */}
+                            {/* <View
                             style={styles.inputContainer}
                             behavior={
                                 Platform.OS === "ios" ? "padding" : "height"
@@ -389,10 +402,10 @@ const AddAddress = ({ navigation }) => {
                                       )
                                     : []}
                             </Picker>
-                        </View>
+                        </View> */}
 
-                        {/* Street input ------------------------------------------ */}
-                        <View
+                            {/* Street input ------------------------------------------ */}
+                            {/* <View
                             style={styles.inputContainer}
                             behavior={
                                 Platform.OS === "ios" ? "padding" : "height"
@@ -418,10 +431,10 @@ const AddAddress = ({ navigation }) => {
                                       ))
                                     : []}
                             </Picker>
-                        </View>
+                        </View> */}
 
-                        {/* Target options --------------------------------------------- */}
-                        <View
+                            {/* Target options --------------------------------------------- */}
+                            {/* <View
                             style={styles.inputContainer}
                             behavior={
                                 Platform.OS === "ios" ? "padding" : "height"
@@ -437,10 +450,10 @@ const AddAddress = ({ navigation }) => {
                                 // autoFocus={true}
                                 maxLength={9}
                             />
-                        </View>
+                        </View> */}
 
-                        {/* Home Number input ----------------------------------------------------- */}
-                        <View
+                            {/* Home Number input ----------------------------------------------------- */}
+                            {/* <View
                             style={styles.inputContainer}
                             behavior={
                                 Platform.OS === "ios" ? "padding" : "height"
@@ -456,42 +469,46 @@ const AddAddress = ({ navigation }) => {
                                 // autoFocus={true}
                                 maxLength={9}
                             />
-                        </View>
+                        </View> */}
 
-                        {/* Branch input ----------------------------------------------- */}
-                        <View
-                            style={styles.inputContainer}
-                            behavior={
-                                Platform.OS === "ios" ? "padding" : "height"
-                            }
-                        >
-                            <View style={styles.preTextWrapperStyle}>
-                                <Text style={styles.preText}>Branch</Text>
-                            </View>
-                            <Picker
-                                style={styles.pickerStyle}
-                                selectedValue={selectedBranch}
-                                onValueChange={(itemValue, itemIndex) =>
-                                    setSelectedBranch(itemValue)
+                            {/* Branch input ----------------------------------------------- */}
+                            <View
+                                style={styles.inputContainer}
+                                behavior={
+                                    Platform.OS === "ios" ? "padding" : "height"
                                 }
                             >
-                                {branches ? (
-                                    <Picker.Item
-                                        key={
-                                            branches.regions[0].branch.branchId
-                                        }
-                                        label={
-                                            branches.regions[0].branch
-                                                .branchName
-                                        }
-                                        value={
-                                            branches.regions[0].branch.branchId
-                                        }
-                                    />
-                                ) : (
-                                    []
-                                )}
-                            </Picker>
+                                <View style={styles.preTextWrapperStyle}>
+                                    <Text style={styles.preText}>Branch</Text>
+                                </View>
+                                <Picker
+                                    style={styles.pickerStyle}
+                                    selectedValue={selectedBranch}
+                                    enabled={false}
+                                    onValueChange={(itemValue, itemIndex) =>
+                                        setSelectedBranch(itemValue)
+                                    }
+                                >
+                                    {branches ? (
+                                        <Picker.Item
+                                            key={
+                                                branches.regions[0].branch
+                                                    .branchId
+                                            }
+                                            label={
+                                                branches.regions[0].branch
+                                                    .branchName
+                                            }
+                                            value={
+                                                branches.regions[0].branch
+                                                    .branchId
+                                            }
+                                        />
+                                    ) : (
+                                        []
+                                    )}
+                                </Picker>
+                            </View>
                         </View>
 
                         <TouchableOpacity
@@ -521,17 +538,28 @@ const AddAddress = ({ navigation }) => {
                                             gender: gender,
                                             secondContact: null,
                                             branchId: selectedBranch,
-                                            addressId: addAddress.addAddress.data.address_id
+                                            addressId:
+                                                addAddress.addAddress.data
+                                                    .address_id,
                                         },
                                         userToken
                                     );
-                                    console.log(firstName, lastName, age, gender, selectedBranch, addAddress.addAddress.data.address_id)
+                                    console.log(
+                                        firstName,
+                                        lastName,
+                                        age,
+                                        gender,
+                                        selectedBranch,
+                                        addAddress.addAddress.data.address_id
+                                    );
                                     console.log(registerClient);
-                                    console.log(selectedState,
+                                    console.log(
+                                        selectedState,
                                         selectedRegion,
                                         selectedNeighborhood,
                                         selectedStreet,
-                                        selectedArea)
+                                        selectedArea
+                                    );
                                     // setUser('aaa')
                                 } catch (error) {
                                     console.log(error);

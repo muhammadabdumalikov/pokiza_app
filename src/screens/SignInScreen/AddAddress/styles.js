@@ -9,7 +9,7 @@ export default StyleSheet.create({
     container: {
         flex: 1,
         height: "100%",
-        backgroundColor: "white"
+        backgroundColor: "white",
     },
     content: {
         // height: "100%",
@@ -17,13 +17,21 @@ export default StyleSheet.create({
         paddingTop: Platform.OS === "android" ? statusBarHeight : 0,
     },
     logoBox: {
-        height: height * 0.2,
+        height: height * 0.45,
+        justifyContent: "space-between",
         alignItems: "center",
-        paddingHorizontal: 76,
         backgroundColor: "#F5F5F5",
+        paddingVertical: 25,
+    },
+    logo: {
+        width: "100%",
+        height: 60,
+        marginTop: 80,
+    },
+    signInWrapper: {
+        alignItems: "center",
     },
     signIn: {
-        top: height / 7.96,
         width: "100%",
         height: 32,
         fontWeight: "bold",
@@ -32,10 +40,18 @@ export default StyleSheet.create({
         textAlign: "center",
         marginBottom: 12,
     },
+    signInDescription: {
+        width: 223,
+        height: 32,
+        fontSize: 12,
+        textAlign: "center",
+    },
     personalDataBox: {
-        alignItems: "center",
-        position: "relative",
-        height: height * 0.8,
+        height: height * 0.55,
+        justifyContent: "space-between",
+        paddingVertical: 15,
+    },
+    infoWrapper: {
         alignItems: "center",
     },
     inputContainer: {
@@ -60,7 +76,7 @@ export default StyleSheet.create({
     },
     preText: {
         fontSize: 16,
-        width: "100%"
+        width: "100%",
     },
     pickerStyle: {
         height: 50,
@@ -104,8 +120,9 @@ export default StyleSheet.create({
         height: 50,
         justifyContent: "center",
         alignItems: "center",
+        alignSelf: "center",
         borderRadius: 10,
-        marginTop: 30
+        marginTop: 30,
     },
     sendCodeText: {
         color: "#fff",
