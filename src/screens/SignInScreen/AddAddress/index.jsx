@@ -272,7 +272,7 @@ const AddAddress = ({ navigation }) => {
             ) : (
                 <View style={{ flex: 1 }}>
                     <View style={styles.logoBox}>
-                        <Text style={styles.signIn}>Sign In</Text>
+                        <Text style={styles.signIn}>Tizimga kirish</Text>
                     </View>
                     <View style={styles.personalDataBox}>
                         {/* State input ------------------------------------ */}
@@ -283,7 +283,7 @@ const AddAddress = ({ navigation }) => {
                             }
                         >
                             <View style={styles.preTextWrapperStyle}>
-                                <Text style={styles.preText}>State</Text>
+                                <Text style={styles.preText}>Viloyat</Text>
                             </View>
                             <Picker
                                 style={styles.pickerStyle}
@@ -310,7 +310,7 @@ const AddAddress = ({ navigation }) => {
                             }
                         >
                             <View style={styles.preTextWrapperStyle}>
-                                <Text style={styles.preText}>Region</Text>
+                                <Text style={styles.preText}>Tuman</Text>
                             </View>
                             <Picker
                                 style={styles.pickerStyle}
@@ -538,7 +538,7 @@ const AddAddress = ({ navigation }) => {
                                 }
                             }}
                         >
-                            <Text style={styles.sendCodeText}>Send code</Text>
+                            <Text style={styles.sendCodeText}>Tasdiqlash</Text>
                         </TouchableOpacity>
                     </View>
                 </View>

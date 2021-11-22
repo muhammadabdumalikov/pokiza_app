@@ -218,7 +218,7 @@ const PersonalData = ({ navigation }) => {
                             }
                         }}
                     >
-                        <Text style={styles.sendCodeText}>Send code</Text>
+                        <Text style={styles.sendCodeText}>Tasdiqlash</Text>
                     </TouchableOpacity>
                 </View>
             </View>

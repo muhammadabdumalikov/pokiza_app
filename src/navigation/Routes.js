@@ -6,6 +6,7 @@ import AppStack from "./AppStack";
 import AuthStack from "./AuthStack";
 import PersonalData from "../screens/SignInScreen/PersonalData";
 import ConfirmCode from "../screens/SignInScreen/ConfirmCode";
+import AddAddress from "../screens/SignInScreen/AddAddress";
 
 export default Routes = () => {
     const { user, setUser } = useContext(AuthContext);
@@ -16,7 +17,7 @@ export default Routes = () => {
     return (
         <NavigationContainer>
             {/* {user ? <AppStack /> : <AuthStack />} */}
-            <PersonalData/>
+            <AddAddress/>
             {/* <AppStack /> */}
         </NavigationContainer>
     );
