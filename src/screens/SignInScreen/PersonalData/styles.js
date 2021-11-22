@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet,  Platform } from "react-native";
+import { Dimensions, StyleSheet, Platform } from "react-native";
 import Constants from "expo-constants";
 
 const statusBarHeight = Constants.statusBarHeight;
@@ -10,7 +10,6 @@ export default StyleSheet.create({
         flex: 1,
         height: "100%",
         backgroundColor: "white",
-
     },
     content: {
         // height: "100%",
@@ -18,14 +17,22 @@ export default StyleSheet.create({
         paddingTop: Platform.OS === "android" ? statusBarHeight : 0,
     },
     logoBox: {
-        height: height*.45,
+        height: height * 0.45,
+        justifyContent: "space-between",
         alignItems: "center",
-        paddingHorizontal: 76,
         backgroundColor: "#F5F5F5",
+        paddingVertical: 25,
+    },
+    logo: {
+        width: "100%",
+        height: 60,
+        marginTop: 80,
+    },
+    signInWrapper: {
+        alignItems: "center",
     },
     signIn: {
-        top: height / 2.96,
-        width: 80,
+        width: "100%",
         height: 32,
         fontWeight: "bold",
         fontSize: 24,
@@ -34,10 +41,8 @@ export default StyleSheet.create({
         marginBottom: 12,
     },
     signInDescription: {
-        position: "absolute",
-        top: height / 2.56,
         width: 223,
-        height: 32,
+        height: 45,
         fontSize: 12,
         textAlign: "center",
     },
@@ -46,25 +51,25 @@ export default StyleSheet.create({
         alignItems: "center",
         position: "relative",
         height: height * 0.55,
-        paddingVertical : 30
+        paddingVertical: 30,
     },
     inputContainer: {
-        flex: 1,
         width: "100%",
-        height: height / 15,
+        height: height / 10,
         borderBottomColor: "#ccc",
         borderBottomWidth: 1,
         borderRadius: 3,
         flexDirection: "row",
         alignItems: "center",
         backgroundColor: "#fff",
-        justifyContent: "space-between"
+        justifyContent: "space-between",
     },
     preTextWrapperStyle: {
+        paddingLeft: 15,
         height: "100%",
         justifyContent: "center",
-        alignItems: "center",
-        width: width * .3,
+        alignItems: "flex-start",
+        width: width * 0.3,
     },
     preText: {
         fontSize: 16,

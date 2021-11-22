@@ -32,15 +32,6 @@ export default StyleSheet.create({
     signInWrapper: {
         alignItems: "center",
     },
-    signIn: {
-        width: "100%",
-        height: 32,
-        fontWeight: "bold",
-        fontSize: 24,
-        color: "#007AFF",
-        textAlign: "center",
-        marginBottom: 12,
-    },
     signInDescription: {
         width: 223,
         height: 45,

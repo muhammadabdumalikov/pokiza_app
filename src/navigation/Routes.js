@@ -16,7 +16,7 @@ export default Routes = () => {
     return (
         <NavigationContainer>
             {/* {user ? <AppStack /> : <AuthStack />} */}
-            <ConfirmCode/>
+            <PersonalData/>
             {/* <AppStack /> */}
         </NavigationContainer>
     );

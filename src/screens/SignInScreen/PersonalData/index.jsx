@@ -7,218 +7,143 @@ import {
     SafeAreaView,
     TouchableOpacity,
     Dimensions,
-    ActivityIndicator,
+    Image
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { AuthContext } from "../../../navigation/AuthProvider";
 import styles from "./styles";
-import { request } from "../../../helpers/request";
-
-const height = Dimensions.get("window").height;
-const width = Dimensions.get("window").width;
 
 const PersonalData = ({ navigation }) => {
-    const GET_STATE_QUERY = `{
-        states {
-          stateId
-          stateName
-        }
-      }`;
-
-    const GET_REGION_QUERY = `
-    query($stateId: ID!){
-        regions(stateId: $stateId){
-          regionId
-          regionName
-        }
-      }`;
-
+    
     const { age, setAge, gender, setGender, setFirstName, setLastName } =
         useContext(AuthContext);
-    let [userToken, setUserToken] = useState("");
     const [selectedFirstname, setSelectedFirstname] = useState("");
     const [selectedLastname, setSelectedLastname] = useState("");
-    const [selectedGender, setSelectedGender] = useState("male");
-    const [selectedState, setSelectedState] = useState();
-    let [states, setStates] = useState();
-    const [selectedRegion, setSelectedRegion] = useState();
-    let [regions, setRegions] = useState();
-    let [isLoading, setLoading] = useState(true);
-    let firstname;
-    let lastname;
-
-    useEffect(() => {
-        async function fetchData() {
-            try {
-                const value = await AsyncStorage.getItem("user_token");
-                setUserToken(value);
-                setStates(await request(GET_STATE_QUERY, null, value));
-                setLoading(false);
-            } catch (error) {
-                console.log(error);
-            }
-        }
-        fetchData();
-    }, []);
-
-    useEffect(() => {
-        async function fetchRegions() {
-            try {
-                setRegions(
-                    await request(
-                        GET_REGION_QUERY,
-                        { stateId: selectedState },
-                        userToken
-                    )
-                );
-            } catch (error) {
-                console.log(error);
-            }
-        }
-        fetchRegions();
-    }, [selectedState]);
 
     return (
         <ScrollView
             style={styles.container}
             contentContainerStyle={styles.content}
         >
-            {isLoading ? (
-                <View
-                    style={{
-                        flex: 1,
-                        justifyContent: "center",
-                        alignItems: "center",
-                    }}
-                >
-                    <ActivityIndicator
-                        size="large"
-                        color="#00ff00"
-                        style={{ alignSelf: "center" }}
+            <View>
+                <View style={styles.logoBox}>
+                    <Image
+                        source={require("../../../../assets/logo.png")}
+                        style={styles.logo}
+                        resizeMode="contain"
                     />
-                </View>
-            ) : (
-                <View>
-                    <View style={styles.logoBox}>
-                        <Text style={styles.signIn}>Sign In</Text>
+                    <View style={styles.signInWrapper}>
+                        <Text style={styles.signIn}>Tizimga kirish</Text>
                         <Text style={styles.signInDescription}>
-                            But I must explain to you how all this mistaken idea
-                            of denouncing pleasure
+                            SMS orqali kod yuborildi, agar kod yuborilmagan
+                            bo'lsa, qayta yuborish tugmasini bosing.{" "}
                         </Text>
                     </View>
-                    <View style={styles.personalDataBox}>
-                        {/* Name input ------------------------------------ */}
+                </View>
+
+                <View style={styles.personalDataBox}>
+                    {/* Name input ------------------------------------ */}
+                    <View
+                        style={{
+                            ...styles.inputContainer,
+                        }}
+                        behavior={Platform.OS === "ios" ? "padding" : "height"}
+                    >
+                        <View style={styles.preTextWrapperStyle}>
+                            <Text style={styles.preText}>Ism</Text>
+                        </View>
+                        <TextInput
+                            style={styles.input}
+                            numberOfLines={1}
+                            placeholder="Familiyangizni kiriting"
+                            placeholderTextColor="#B8B8BB"
+                            onChangeText={(value) =>
+                                setSelectedFirstname(value)
+                            }
+                            keyboardType="default"
+                            // autoFocus={true}
+                            maxLength={20}
+                        />
+                    </View>
+
+                    {/* Surname input ------------------------------------------ */}
+                    <View
+                        style={{
+                            ...styles.inputContainer,
+                        }}
+                        behavior={Platform.OS === "ios" ? "padding" : "height"}
+                    >
+                        <View style={styles.preTextWrapperStyle}>
+                            <Text style={styles.preText}>Familiya</Text>
+                        </View>
+                        <TextInput
+                            style={styles.input}
+                            numberOfLines={1}
+                            placeholder="Ismingizni kiriting"
+                            placeholderTextColor="#B8B8BB"
+                            onChangeText={(value) => setSelectedLastname(value)}
+                            keyboardType="default"
+                            // autoFocus={true}
+                            maxLength={20}
+                        />
+                    </View>
+
+                    <View style={{ ...styles.inputContainer }}>
+                        {/* Age input ----------------------------------------------- */}
                         <View
                             style={{
                                 ...styles.inputContainer,
+                                borderBottomWidth: 0,
+                                width: "48%",
                             }}
                             behavior={
                                 Platform.OS === "ios" ? "padding" : "height"
                             }
                         >
                             <View style={styles.preTextWrapperStyle}>
-                                <Text style={styles.preText}>Name</Text>
+                                <Text style={styles.preText}>Yosh</Text>
                             </View>
                             <TextInput
-                                style={styles.input}
+                                style={{ height: "100%", width: "50%" }}
                                 numberOfLines={1}
-                                placeholder="Enter first name"
+                                placeholder="20"
                                 placeholderTextColor="#B8B8BB"
-                                onChangeText={(value) =>
-                                    setSelectedFirstname(value)
-                                }
-                                keyboardType="default"
+                                onChangeText={(value) => setAge(value)}
+                                keyboardType="numeric"
                                 // autoFocus={true}
-                                maxLength={20}
+                                maxLength={3}
                             />
                         </View>
 
-                        {/* Surname input ------------------------------------------ */}
+                        {/* Gender input --------------------------------------------- */}
                         <View
                             style={{
                                 ...styles.inputContainer,
+                                borderBottomWidth: 0,
+                                width: "48%",
                             }}
                             behavior={
                                 Platform.OS === "ios" ? "padding" : "height"
                             }
                         >
                             <View style={styles.preTextWrapperStyle}>
-                                <Text style={styles.preText}>Surname</Text>
+                                <Text style={styles.preText}>Jins</Text>
                             </View>
-                            <TextInput
-                                style={styles.input}
-                                numberOfLines={1}
-                                placeholder="Enter last name"
-                                placeholderTextColor="#B8B8BB"
-                                onChangeText={(value) =>
-                                    setSelectedLastname(value)
-                                }
-                                keyboardType="default"
-                                // autoFocus={true}
-                                maxLength={20}
-                            />
-                        </View>
-
-                        <View style={{...styles.inputContainer}}>
-                            {/* Age input ----------------------------------------------- */}
-                            <View
-                                style={{
-                                    ...styles.inputContainer,
-                                    borderBottomWidth: 0,
-                                    width: "48%",
+                            <Picker
+                                style={{ height: "100%", width: 120 }}
+                                selectedValue={gender}
+                                onValueChange={(itemValue, itemIndex) => {
+                                    setGender(itemValue);
                                 }}
-                                behavior={
-                                    Platform.OS === "ios" ? "padding" : "height"
-                                }
                             >
-                                <View style={styles.preTextWrapperStyle}>
-                                    <Text style={styles.preText}>Age</Text>
-                                </View>
-                                <TextInput
-                                    style={{ height: "100%", width: "50%" }}
-                                    numberOfLines={1}
-                                    placeholder="20"
-                                    placeholderTextColor="#B8B8BB"
-                                    onChangeText={(value) => setAge(value)}
-                                    keyboardType="numeric"
-                                    // autoFocus={true}
-                                    maxLength={3}
-                                />
-                            </View>
-
-                            {/* Gender input --------------------------------------------- */}
-                            <View
-                                style={{
-                                    ...styles.inputContainer,
-                                    borderBottomWidth: 0,
-                                    width: "48%",
-                                }}
-                                behavior={
-                                    Platform.OS === "ios" ? "padding" : "height"
-                                }
-                            >
-                                <View style={styles.preTextWrapperStyle}>
-                                    <Text style={styles.preText}>Gender</Text>
-                                </View>
-                                <Picker
-                                    style={{ height: "100%", width: 120 }}
-                                    selectedValue={gender}
-                                    onValueChange={(itemValue, itemIndex) => {
-                                        setGender(itemValue);
-                                    }}
-                                >
-                                    <Picker.Item label="Male" value="male" />
-                                    <Picker.Item
-                                        label="Female"
-                                        value="female"
-                                    />
-                                </Picker>
-                            </View>
+                                <Picker.Item label="Erkak" value="male" />
+                                <Picker.Item label="Ayol" value="female" />
+                            </Picker>
                         </View>
+                    </View>
 
-                        {/* State input ------------------------------------ */}
+                    {/* State input ------------------------------------
                         <View
                             style={{
                                 ...styles.inputContainer,
@@ -245,9 +170,9 @@ const PersonalData = ({ navigation }) => {
                                     />
                                 ))}
                             </Picker>
-                        </View>
+                        </View> */}
 
-                        {/* Region input ------------------------------------------ */}
+                    {/* Region input ------------------------------------------
                         <View
                             style={{
                                 ...styles.inputContainer,
@@ -276,28 +201,27 @@ const PersonalData = ({ navigation }) => {
                                       ))
                                     : []}
                             </Picker>
-                        </View>
+                        </View> */}
 
-                        <TouchableOpacity
-                            style={styles.sendCodeWrapper}
-                            onPress={() => {
-                                if (
-                                    age &&
-                                    gender &&
-                                    selectedFirstname &&
-                                    selectedLastname
-                                ) {
-                                    setFirstName(selectedFirstname);
-                                    setLastName(selectedLastname);
-                                    navigation.navigate("AddAddress");
-                                }
-                            }}
-                        >
-                            <Text style={styles.sendCodeText}>Send code</Text>
-                        </TouchableOpacity>
-                    </View>
+                    <TouchableOpacity
+                        style={styles.sendCodeWrapper}
+                        onPress={() => {
+                            if (
+                                age &&
+                                gender &&
+                                selectedFirstname &&
+                                selectedLastname
+                            ) {
+                                setFirstName(selectedFirstname);
+                                setLastName(selectedLastname);
+                                navigation.navigate("AddAddress");
+                            }
+                        }}
+                    >
+                        <Text style={styles.sendCodeText}>Send code</Text>
+                    </TouchableOpacity>
                 </View>
-            )}
+            </View>
         </ScrollView>
     );
 };
