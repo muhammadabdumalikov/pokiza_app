@@ -25,7 +25,7 @@ export default StyleSheet.create({
     },
     signIn: {
         top: height / 2.96,
-        width: 80,
+        width: "100%",
         height: 32,
         fontWeight: "bold",
         fontSize: 24,

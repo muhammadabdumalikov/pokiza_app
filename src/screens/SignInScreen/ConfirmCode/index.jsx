@@ -13,7 +13,7 @@ import {
     useBlurOnFulfill,
     useClearByFocusCell,
 } from "react-native-confirmation-code-field";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { AuthContext } from "../../../navigation/AuthProvider";
 import { request } from "../../../helpers/request";
@@ -23,25 +23,27 @@ import { useMutation } from "@apollo/client";
 
 const CELL_COUNT = 4;
 
-const CODE_QUERY = gql`mutation ($phoneNumber: String!, $password: String!){
-    enterClientPassword(phoneNumber: $phoneNumber, password: $password){
-      status
-      message
-      data
-      token
-      permissions{
-        branchId
-        branchName
-        permissionsList{
-          permissionAction
-          permissionModel
+const CODE_QUERY = gql`
+    mutation ($phoneNumber: String!, $password: String!) {
+        enterClientPassword(phoneNumber: $phoneNumber, password: $password) {
+            status
+            message
+            data
+            token
+            permissions {
+                branchId
+                branchName
+                permissionsList {
+                    permissionAction
+                    permissionModel
+                }
+            }
         }
-      }
     }
-  }`;
+`;
 
 const ConfirmCode = ({ navigation }) => {
-    const [verify, {loading}] = useMutation(CODE_QUERY);
+    const [verify, { loading }] = useMutation(CODE_QUERY);
     const [value, setValue] = useState("");
     const ref = useBlurOnFulfill({ value, cellCount: CELL_COUNT });
     const [props, getCellOnLayoutHandler] = useClearByFocusCell({
@@ -50,24 +52,26 @@ const ConfirmCode = ({ navigation }) => {
     });
     const { setCode, phoneNumber } = useContext(AuthContext);
 
-    
     const handleSubmit = () => {
         verify({
             variables: {
                 phoneNumber: phoneNumber,
                 password: value,
-            }
+            },
         })
-            .then(({data}) => {
-                if(data.enterClientPassword.status == 200){
-                    AsyncStorage.setItem('user_token', data.enterClientPassword.token)
+            .then(({ data }) => {
+                if (data.enterClientPassword.status == 200) {
+                    AsyncStorage.setItem(
+                        "user_token",
+                        data.enterClientPassword.token
+                    );
                     navigation.navigate("PersonalData");
                 }
             })
             .catch((err) => {
-                console.log(error)
+                console.log(error);
             });
-    }
+    };
 
     return (
         <ScrollView
@@ -75,10 +79,10 @@ const ConfirmCode = ({ navigation }) => {
             contentContainerStyle={styles.content}
         >
             <View style={styles.logoBox}>
-                <Text style={styles.signIn}>Sign In</Text>
+                <Text style={styles.signIn}>Tizimga kirish</Text>
                 <Text style={styles.signInDescription}>
-                    But I must explain to you how all this mistaken idea of
-                    denouncing pleasure
+                    SMS orqali kod yuborildi, agar kod yuborilmagan bo'lsa,
+                    qayta yuborish tugmasini bosing.
                 </Text>
             </View>
             <View style={styles.root}>
@@ -105,7 +109,7 @@ const ConfirmCode = ({ navigation }) => {
                 />
 
                 <TouchableOpacity>
-                    <Text style={styles.forgotPass}>Resend</Text>
+                    <Text style={styles.forgotPass}>Qayta yuborish</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
