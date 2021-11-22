@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, TouchableOpacity, Dimensions } from "react-native";
+import { Text, TouchableOpacity, Dimensions, Image } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
 import {
     Ionicons,
@@ -16,6 +16,9 @@ import NoticesScreen from "../screens/ClientScreens/NoticeScreen";
 import LocationScreen from "../screens/ClientScreens/LocationScreen";
 import SettingsScreen from "../screens/ClientScreens/SettingsScreen";
 import AddOrderScreen from "../screens/ClientScreens/OrdersScreen/AddOrderScreen";
+import { colors } from "../constants/color";
+import LogoImage from "../components/LogoImage";
+import CallButton from "../components/callButton";
 
 const height = Dimensions.get("window").height;
 
@@ -24,31 +27,26 @@ const Stack = createStackNavigator();
 
 const OrdersStack = ({ navigation, route }) => {
     return (
-        <Stack.Navigator screenOptions={{}}>
-            <Stack.Screen
-                name="OrdersScreen"
-                component={OrderScreen}
-                options={{
-                    headerTitle: "ID: #3493843",
-                    headerTitleAlign: "center",
-                    headerTitleStyle: {
-                        fontSize: 18,
-                        top: height/32.48,
-                        textAlign: "center",
-                    },
-                    headerStyle: {
-                        backgroundColor: "#F4F4F5",
-                        shadowColor: "#fff",
-                        elevation: 0,
-                        height: Dimensions.get("window").height / 5.8,
-                    },
-                    headerRight: () => (
-                        <TouchableOpacity style={{ marginRight: 20 }}>
-                            <Feather name="phone" size={24} color="#007AFF" />
-                        </TouchableOpacity>
-                    ),
-                }}
-            />
+        <Stack.Navigator
+            screenOptions={{
+                headerTitle: "ID: #3493843",
+                headerTitleAlign: "center",
+                headerTitleStyle: {
+                    fontSize: 18,
+                    top: 40,
+                    textAlign: "center",
+                },
+                headerStyle: {
+                    backgroundColor: "#F4F4F5",
+                    shadowColor: "#fff",
+                    elevation: 0,
+                    height: height * 0.2,
+                },
+                headerRight: () => <CallButton />,
+                headerLeft: () => <LogoImage />,
+            }}
+        >
+            <Stack.Screen name="OrdersScreen" component={OrderScreen} />
             <Stack.Screen
                 name="OrderDetailScreen"
                 component={OrderDetailScreen}
@@ -56,7 +54,7 @@ const OrdersStack = ({ navigation, route }) => {
                     headerTitleAlign: "center",
                     headerTitleStyle: {
                         fontSize: 18,
-                        top: height/32.48,
+                        top: height / 32.48,
                         textAlign: "center",
                     },
                     headerStyle: {
@@ -73,34 +71,8 @@ const OrdersStack = ({ navigation, route }) => {
                     ),
                     headerLeft: () => null,
                 })}
-                
             />
-             <Stack.Screen
-                name="AddOrderScreen"
-                component={AddOrderScreen}
-                options={({ route }) => ({
-                    headerTitleAlign: "center",
-                    headerTitleStyle: {
-                        fontSize: 18,
-                        top: height/32.48,
-                        textAlign: "center",
-                    },
-                    headerStyle: {
-                        backgroundColor: "#F4F4F5",
-                        shadowColor: "#fff",
-                        elevation: 0,
-                        height: Dimensions.get("window").height / 5.8,
-                    },
-                    title: route.params.id,
-                    headerRight: () => (
-                        <TouchableOpacity style={{ marginRight: 20 }}>
-                            <Feather name="phone" size={24} color="#007AFF" />
-                        </TouchableOpacity>
-                    ),
-                    headerLeft: () => null,
-                })}
-                
-            />
+            <Stack.Screen name="AddOrderScreen" component={AddOrderScreen} />
         </Stack.Navigator>
     );
 };
@@ -115,7 +87,7 @@ const NoticesStack = ({ navigation, route }) => {
                     headerTitleAlign: "center",
                     headerTitleStyle: {
                         fontSize: 18,
-                        top: height/32.48,
+                        top: height / 32.48,
                         textAlign: "center",
                     },
                     headerStyle: {
@@ -147,7 +119,7 @@ const LocationStack = ({ navigation, route }) => {
                     headerTitleAlign: "center",
                     headerTitleStyle: {
                         fontSize: 18,
-                        top: height/32.48,
+                        top: height / 32.48,
                         textAlign: "center",
                     },
                     headerStyle: {
@@ -179,7 +151,7 @@ const SettingsStack = ({ navigation, route }) => {
                     headerTitleAlign: "center",
                     headerTitleStyle: {
                         fontSize: 18,
-                        top: height/32.48,
+                        top: height / 32.48,
                         textAlign: "center",
                     },
                     headerStyle: {
@@ -211,7 +183,7 @@ const AppStack = () => {
                 headerShown: false,
                 tabBarStyle: {
                     height: Dimensions.get("window").height / 9.78,
-                    paddingBottom: height/40.6,
+                    paddingBottom: height / 40.6,
                     backgroundColor: "#F4F4F5",
                 },
             }}
