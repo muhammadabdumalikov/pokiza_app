@@ -26,7 +26,7 @@ export default StyleSheet.create({
     logo: {
         width: "100%",
         height: 60,
-        marginTop: 100
+        marginTop: 80
     },
     signInWrapper: {
         alignItems: "center",

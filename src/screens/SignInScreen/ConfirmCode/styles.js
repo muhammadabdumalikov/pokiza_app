@@ -19,12 +19,20 @@ export default StyleSheet.create({
     },
     logoBox: {
         height: height * 0.45,
+        justifyContent: "space-between",
         alignItems: "center",
-        paddingHorizontal: 76,
         backgroundColor: "#F5F5F5",
+        paddingVertical: 25,
+    },
+    logo: {
+        width: "100%",
+        height: 60,
+        marginTop: 80
+    },
+    signInWrapper: {
+        alignItems: "center",
     },
     signIn: {
-        top: height / 2.96,
         width: "100%",
         height: 32,
         fontWeight: "bold",
@@ -34,12 +42,16 @@ export default StyleSheet.create({
         marginBottom: 12,
     },
     signInDescription: {
-        position: "absolute",
-        top: height / 2.56,
         width: 223,
-        height: 32,
+        height: 45,
         fontSize: 12,
         textAlign: "center",
+    },
+    signInBox: {
+        backgroundColor: "#fff",
+        alignItems: "center",
+        position: "relative",
+        height: height * 0.55,
     },
     root: {
         height: height * 0.55,

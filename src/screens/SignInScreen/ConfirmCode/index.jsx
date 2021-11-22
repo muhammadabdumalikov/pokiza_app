@@ -6,6 +6,7 @@ import {
     ScrollView,
     SafeAreaView,
     TouchableOpacity,
+    Image,
 } from "react-native";
 import {
     CodeField,
@@ -79,11 +80,18 @@ const ConfirmCode = ({ navigation }) => {
             contentContainerStyle={styles.content}
         >
             <View style={styles.logoBox}>
-                <Text style={styles.signIn}>Tizimga kirish</Text>
-                <Text style={styles.signInDescription}>
-                    SMS orqali kod yuborildi, agar kod yuborilmagan bo'lsa,
-                    qayta yuborish tugmasini bosing.
-                </Text>
+                <Image
+                    source={require("../../../../assets/logo.png")}
+                    style={styles.logo}
+                    resizeMode="contain"
+                />
+                <View style={styles.signInWrapper}>
+                    <Text style={styles.signIn}>Tizimga kirish</Text>
+                    <Text style={styles.signInDescription}>
+                        SMS orqali kod yuborildi, agar kod yuborilmagan bo'lsa,
+                        qayta yuborish tugmasini bosing.{" "}
+                    </Text>
+                </View>
             </View>
             <View style={styles.root}>
                 <CodeField
