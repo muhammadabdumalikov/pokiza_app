@@ -37,7 +37,7 @@ const AddOrderScreen = ({ navigation }) => {
     const [stateModalVisible, setStateModalVisible] = useState(false);
     const [regionModalVisible, setRegionModalVisible] = useState(false);
     const [areaModalVisible, setAreaModalVisible] = useState(false);
-    const [tariffModalVisible, setTariffModalVisible] = useState(false)
+    const [tariffModalVisible, setTariffModalVisible] = useState(false);
 
     const tariffs = [
         { id: "1", tariffName: "Tezkor" },
@@ -203,14 +203,6 @@ const AddOrderScreen = ({ navigation }) => {
                     >
                         <View style={styles.infoBox}>
                             <View style={styles.inputContainer}>
-                                <Text style={styles.preText}>Ism:</Text>
-                                <TextInput placeholder="Abdulaziz" />
-                            </View>
-                            <View style={styles.inputContainer}>
-                                <Text style={styles.preText}>Familiya:</Text>
-                                <TextInput placeholder="Abdujalilov" />
-                            </View>
-                            <View style={styles.inputContainer}>
                                 <View style={styles.preTextWrapperStyle}>
                                     <Text style={styles.preText}>Viloyat:</Text>
                                 </View>
@@ -271,7 +263,12 @@ const AddOrderScreen = ({ navigation }) => {
                                     </Text>
                                 </Pressable>
                             </View>
-                            <View style={styles.inputContainer}>
+                            <View
+                                style={{
+                                    ...styles.inputContainer,
+                                    borderBottomWidth: 0,
+                                }}
+                            >
                                 <View style={styles.preTextWrapperStyle}>
                                     <Text style={styles.preText}>Tuman:</Text>
                                 </View>
@@ -336,78 +333,15 @@ const AddOrderScreen = ({ navigation }) => {
                                     </Text>
                                 </Pressable>
                             </View>
+                        </View>
+
+                        <View style={styles.tariffBox}>
                             <View
                                 style={{
                                     ...styles.inputContainer,
                                     borderBottomWidth: 0,
                                 }}
                             >
-                                <View style={styles.preTextWrapperStyle}>
-                                    <Text style={styles.preText}>Hudud:</Text>
-                                </View>
-                                <Modal
-                                    animationType="slide"
-                                    transparent={true}
-                                    visible={areaModalVisible}
-                                    onRequestClose={() => {
-                                        setAreaModalVisible(!areaModalVisible);
-                                    }}
-                                >
-                                    <View style={styles.centeredView}>
-                                        <View style={styles.modalWrapper}>
-                                            <FlatList
-                                                data={
-                                                    areas != undefined
-                                                        ? areas.areas
-                                                        : []
-                                                }
-                                                renderItem={modalArea}
-                                                keyExtractor={(item) =>
-                                                    item.areaId
-                                                }
-                                                contentContainerStyle={
-                                                    styles.modalView
-                                                }
-                                                style={styles.contenModalView}
-                                                showsVerticalScrollIndicator={
-                                                    false
-                                                }
-                                            />
-                                        </View>
-                                        <Pressable
-                                            style={[
-                                                styles.button,
-                                                styles.buttonClose,
-                                            ]}
-                                            onPress={() =>
-                                                setAreaModalVisible(
-                                                    !areaModalVisible
-                                                )
-                                            }
-                                        >
-                                            <Text
-                                                style={styles.hideModalButton}
-                                            >
-                                                Hide Modal
-                                            </Text>
-                                        </Pressable>
-                                    </View>
-                                </Modal>
-                                <Pressable
-                                    style={styles.buttonOpen}
-                                    onPress={() => setAreaModalVisible(true)}
-                                >
-                                    <Text style={styles.textStyle}>
-                                        {selectedArea != undefined
-                                            ? selectedArea.areaName
-                                            : "Hududni tanlang"}
-                                    </Text>
-                                </Pressable>
-                            </View>
-                        </View>
-
-                        <View style={styles.tariffBox}>
-                            <View style={{...styles.inputContainer, borderBottomWidth: 0}}>
                                 <Text style={styles.preText}>Tariff:</Text>
                                 <Modal
                                     animationType="slide"
@@ -420,13 +354,16 @@ const AddOrderScreen = ({ navigation }) => {
                                     }}
                                 >
                                     <View style={styles.centeredView}>
-                                        <View style={[styles.modalWrapper, styles.tariffModalWrapper]}>
+                                        <View
+                                            style={[
+                                                styles.modalWrapper,
+                                                styles.tariffModalWrapper,
+                                            ]}
+                                        >
                                             <FlatList
                                                 data={tariffs}
                                                 renderItem={modalTariff}
-                                                keyExtractor={(item) =>
-                                                    item.id
-                                                }
+                                                keyExtractor={(item) => item.id}
                                                 contentContainerStyle={
                                                     styles.modalView
                                                 }
@@ -469,8 +406,8 @@ const AddOrderScreen = ({ navigation }) => {
                         </View>
                         <View style={styles.dateAddInfoWrapper}>
                             <Text style={styles.dateAddInfo}>
-                                <Text style={styles.attention}>*</Text>{" "}
-                                Haydovchi qachon kelishini xohlaysiz?
+                                <Text style={styles.attention}>*</Text>
+                                Buyurtmangiz qachon olib ketilsin?
                             </Text>
                         </View>
                         <View style={styles.dateInfoBox}>

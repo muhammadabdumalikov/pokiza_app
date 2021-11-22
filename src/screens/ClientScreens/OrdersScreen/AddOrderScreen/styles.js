@@ -19,7 +19,7 @@ const styles = StyleSheet.create({
         height: height,
     },
     infoBox: {
-        flex: 5,
+        height: "25%",
         borderBottomColor: "gray",
         borderBottomWidth: 0.9,
         padding: 15,
@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
     },
     tariffBox: {
-        flex: 1,
+        height: "10%",
         paddingHorizontal: 10,
         borderWidth: 1,
         borderRadius: 10,
@@ -65,7 +65,7 @@ const styles = StyleSheet.create({
         fontSize: 14,
     },
     dateInfoBox: {
-        flex: 1,
+        height: "10%",
         paddingHorizontal: 10,
         borderWidth: 1,
         borderRadius: 10,
