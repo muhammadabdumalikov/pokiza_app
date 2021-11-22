@@ -1,4 +1,4 @@
-import { Dimensions, StyleSheet,  Platform } from "react-native";
+import { Dimensions, StyleSheet, Platform } from "react-native";
 import Constants from "expo-constants";
 import { colors } from "../../../constants/color";
 
@@ -17,13 +17,21 @@ export default StyleSheet.create({
         paddingTop: Platform.OS === "android" ? statusBarHeight : 0,
     },
     logoBox: {
-        height: height*.45,
+        height: height * 0.45,
+        justifyContent: "space-between",
         alignItems: "center",
-        paddingHorizontal: 76,
         backgroundColor: "#F5F5F5",
+        paddingVertical: 25,
+    },
+    logo: {
+        width: "100%",
+        height: 60,
+        marginTop: 100
+    },
+    signInWrapper: {
+        alignItems: "center",
     },
     signIn: {
-        top: height / 2.96,
         width: "100%",
         height: 32,
         fontWeight: "bold",
@@ -33,8 +41,6 @@ export default StyleSheet.create({
         marginBottom: 12,
     },
     signInDescription: {
-        position: "absolute",
-        top: height / 2.56,
         width: 223,
         height: 32,
         fontSize: 12,
@@ -44,7 +50,7 @@ export default StyleSheet.create({
         backgroundColor: "#fff",
         alignItems: "center",
         position: "relative",
-        height: height*.55,
+        height: height * 0.55,
     },
     inputContainer: {
         position: "absolute",
@@ -57,31 +63,30 @@ export default StyleSheet.create({
         borderRadius: 3,
         borderBottomWidth: 1,
         backgroundColor: "#fff",
-        paddingLeft: 25
+        paddingLeft: 25,
     },
     preTextWrapperStyle: {
         flex: 1,
         justifyContent: "center",
-        width: "30%",
     },
     preText: {
-        fontSize: 16,
-        color: colors.gray
+        fontSize: 18,
+        color: colors.gray,
     },
     input: {
         padding: 10,
         flex: 1,
-        fontSize: 16,
+        fontSize: 18,
         color: "#666",
         justifyContent: "center",
         alignItems: "center",
     },
     inputWrapper: {
         flexDirection: "row",
-        alignItems: "center"
+        alignItems: "center",
     },
     inputTxt: {
-        fontSize: 16,
+        fontSize: 18,
     },
     inputField: {
         padding: 10,

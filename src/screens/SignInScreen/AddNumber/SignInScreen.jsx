@@ -6,6 +6,7 @@ import {
     ScrollView,
     SafeAreaView,
     TouchableOpacity,
+    Image,
 } from "react-native";
 
 import { AuthContext } from "../../../navigation/AuthProvider";
@@ -64,11 +65,17 @@ export default function ({ navigation }) {
             contentContainerStyle={styles.content}
         >
             <View style={styles.logoBox}>
-                {/* <LogoSvg/> */}
-                <Text style={styles.signIn}>Tizimga kirish</Text>
-                <Text style={styles.signInDescription}>
-                    Tizimga kirish uchun telefon raqamingizni kiriting.
-                </Text>
+                <Image
+                    source={require("../../../../assets/logo.png")}
+                    style={styles.logo}
+                    resizeMode="contain"
+                />
+                <View style={styles.signInWrapper}>
+                    <Text style={styles.signIn}>Tizimga kirish</Text>
+                    <Text style={styles.signInDescription}>
+                        Tizimga kirish uchun telefon raqamingizni kiriting.
+                    </Text>
+                </View>
             </View>
             <View style={styles.signInBox}>
                 <View
@@ -79,7 +86,9 @@ export default function ({ navigation }) {
                         <Text style={styles.preText}>Telefon raqam</Text>
                     </View>
                     <View style={styles.inputWrapper}>
-                        <Text style={{ fontSize: 16, color: "black"}}>+998</Text>
+                        <Text style={{ fontSize: 18, color: "black" }}>
+                            +998
+                        </Text>
                         <TextInput
                             style={styles.input}
                             numberOfLines={1}

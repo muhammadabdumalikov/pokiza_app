@@ -121,7 +121,7 @@ const ConfirmCode = ({ navigation }) => {
                     disabled={value.length < 4 ? true : false}
                     onPress={handleSubmit}
                 >
-                    <Text style={styles.sendCodeText}>Confirm</Text>
+                    <Text style={styles.sendCodeText}>Tasdiqlash</Text>
                 </TouchableOpacity>
             </View>
         </ScrollView>
