@@ -40,276 +40,309 @@ const OrderScreen = ({ navigation }) => {
     //     console.log(data, error);
     // }, [data]);
 
+    let orders = true;
+
     return (
         // Orders with scrollable view ------------------------------------
         <View style={styles.containerWrapper}>
-            <ScrollView
-                style={styles.container}
-                contentContainerStyle={styles.contentStyle}
-                showsVerticalScrollIndicator={false}
-            >
-                {/* Order box ---------------------------------------------------*/}
-                <TouchableOpacity
-                    style={styles.orderBox}
-                    onPress={() =>
-                        navigation.navigate("OrderDetailScreen", {
-                            id: "ID: #329304",
-                        })
-                    }
+            {orders ? (
+                <ScrollView
+                    style={styles.container}
+                    contentContainerStyle={styles.contentStyle}
+                    showsVerticalScrollIndicator={false}
                 >
-                    <View style={styles.first}>
-                        <View style={styles.orderNumber}>
-                            <Text style={styles.orderNumberStyle}>
-                                Buyurtma - {1}
-                            </Text>
-                            <Text style={styles.orderNumberStyle}>#10293</Text>
+                    {/* Order box ---------------------------------------------------*/}
+                    <TouchableOpacity
+                        style={styles.orderBox}
+                        onPress={() =>
+                            navigation.navigate("OrderDetailScreen", {
+                                id: "ID: #329304",
+                            })
+                        }
+                    >
+                        <View style={styles.first}>
+                            <View style={styles.orderNumber}>
+                                <Text style={styles.orderNumberStyle}>
+                                    Buyurtma - {1}
+                                </Text>
+                                <Text style={styles.orderNumberStyle}>
+                                    #10293
+                                </Text>
+                            </View>
+                            <View style={styles.orderStatusWrapper}>
+                                <Text style={styles.orderStatusText}>
+                                    Buyurma holati
+                                </Text>
+                                <Text style={styles.orderStatus}>
+                                    Moderatorda
+                                </Text>
+                            </View>
                         </View>
-                        <View style={styles.orderStatusWrapper}>
-                            <Text style={styles.orderStatusText}>
-                                Buyurma holati
-                            </Text>
-                            <Text style={styles.orderStatus}>Moderatorda</Text>
-                        </View>
-                    </View>
 
-                    <View style={styles.second}>
-                        <View style={styles.orderRegisterBox}>
-                            <View style={styles.orderRegisterTextWrapper}>
-                                <Feather
-                                    name="calendar"
-                                    size={18}
-                                    color="black"
-                                />
-                                <Text style={styles.orderRegisterText}>
-                                    Ro'yxatdan o'tgan sana
+                        <View style={styles.second}>
+                            <View style={styles.orderRegisterBox}>
+                                <View style={styles.orderRegisterTextWrapper}>
+                                    <Feather
+                                        name="calendar"
+                                        size={18}
+                                        color="black"
+                                    />
+                                    <Text style={styles.orderRegisterText}>
+                                        Ro'yxatdan o'tgan sana
+                                    </Text>
+                                </View>
+                                <Text style={styles.orderRegisterDate}>
+                                    18.11.2020
                                 </Text>
                             </View>
-                            <Text style={styles.orderRegisterDate}>
-                                18.11.2020
-                            </Text>
-                        </View>
-                        <View style={styles.orderRegisterBox}>
-                            <View style={styles.orderRegisterTextWrapper}>
-                                <Feather
-                                    name="calendar"
-                                    size={18}
-                                    color="black"
-                                />
-                                <Text style={styles.orderRegisterText}>
-                                    Olib ketilgan sana
+                            <View style={styles.orderRegisterBox}>
+                                <View style={styles.orderRegisterTextWrapper}>
+                                    <Feather
+                                        name="calendar"
+                                        size={18}
+                                        color="black"
+                                    />
+                                    <Text style={styles.orderRegisterText}>
+                                        Olib ketilgan sana
+                                    </Text>
+                                </View>
+                                <Text style={styles.orderRegisterDate}>
+                                    --.--.----
                                 </Text>
                             </View>
-                            <Text style={styles.orderRegisterDate}>
-                                --.--.----
-                            </Text>
-                        </View>
-                        <View style={styles.orderRegisterBox}>
-                            <View style={styles.orderRegisterTextWrapper}>
-                                <Feather
-                                    name="calendar"
-                                    size={18}
-                                    color="black"
-                                />
-                                <Text style={styles.orderRegisterText}>
-                                    Qabul qilingan sana
+                            <View style={styles.orderRegisterBox}>
+                                <View style={styles.orderRegisterTextWrapper}>
+                                    <Feather
+                                        name="calendar"
+                                        size={18}
+                                        color="black"
+                                    />
+                                    <Text style={styles.orderRegisterText}>
+                                        Qabul qilingan sana
+                                    </Text>
+                                </View>
+                                <Text style={styles.orderRegisterDate}>
+                                    --.--.----
                                 </Text>
                             </View>
-                            <Text style={styles.orderRegisterDate}>
-                                --.--.----
-                            </Text>
                         </View>
-                    </View>
 
-                    <View style={styles.third}>
-                        <View style={styles.orderNumber}>
-                            <Text style={styles.summText}>Umumiy summa:</Text>
-                            <Text style={styles.orderSumm}>1 750 00 so'm</Text>
-                        </View>
-                    </View>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                    style={styles.orderBox}
-                    onPress={() =>
-                        navigation.navigate("OrderDetailScreen", {
-                            id: "ID: #329304",
-                        })
-                    }
-                >
-                    <View style={styles.first}>
-                        <View style={styles.orderNumber}>
-                            <Text style={styles.orderNumberStyle}>
-                                Buyurtma - {1}
-                            </Text>
-                            <Text style={styles.orderNumberStyle}>#10293</Text>
-                        </View>
-                        <View style={styles.orderStatusWrapper}>
-                            <Text style={styles.orderStatusText}>
-                                Buyurma holati
-                            </Text>
-                            <Text style={{
-                                    fontSize: 14,
-                                    textAlign: "center",
-                                    textAlignVertical: "center",
-                                    backgroundColor: colors.lightPink,
-                                    padding: 5,
-                                    borderColor: colors.pink,
-                                    borderWidth: 1,
-                                    borderRadius: 5,
-                                    color: colors.pink
-                                }}>Moderatorda</Text>
-                        </View>
-                    </View>
-
-                    <View style={styles.second}>
-                        <View style={styles.orderRegisterBox}>
-                            <View style={styles.orderRegisterTextWrapper}>
-                                <Feather
-                                    name="calendar"
-                                    size={18}
-                                    color="black"
-                                />
-                                <Text style={styles.orderRegisterText}>
-                                    Ro'yxatdan o'tgan sana
+                        <View style={styles.third}>
+                            <View style={styles.orderNumber}>
+                                <Text style={styles.summText}>
+                                    Umumiy summa:
+                                </Text>
+                                <Text style={styles.orderSumm}>
+                                    1 750 00 so'm
                                 </Text>
                             </View>
-                            <Text style={styles.orderRegisterDate}>
-                                18.11.2020
-                            </Text>
                         </View>
-                        <View style={styles.orderRegisterBox}>
-                            <View style={styles.orderRegisterTextWrapper}>
-                                <Feather
-                                    name="calendar"
-                                    size={18}
-                                    color="black"
-                                />
-                                <Text style={styles.orderRegisterText}>
-                                    Olib ketilgan sana
-                                </Text>
-                            </View>
-                            <Text style={styles.orderRegisterDate}>
-                                --.--.----
-                            </Text>
-                        </View>
-                        <View style={styles.orderRegisterBox}>
-                            <View style={styles.orderRegisterTextWrapper}>
-                                <Feather
-                                    name="calendar"
-                                    size={18}
-                                    color="black"
-                                />
-                                <Text style={styles.orderRegisterText}>
-                                    Qabul qilingan sana
-                                </Text>
-                            </View>
-                            <Text style={styles.orderRegisterDate}>
-                                --.--.----
-                            </Text>
-                        </View>
-                    </View>
+                    </TouchableOpacity>
 
-                    <View style={styles.third}>
-                        <View style={styles.orderNumber}>
-                            <Text style={styles.summText}>Umumiy summa:</Text>
-                            <Text style={styles.orderSumm}>1 750 00 so'm</Text>
-                        </View>
-                    </View>
-                </TouchableOpacity>
-
-                <TouchableOpacity
-                    style={styles.orderBox}
-                    onPress={() =>
-                        navigation.navigate("OrderDetailScreen", {
-                            id: "ID: #329304",
-                        })
-                    }
-                >
-                    <View style={styles.first}>
-                        <View style={styles.orderNumber}>
-                            <Text style={styles.orderNumberStyle}>
-                                Buyurtma - {1}
-                            </Text>
-                            <Text style={styles.orderNumberStyle}>#10293</Text>
-                        </View>
-                        <View style={styles.orderStatusWrapper}>
-                            <Text style={styles.orderStatusText}>
-                                Buyurma holati
-                            </Text>
-                            <Text
-                                style={{
-                                    fontSize: 14,
-                                    textAlign: "center",
-                                    textAlignVertical: "center",
-                                    backgroundColor: colors.lighGreen,
-                                    padding: 5,
-                                    borderColor: colors.green,
-                                    borderWidth: 1,
-                                    borderRadius: 5,
-                                    color: "white"
-                                }}
-                            >
-                                Yetkazildi
-                            </Text>
-                        </View>
-                    </View>
-
-                    <View style={styles.second}>
-                        <View style={styles.orderRegisterBox}>
-                            <View style={styles.orderRegisterTextWrapper}>
-                                <Feather
-                                    name="calendar"
-                                    size={18}
-                                    color="black"
-                                />
-                                <Text style={styles.orderRegisterText}>
-                                    Ro'yxatdan o'tgan sana
+                    <TouchableOpacity
+                        style={styles.orderBox}
+                        onPress={() =>
+                            navigation.navigate("OrderDetailScreen", {
+                                id: "ID: #329304",
+                            })
+                        }
+                    >
+                        <View style={styles.first}>
+                            <View style={styles.orderNumber}>
+                                <Text style={styles.orderNumberStyle}>
+                                    Buyurtma - {1}
+                                </Text>
+                                <Text style={styles.orderNumberStyle}>
+                                    #10293
                                 </Text>
                             </View>
-                            <Text style={styles.orderRegisterDate}>
-                                18.11.2020
-                            </Text>
-                        </View>
-                        <View style={styles.orderRegisterBox}>
-                            <View style={styles.orderRegisterTextWrapper}>
-                                <Feather
-                                    name="calendar"
-                                    size={18}
-                                    color="black"
-                                />
-                                <Text style={styles.orderRegisterText}>
-                                    Olib ketilgan sana
+                            <View style={styles.orderStatusWrapper}>
+                                <Text style={styles.orderStatusText}>
+                                    Buyurma holati
+                                </Text>
+                                <Text
+                                    style={{
+                                        fontSize: 14,
+                                        textAlign: "center",
+                                        textAlignVertical: "center",
+                                        backgroundColor: colors.lightPink,
+                                        padding: 5,
+                                        borderColor: colors.pink,
+                                        borderWidth: 1,
+                                        borderRadius: 5,
+                                        color: colors.pink,
+                                    }}
+                                >
+                                    Moderatorda
                                 </Text>
                             </View>
-                            <Text style={styles.orderRegisterDate}>
-                                --.--.----
-                            </Text>
                         </View>
-                        <View style={styles.orderRegisterBox}>
-                            <View style={styles.orderRegisterTextWrapper}>
-                                <Feather
-                                    name="calendar"
-                                    size={18}
-                                    color="black"
-                                />
-                                <Text style={styles.orderRegisterText}>
-                                    Qabul qilingan sana
-                                </Text>
-                            </View>
-                            <Text style={styles.orderRegisterDate}>
-                                --.--.----
-                            </Text>
-                        </View>
-                    </View>
 
-                    <View style={styles.third}>
-                        <View style={styles.orderNumber}>
-                            <Text style={styles.summText}>Umumiy summa:</Text>
-                            <Text style={styles.orderSumm}>1 750 00 so'm</Text>
+                        <View style={styles.second}>
+                            <View style={styles.orderRegisterBox}>
+                                <View style={styles.orderRegisterTextWrapper}>
+                                    <Feather
+                                        name="calendar"
+                                        size={18}
+                                        color="black"
+                                    />
+                                    <Text style={styles.orderRegisterText}>
+                                        Ro'yxatdan o'tgan sana
+                                    </Text>
+                                </View>
+                                <Text style={styles.orderRegisterDate}>
+                                    18.11.2020
+                                </Text>
+                            </View>
+                            <View style={styles.orderRegisterBox}>
+                                <View style={styles.orderRegisterTextWrapper}>
+                                    <Feather
+                                        name="calendar"
+                                        size={18}
+                                        color="black"
+                                    />
+                                    <Text style={styles.orderRegisterText}>
+                                        Olib ketilgan sana
+                                    </Text>
+                                </View>
+                                <Text style={styles.orderRegisterDate}>
+                                    --.--.----
+                                </Text>
+                            </View>
+                            <View style={styles.orderRegisterBox}>
+                                <View style={styles.orderRegisterTextWrapper}>
+                                    <Feather
+                                        name="calendar"
+                                        size={18}
+                                        color="black"
+                                    />
+                                    <Text style={styles.orderRegisterText}>
+                                        Qabul qilingan sana
+                                    </Text>
+                                </View>
+                                <Text style={styles.orderRegisterDate}>
+                                    --.--.----
+                                </Text>
+                            </View>
                         </View>
-                    </View>
-                </TouchableOpacity>
-            </ScrollView>
+
+                        <View style={styles.third}>
+                            <View style={styles.orderNumber}>
+                                <Text style={styles.summText}>
+                                    Umumiy summa:
+                                </Text>
+                                <Text style={styles.orderSumm}>
+                                    1 750 00 so'm
+                                </Text>
+                            </View>
+                        </View>
+                    </TouchableOpacity>
+
+                    <TouchableOpacity
+                        style={styles.orderBox}
+                        onPress={() =>
+                            navigation.navigate("OrderDetailScreen", {
+                                id: "ID: #329304",
+                            })
+                        }
+                    >
+                        <View style={styles.first}>
+                            <View style={styles.orderNumber}>
+                                <Text style={styles.orderNumberStyle}>
+                                    Buyurtma - {1}
+                                </Text>
+                                <Text style={styles.orderNumberStyle}>
+                                    #10293
+                                </Text>
+                            </View>
+                            <View style={styles.orderStatusWrapper}>
+                                <Text style={styles.orderStatusText}>
+                                    Buyurma holati
+                                </Text>
+                                <Text
+                                    style={{
+                                        fontSize: 14,
+                                        textAlign: "center",
+                                        textAlignVertical: "center",
+                                        backgroundColor: colors.lighGreen,
+                                        padding: 5,
+                                        borderColor: colors.green,
+                                        borderWidth: 1,
+                                        borderRadius: 5,
+                                        color: "white",
+                                    }}
+                                >
+                                    Yetkazildi
+                                </Text>
+                            </View>
+                        </View>
+
+                        <View style={styles.second}>
+                            <View style={styles.orderRegisterBox}>
+                                <View style={styles.orderRegisterTextWrapper}>
+                                    <Feather
+                                        name="calendar"
+                                        size={18}
+                                        color="black"
+                                    />
+                                    <Text style={styles.orderRegisterText}>
+                                        Ro'yxatdan o'tgan sana
+                                    </Text>
+                                </View>
+                                <Text style={styles.orderRegisterDate}>
+                                    18.11.2020
+                                </Text>
+                            </View>
+                            <View style={styles.orderRegisterBox}>
+                                <View style={styles.orderRegisterTextWrapper}>
+                                    <Feather
+                                        name="calendar"
+                                        size={18}
+                                        color="black"
+                                    />
+                                    <Text style={styles.orderRegisterText}>
+                                        Olib ketilgan sana
+                                    </Text>
+                                </View>
+                                <Text style={styles.orderRegisterDate}>
+                                    --.--.----
+                                </Text>
+                            </View>
+                            <View style={styles.orderRegisterBox}>
+                                <View style={styles.orderRegisterTextWrapper}>
+                                    <Feather
+                                        name="calendar"
+                                        size={18}
+                                        color="black"
+                                    />
+                                    <Text style={styles.orderRegisterText}>
+                                        Qabul qilingan sana
+                                    </Text>
+                                </View>
+                                <Text style={styles.orderRegisterDate}>
+                                    --.--.----
+                                </Text>
+                            </View>
+                        </View>
+
+                        <View style={styles.third}>
+                            <View style={styles.orderNumber}>
+                                <Text style={styles.summText}>
+                                    Umumiy summa:
+                                </Text>
+                                <Text style={styles.orderSumm}>
+                                    1 750 00 so'm
+                                </Text>
+                            </View>
+                        </View>
+                    </TouchableOpacity>
+                </ScrollView>
+            ) : (
+                <View style={styles.emptyOrderView}> 
+                    <View style={styles.emptyBox}></View>
+                </View>
+            )}
+
             <TouchableOpacity
                 style={styles.fab}
                 onPress={() =>

@@ -18,11 +18,23 @@ export const styles = StyleSheet.create({
         alignItems: "center",
         padding: 16,
     },
+    emptyOrderView: {
+        height: "100%",
+        width: "100%",
+        backgroundColor: "white",
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    emptyBox: {
+        backgroundColor: colors.gray,
+        height: 200,
+        width: 200,
+    },
     orderBox: {
         height: height / 3.3,
         width: width / 1.09,
         paddingHorizontal: 24,
-        paddingVertical: 14,
+        paddingVertical: 10,
         borderRadius: 10,
         justifyContent: "space-between",
         marginBottom: 16,
@@ -39,7 +51,7 @@ export const styles = StyleSheet.create({
         flex: 5,
         paddingVertical: 10,
         borderBottomColor: colors.gray,
-        borderBottomWidth: 1, 
+        borderBottomWidth: 1,
     },
     third: {
         flex: 2,
@@ -48,7 +60,7 @@ export const styles = StyleSheet.create({
         flex: 1,
         flexDirection: "row",
         justifyContent: "space-between",
-        alignItems: "center"
+        alignItems: "center",
     },
     orderStatusWrapper: {
         flex: 1,
@@ -76,7 +88,7 @@ export const styles = StyleSheet.create({
         flex: 1,
         flexDirection: "row",
         justifyContent: "space-between",
-        alignItems: "center"
+        alignItems: "center",
     },
     orderRegisterTextWrapper: {
         flexDirection: "row",
@@ -85,18 +97,18 @@ export const styles = StyleSheet.create({
     },
     orderRegisterText: {
         fontSize: 14,
-        marginLeft: 5
+        marginLeft: 5,
     },
     orderRegisterDate: {
         fontSize: 14,
     },
     summText: {
-        fontSize: 14
+        fontSize: 14,
     },
     orderSumm: {
         fontSize: 16,
         fontWeight: "bold",
-        color: colors.blue
+        color: colors.blue,
     },
     fab: {
         width: 64,
