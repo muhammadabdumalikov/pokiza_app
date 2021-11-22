@@ -13,28 +13,29 @@ import { request } from "../../../helpers/request.js";
 import styles from "./styles";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/client";
+import LogoSvg from "../../../../assets/svg/logo";
 
 const LOGIN = gql`
-mutation ($phoneNumber: String!){
-    enterClientPhone(phoneNumber: $phoneNumber){
-      status
-      data
-      message
+    mutation ($phoneNumber: String!) {
+        enterClientPhone(phoneNumber: $phoneNumber) {
+            status
+            data
+            message
+        }
     }
-  }
 `;
 
 export default function ({ navigation }) {
-    const {phoneNumber, setPhoneNumber} = useContext(AuthContext);
-    const [login, {loading}] = useMutation(LOGIN);
-    
+    const { phoneNumber, setPhoneNumber } = useContext(AuthContext);
+    const [login, { loading }] = useMutation(LOGIN);
+
     const handleLoginPress = () => {
         login({
             variables: {
                 phoneNumber: phoneNumber,
-            }
+            },
         })
-            .then(({data}) => {
+            .then(({ data }) => {
                 console.log(data);
                 if (data.enterClientPhone.status == 200) {
                     navigation.navigate("ConfirmCode");
@@ -55,7 +56,7 @@ export default function ({ navigation }) {
         // } catch (error) {
         //     console.log(error);
         // }
-    }
+    };
 
     return (
         <ScrollView
@@ -63,10 +64,10 @@ export default function ({ navigation }) {
             contentContainerStyle={styles.content}
         >
             <View style={styles.logoBox}>
-                <Text style={styles.signIn}>Sign In</Text>
+                {/* <LogoSvg/> */}
+                <Text style={styles.signIn}>Tizimga kirish</Text>
                 <Text style={styles.signInDescription}>
-                    But I must explain to you how all this mistaken idea of
-                    denouncing pleasure
+                    Tizimga kirish uchun telefon raqamingizni kiriting.
                 </Text>
             </View>
             <View style={styles.signInBox}>
@@ -75,22 +76,22 @@ export default function ({ navigation }) {
                     behavior={Platform.OS === "ios" ? "padding" : "height"}
                 >
                     <View style={styles.preTextWrapperStyle}>
-                        <Text style={styles.preText}>Number</Text>
+                        <Text style={styles.preText}>Telefon raqam</Text>
                     </View>
-                    <TextInput
-                        style={styles.input}
-                        numberOfLines={1}
-                        placeholder="Enter phone number"
-                        placeholderTextColor="#B8B8BB"
-                        onChangeText={(number) => setPhoneNumber(number)}
-                        keyboardType="phone-pad"
-                        // autoFocus={true}
-                        maxLength={12}
-                    />
+                    <View style={styles.inputWrapper}>
+                        <Text style={{ fontSize: 16, color: "black"}}>+998</Text>
+                        <TextInput
+                            style={styles.input}
+                            numberOfLines={1}
+                            placeholder="Enter phone number"
+                            placeholderTextColor="#B8B8BB"
+                            onChangeText={(number) => setPhoneNumber(number)}
+                            keyboardType="phone-pad"
+                            // autoFocus={true}
+                            maxLength={12}
+                        />
+                    </View>
                 </View>
-                <TouchableOpacity style={styles.forgotPassWrapper}>
-                    <Text style={styles.forgotPass}>Forgot Password?</Text>
-                </TouchableOpacity>
 
                 <TouchableOpacity
                     style={styles.sendCodeWrapper}

@@ -1,5 +1,6 @@
 import { Dimensions, StyleSheet,  Platform } from "react-native";
 import Constants from "expo-constants";
+import { colors } from "../../../constants/color";
 
 const statusBarHeight = Constants.statusBarHeight;
 const width = Dimensions.get("window").width;
@@ -23,7 +24,7 @@ export default StyleSheet.create({
     },
     signIn: {
         top: height / 2.96,
-        width: 80,
+        width: "100%",
         height: 32,
         fontWeight: "bold",
         fontSize: 24,
@@ -51,32 +52,36 @@ export default StyleSheet.create({
         marginTop: 5,
         marginBottom: 10,
         width: "100%",
-        height: height / 15,
+        height: height / 7,
         borderBottomColor: "#ccc",
         borderRadius: 3,
         borderBottomWidth: 1,
-        flexDirection: "row",
-        alignItems: "center",
         backgroundColor: "#fff",
+        paddingLeft: 25
     },
     preTextWrapperStyle: {
-        padding: 10,
-        height: "100%",
+        flex: 1,
         justifyContent: "center",
-        alignItems: "center",
         width: "30%",
     },
     preText: {
         fontSize: 16,
+        color: colors.gray
     },
     input: {
-        width: "100%",
         padding: 10,
         flex: 1,
         fontSize: 16,
         color: "#666",
         justifyContent: "center",
         alignItems: "center",
+    },
+    inputWrapper: {
+        flexDirection: "row",
+        alignItems: "center"
+    },
+    inputTxt: {
+        fontSize: 16,
     },
     inputField: {
         padding: 10,
@@ -87,19 +92,6 @@ export default StyleSheet.create({
         fontSize: 16,
         borderRadius: 8,
         borderWidth: 1,
-    },
-    forgotPassWrapper: {
-        width: 105,
-        position: "absolute",
-        bottom: height / 3.87,
-        right: width / 16.3,
-    },
-    forgotPass: {
-        textDecorationLine: "underline",
-        width: "100%",
-        textAlign: "center",
-        color: "#007AFF",
-        fontSize: 12,
     },
     sendCodeWrapper: {
         position: "absolute",

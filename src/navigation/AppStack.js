@@ -42,6 +42,11 @@ const OrdersStack = ({ navigation, route }) => {
                         elevation: 0,
                         height: Dimensions.get("window").height / 5.8,
                     },
+                    headerRight: () => (
+                        <TouchableOpacity style={{ marginRight: 20 }}>
+                            <Feather name="phone" size={24} color="#007AFF" />
+                        </TouchableOpacity>
+                    ),
                 }}
             />
             <Stack.Screen
