@@ -27,6 +27,7 @@ const OrderDetailScreen = ({ navigation, route }) => {
     ];
 
     const renderItem = ({ item }) => {
+        console.log(item)
         return (
             <View style={styles.ordersList}>
                 <TouchableOpacity
