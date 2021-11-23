@@ -1,25 +1,37 @@
 import { Dimensions, StyleSheet } from "react-native";
 
+import { colors } from "../../../constants/color";
+
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
 
 export const styles = StyleSheet.create({
+    containerAll: {
+        flex: 1,
+        width: "100%",
+        height: "100%",
+        padding: 16,
+        // backgroundColor: "white",
+    },
     container: {
         flex: 1,
-        width: width,
+        width: "100%",
         height: "100%",
     },
     contentStyle: {
         alignItems: "center",
-        padding: 16,
     },
     sumLine: {
-        width: width / 1.09,
-        height: 29,
+        width: "100%",
+        height: 45,
         flexDirection: "row",
         justifyContent: "space-between",
         alignItems: "center",
-        marginHorizontal: width/23.43
+    },
+    orderBottom: {
+        paddingBottom: 5,
+        borderBottomColor: colors.lightGray,
+        borderBottomWidth: .5
     },
     sumText: {
         fontSize: 14,
@@ -31,10 +43,28 @@ export const styles = StyleSheet.create({
         color: "#007AFF",
         fontWeight: "bold",
     },
-    outOfTurn: {
-        color: "#E50000",
+    orderIdText: {
+        fontSize: 17,
         fontWeight: "bold",
-        fontSize: 18,
+    },
+    orderStatus: {
+        fontSize: 16,
+    },
+    orderStatusTxt: {
+        fontSize: 14,
+        textAlign: "center",
+        textAlignVertical: "center",
+        backgroundColor: colors.lightPink,
+        padding: 5,
+        borderColor: colors.pink,
+        borderWidth: 1,
+        borderRadius: 5,
+        color: colors.pink,
+    },
+    outOfTurn: {
+        color: "black",
+        fontWeight: "bold",
+        fontSize: 14,
     },
     ordersList: {
         marginBottom: 16,
@@ -79,10 +109,10 @@ export const styles = StyleSheet.create({
         borderRadius: 10,
         // borderWidth: .2,
         overflow: "hidden",
-        marginBottom: 8
+        marginBottom: 8,
     },
     orderDetailTextContent: {
-        width: (width / 1.09) - (width/4.21),
+        width: width / 1.09 - width / 4.21,
         flexDirection: "row",
         paddingHorizontal: 24,
         paddingVertical: 14,
@@ -92,29 +122,33 @@ export const styles = StyleSheet.create({
     orderDetailStatusContent: {
         justifyContent: "space-around",
     },
+    hiddenContent: {
+        maxHeight: height/3,
+        width: "100%"
+    },
     statusText: {
         fontSize: 14,
-        fontWeight: "bold"
+        fontWeight: "bold",
     },
     status: {
         fontSize: 18,
-        fontWeight: "bold"
+        fontWeight: "bold",
     },
     orderDetailSizeContent: {
         justifyContent: "space-around",
     },
     sizeText: {
         fontSize: 14,
-        fontWeight: "bold"
+        fontWeight: "bold",
     },
     size: {
         fontSize: 18,
-        fontWeight: "bold"
+        fontWeight: "bold",
     },
     orderImage: {
         width: width / 4.21,
         height: "100%",
-        backgroundColor: "gray"
+        backgroundColor: "gray",
     },
     fab: {
         width: 64,

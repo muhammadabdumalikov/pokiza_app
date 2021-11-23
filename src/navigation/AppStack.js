@@ -40,7 +40,7 @@ const OrdersStack = ({ navigation, route }) => {
                     backgroundColor: "#F4F4F5",
                     shadowColor: "#fff",
                     elevation: 0,
-                    height: height * 0.2,
+                    height: height * 0.15 ,
                 },
                 headerRight: () => <CallButton />,
                 headerLeft: () => <LogoImage />,
@@ -50,27 +50,6 @@ const OrdersStack = ({ navigation, route }) => {
             <Stack.Screen
                 name="OrderDetailScreen"
                 component={OrderDetailScreen}
-                options={({ route }) => ({
-                    headerTitleAlign: "center",
-                    headerTitleStyle: {
-                        fontSize: 18,
-                        top: height / 32.48,
-                        textAlign: "center",
-                    },
-                    headerStyle: {
-                        backgroundColor: "#F4F4F5",
-                        shadowColor: "#fff",
-                        elevation: 0,
-                        height: Dimensions.get("window").height / 5.8,
-                    },
-                    title: route.params.id,
-                    headerRight: () => (
-                        <TouchableOpacity style={{ marginRight: 20 }}>
-                            <Feather name="phone" size={24} color="#007AFF" />
-                        </TouchableOpacity>
-                    ),
-                    headerLeft: () => null,
-                })}
             />
             <Stack.Screen name="AddOrderScreen" component={AddOrderScreen} />
         </Stack.Navigator>
