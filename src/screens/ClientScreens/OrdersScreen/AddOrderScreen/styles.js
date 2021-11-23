@@ -23,9 +23,6 @@ const styles = StyleSheet.create({
         borderBottomColor: "gray",
         borderBottomWidth: 0.9,
         padding: 15,
-        borderWidth: 1,
-        borderRadius: 10,
-        borderColor: "gray",
     },
     inputContainer: {
         flex: 1,
@@ -48,9 +45,6 @@ const styles = StyleSheet.create({
     tariffBox: {
         height: "10%",
         paddingHorizontal: 10,
-        borderWidth: 1,
-        borderRadius: 10,
-        borderColor: "gray",
         marginTop: 10,
         marginBottom: 10,
     },
@@ -67,9 +61,6 @@ const styles = StyleSheet.create({
     dateInfoBox: {
         height: "10%",
         paddingHorizontal: 10,
-        borderWidth: 1,
-        borderRadius: 10,
-        borderColor: "gray",
     },
     sendCodeWrapper: {
         backgroundColor: "#2196F3",
