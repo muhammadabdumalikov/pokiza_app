@@ -1,53 +1,32 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, Text, ScrollView } from "react-native";
-import ShowMoreText from "react-show-more-text";
 
 import { styles } from "./styles";
 
 const NoticesScreen = () => {
+    const [text, setText] = useState(
+        "Состоятельные жители Мехико в панике: всего за шесть дней в городе пропали 24 человека! Бывшего агента ЦРУ Джона Кризи нанимают телохранителем девятилетней дочери промышленника Сэмюэля Рамоса, Питы Рамос. Поначалу Кризи с трудом терпит соседство не по годам развитой девочки. Но со временем они становятся друзьями. Кризи вновь почувствовал вкус к жизни, но все рушится, когда Питу похищают. Кризи клянется убить любого, кто втянут в похищение Питы. Теперь его никто не остановит…"
+    );
+    const [showFull, setShowFull] = useState(false);
+
     return (
         <ScrollView contentContainerStyle={styles.container}>
-            <ShowMoreText
-                /* Default options */
-                lines={3}
-                more="Show more"
-                less="Show less"
-                className="content-css"
-                anchorClass="my-anchor-css-class"
-                onClick={this.executeOnClick}
-                expanded={false}
-                width={280}
-                truncatedEndingComponent={"... "}
-            >
-                Lorem ipsum dolor sit amet, consectetur{" "}
-                <a
-                    href="https://www.yahoo.com/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    yahoo.com
-                </a>{" "}
-                adipiscing elit, sed do eiusmod tempor incididunt
-                <a
-                    href="https://www.google.bg/"
-                    title="Google"
-                    rel="nofollow"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    www.google.bg
-                </a>{" "}
-                ut labore et dolore magna amet, consectetur adipiscing elit, sed
-                do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-                Ut enim ad minim veniam, quis nostrud exercitation ullamco
-                laboris nisi ut aliquip ex Lorem ipsum dolor sit amet,
-                consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-                labore et dolore magna aliqua. Ut enim ad minim veniam, quis
-                nostrud exercitation ullamco laboris nisi ut aliquip ex Lorem
-                ipsum dolor sit amet, consectetur adipiscing elit, sed do
-                eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-                enim ad minim veniam, quis nostrud exercitation
-            </ShowMoreText>
+            {showFull ? (
+                <Text>
+                    {text}
+                    <Text
+                        style={styles.toggleText}
+                        onPress={() => setShowFull(false)}
+                    >
+                        Less
+                    </Text>
+                </Text>
+            ) : (
+                <Text>
+                    {text.split(".")[0] + "."}
+                    <Text onPress={() => setShowFull(true)}>More</Text>
+                </Text>
+            )}
         </ScrollView>
     );
 };

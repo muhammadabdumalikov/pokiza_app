@@ -7,11 +7,11 @@ export const styles = StyleSheet.create({
     container: {
         padding: 16,
         height: "100%",
-        backgroundColor: "#fff"
+        backgroundColor: "#fff",
     },
     noticeBox: {
         width: width / 1.09,
-        height: height / 14.5,
+        minHeight: 100,
         backgroundColor: "#F4F4F5",
         borderRadius: 10,
         overflow: "hidden",
@@ -20,6 +20,13 @@ export const styles = StyleSheet.create({
         alignItems: "center",
         paddingHorizontal: 24,
     },
+    textStyle: {
+        flex: 1,
+    },
+    toggleText: {
+        color: "#3742fa",
+        fontWeight: "bold"
+    },
     statusText: {
         fontSize: 14,
         fontWeight: "bold",
@@ -27,9 +34,9 @@ export const styles = StyleSheet.create({
     statusTextColor: {
         fontSize: 14,
         fontWeight: "bold",
-        color: "#FFA000"
+        color: "#FFA000",
     },
     timeText: {
-        fontSize: 12
-    }
+        fontSize: 12,
+    },
 });
