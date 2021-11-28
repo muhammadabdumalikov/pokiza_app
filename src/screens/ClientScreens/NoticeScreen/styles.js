@@ -17,6 +17,10 @@ export const styles = StyleSheet.create({
         overflow: "hidden",
         padding: 16,
     },
+    noticeTxtTitle: {
+        fontSize: 16,
+        fontWeight: "bold"
+    },
     logoLine: {
         flexDirection: "row",
         height: 50,
