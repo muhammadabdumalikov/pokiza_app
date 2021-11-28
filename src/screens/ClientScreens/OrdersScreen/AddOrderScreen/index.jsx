@@ -71,8 +71,9 @@ const AddOrderScreen = ({ navigation }) => {
         async function fetchData() {
             try {
                 const value = await AsyncStorage.getItem("user_token");
-                setUserToken(value);
-                setStates(await request(GET_STATE_QUERY, null, value));
+                console.log(value)
+                setUserToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlblN0YWZmIjp0cnVlLCJ0b2tlbkNsaWVudCI6ZmFsc2UsInVzZXJfaWQiOiI1IiwiYWRkcmVzc19pZCI6IjUiLCJzdGFmZl9pZCI6IjIiLCJjbGllbnRfaWQiOm51bGwsImlzX3JlZ2lzdGVyZWQiOnRydWUsInN0YWZmIjp0cnVlLCJjbGllbnQiOmZhbHNlLCJpYXQiOjE2MzUyNjcyMjN9.148eRCcrVWVn7A2uEx6w0oz5T0hKh-dsglSMCHIBk0U");
+                setStates(await request(GET_STATE_QUERY, null, userToken));
                 setLoading(false);
             } catch (error) {
                 console.log(error);
@@ -178,6 +179,7 @@ const AddOrderScreen = ({ navigation }) => {
             </TouchableOpacity>
         );
     };
+
     return (
         <>
             {isLoading ? (
@@ -219,7 +221,7 @@ const AddOrderScreen = ({ navigation }) => {
                                     <View style={styles.centeredView}>
                                         <View style={styles.modalWrapper}>
                                             <FlatList
-                                                data={states.states}
+                                                data={states ? states.states : []}
                                                 renderItem={modalState}
                                                 keyExtractor={(item) =>
                                                     item.stateId

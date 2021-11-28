@@ -15,10 +15,27 @@ export const styles = StyleSheet.create({
         backgroundColor: "#F4F4F5",
         borderRadius: 10,
         overflow: "hidden",
+        padding: 16,
+    },
+    logoLine: {
         flexDirection: "row",
+        height: 50,
         justifyContent: "space-between",
         alignItems: "center",
-        paddingHorizontal: 24,
+    },
+    logoImg: {
+        height: "100%",
+        width: "40%",
+    },
+    logoDate: {
+        fontSize: 14,
+        fontWeight: "bold"
+    },
+    noticeTxt: {
+    },
+    photo: {
+        width: "100%",
+        height: 150
     },
     textStyle: {
         flex: 1,
