@@ -20,14 +20,13 @@ export const CardComponent = ({ item }) => {
                 <View style={styles.orderBoxContent}>
                     <View style={styles.orderNumber}>
                         <Text style={styles.orderNumberStyle}>
-                            3 pcs.
+                            {"3"} dona {" "}
                             <Text style={styles.productNameStyle}>
-                                {" "}
-                                carpet
+                                {"Gilam"}
                             </Text>
                         </Text>
                         <Text>
-                            Size:
+                            O'lcham:
                             <Text style={styles.orderNumberStyle}>
                                 {" "}
                                 37 m.kv
@@ -36,7 +35,7 @@ export const CardComponent = ({ item }) => {
                     </View>
                     <View style={styles.orderNumber}>
                         <Text style={styles.orderNumberStyle}>
-                            Price: 185.000{" "}
+                            Jami: 185.000{" "}
                             <Text style={{ fontSize: 12 }}>sum</Text>
                         </Text>
                         <Text style={styles.finishedProduct}>
@@ -66,7 +65,7 @@ export const CardComponent = ({ item }) => {
                 collapsed={collapsed}
                 align="center"
             >
-                <View>
+               
                     <View
                         style={{
                             ...styles.orderDetailBox,
@@ -76,18 +75,40 @@ export const CardComponent = ({ item }) => {
                         <View style={styles.orderDetailTextContent}>
                             <View style={styles.orderDetailStatusContent}>
                                 <Text style={styles.statusText}>
-                                    Status:
+                                    Holati:
                                 </Text>
-                                <Text style={styles.status}>Done</Text>
+                                <Text style={styles.status}>{"Yuvilishda"}</Text>
+                                <Text style={styles.priceText}>Narxi</Text>
                             </View>
                             <View style={styles.orderDetailSizeContent}>
-                                <Text style={styles.sizeText}>Size:</Text>
+                                <Text style={styles.sizeText}>O'lcham:</Text>
                                 <Text style={styles.size}>12 m.kv</Text>
+                                <Text style={styles.priceText}>{"64.000"} so'm</Text>
                             </View>
                         </View>
                         <Image style={styles.orderImage} />
                     </View>
-                </View>
+                    <View
+                        style={{
+                            ...styles.orderDetailBox,
+                        }}
+                    >
+                        <View style={styles.orderDetailTextContent}>
+                            <View style={styles.orderDetailStatusContent}>
+                                <Text style={styles.statusText}>
+                                    Holati:
+                                </Text>
+                                <Text style={styles.status}>{"Yuvilishda"}</Text>
+                                <Text style={styles.priceText}>Narxi</Text>
+                            </View>
+                            <View style={styles.orderDetailSizeContent}>
+                                <Text style={styles.sizeText}>O'lcham:</Text>
+                                <Text style={styles.size}>12 m.kv</Text>
+                                <Text style={styles.priceText}>{"64.000"} so'm</Text>
+                            </View>
+                        </View>
+                        <Image style={styles.orderImage} />
+                    </View>
             </Collapsible>
         </View>
     );

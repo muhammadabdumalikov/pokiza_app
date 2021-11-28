@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View, Text, ScrollView, TouchableOpacity } from "react-native";
+import { View, Text, ScrollView, TouchableOpacity, Pressable, Touchable } from "react-native";
 import { MaterialIcons, Feather } from "@expo/vector-icons";
 
 import { styles } from "./styles";

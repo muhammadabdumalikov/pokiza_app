@@ -104,7 +104,7 @@ export const styles = StyleSheet.create({
     orderDetailBox: {
         flexDirection: "row",
         width: width / 1.09,
-        height: height / 9.12,
+        height: height / 7.12,
         backgroundColor: "white",
         borderRadius: 10,
         // borderWidth: .2,
@@ -115,7 +115,7 @@ export const styles = StyleSheet.create({
         width: width / 1.09 - width / 4.21,
         flexDirection: "row",
         paddingHorizontal: 24,
-        paddingVertical: 14,
+        paddingVertical: 10,
         height: "100%",
         justifyContent: "space-between",
     },
@@ -131,8 +131,13 @@ export const styles = StyleSheet.create({
         fontWeight: "bold",
     },
     status: {
-        fontSize: 18,
-        fontWeight: "bold",
+        fontSize: 14,
+        padding: 5,
+        borderWidth: 1,
+        borderColor: colors.blue,
+        backgroundColor: colors.lightBlue,
+        borderRadius: 5,
+        color: colors.blue
     },
     orderDetailSizeContent: {
         justifyContent: "space-around",
@@ -143,6 +148,10 @@ export const styles = StyleSheet.create({
     },
     size: {
         fontSize: 18,
+        fontWeight: "bold",
+    },
+    priceText: {
+        fontSize: 14,
         fontWeight: "bold",
     },
     orderImage: {
