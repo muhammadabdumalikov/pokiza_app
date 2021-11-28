@@ -5,16 +5,17 @@ const height = Dimensions.get("window").height;
 
 export const styles = StyleSheet.create({
     container: {
-        padding: 16,
+        padding: 24,
         height: "100%",
         backgroundColor: "#fff"
     },
     containerContent: {
         height: height < 600 ? 450 : "100%",
         // backgroundColor: "#fff"
+        justifyContent: "space-between"
     },
     settingsBox: {
-        width: width / 1.09,
+        width: "100%",
         marginBottom: 16
     },
     oneSettingBox: {

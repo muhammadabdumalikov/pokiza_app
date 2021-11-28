@@ -15,41 +15,37 @@ const SettingsScreen = () => {
 
             <View style={styles.settingsBox}>
                 <TouchableOpacity style={styles.oneSettingBox}>
-                    <Text style={styles.settingText}>Change Name</Text>
+                    <Text style={styles.settingText}>Ma'lumotlarni o'zgartirish</Text>
                     <Feather name="edit" size={24} color="black" />
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.oneSettingBox}>
-                    <Text style={styles.settingText}>Change Phone Number</Text>
+                    <Text style={styles.settingText}>Telefon raqamini o'zgartirish</Text>
                     <Feather name="smartphone" size={24} color="black" />
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.oneSettingBox}>
-                    <Text style={styles.settingText}>Change Password</Text>
-                    <Feather name="lock" size={24} color="black" />
-                </TouchableOpacity>
-                <TouchableOpacity style={styles.oneSettingBox}>
-                    <Text style={styles.settingText}>Change Location</Text>
+                <Text style={styles.settingText}>Manzilni o'zgartirish</Text>
                     <Feather name="map-pin" size={24} color="black" />
                 </TouchableOpacity>
                 <TouchableOpacity style={styles.oneSettingBox}>
-                    <Text style={styles.settingText}>Change Lanuage</Text>
+                <Text style={styles.settingText}>Tilni o'zgartirish</Text>
                     <Feather name="globe" size={24} color="black" />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.oneSettingBox}>
-                    <Text style={styles.settingText}>Contact with Support</Text>
-                    <Feather name="help-circle" size={24} color="black" />
+                <TouchableOpacity style={{...styles.oneSettingBox, marginTop: 25}}>
+                    <Text style={styles.settingText}>Tizimdan chiqish</Text>
+                    <Feather name="log-out" size={24} color="black" />
                 </TouchableOpacity>
             </View>
 
             <TouchableOpacity style={styles.oneSettingBox}>
                 <Text style={{ ...styles.settingText, color: "#E50000" }}>
-                    Exit Account
+                    Akkauntni o'chirish
                 </Text>
                 <Feather name="log-out" size={24} color="#E50000" />
             </TouchableOpacity>
             {/* About us button /////////////////////////////////////////////////////////////////// */}
-            <TouchableOpacity style={styles.aboutUsWrapper}>
+            {/* <TouchableOpacity style={styles.aboutUsWrapper}>
                 <Text style={styles.aboutUs}>About us</Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
         </ScrollView>
     );
 };
