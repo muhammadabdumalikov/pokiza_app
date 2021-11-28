@@ -28,8 +28,8 @@ export const styles = StyleSheet.create({
         alignItems: "center",
     },
     logoImg: {
-        height: "100%",
-        width: "40%",
+        height: "80%",
+        width: "25%",
     },
     logoDate: {
         fontSize: 14,
