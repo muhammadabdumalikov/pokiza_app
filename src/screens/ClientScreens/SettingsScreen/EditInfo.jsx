@@ -17,6 +17,8 @@ const EditInfo = () => {
                     <TextInput
                         style={styles.preText}
                         placeholder="Familiyangizni kiriting"
+                        placeholderTextColor="#B8B8BB"
+                        maxLength={20}
                     />
                 </View>
                 <View style={styles.inputContainer}>
@@ -24,6 +26,8 @@ const EditInfo = () => {
                     <TextInput
                         style={styles.preText}
                         placeholder="Ismingizni kiriting"
+                        placeholderTextColor="#B8B8BB"
+                        maxLength={20}
                     />
                 </View>
                 <View
