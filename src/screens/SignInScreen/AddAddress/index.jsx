@@ -96,45 +96,28 @@ const GET_BRANCHES_QUERY = `query($regionId: ID!){
     }
   }`;
 
-const MUTATION_ADD_ADDRESS = `mutation($stateId: ID! ,$regionId: ID!, $neighborhoodId: ID!, $streetId: ID!, $areaId: ID, $target: String, $homeNumber: Int){ 
-    addAddress (stateId: $stateId, regionId: $regionId, neighborhoodId: $neighborhoodId, streetId: $streetId, areaId: $areaId, target: $target, homeNumber: $homeNumber){
+const MUTATION_ADD_ADDRESS = `mutation($stateId:ID!,$regionId:ID!){ 
+    addAddress (stateId: $stateId, regionId: $regionId){
       status
       message
       data
     }
   }`;
 
-const MUTATION_REGISTER_CLIENT = `mutation(
-    $firstName: String!
-    $lastName: String
-    $secondContact: String
-    $age: Int!
-    $gender: Int!
-    $branchId: ID!
-    $addressId: ID!
-  ) {
-    registerClient(
-      firstName: $firstName
-      lastName: $lastName
-      age: $age
-      gender: $gender
-      secondContact: $secondContact
-      branchId: $branchId
-      addressId: $addressId
-    ) {
+const MUTATION_REGISTER_CLIENT = `mutation($firstName:String!,$lastName:String,$age:Int!,$gender:Int!,$branchId:ID!,$addressId:ID!){
+    registerClient(firstName: $firstName,lastName: $lastName,age: $age,gender: $gender,branchId: $branchId,addressId: $addressId){
       status
       message
       data
       token
     }
-  }
-  `;
+  }`;
 
 const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
 
 const AddAddress = ({ navigation }) => {
-    const { firstName, lastName, gender, age } = useContext(AuthContext);
+    const { firstName, lastName, gender, age, setUser } = useContext(AuthContext);
     const [selectedState, setSelectedState] = useState();
     let [states, setStates] = useState();
     const [selectedRegion, setSelectedRegion] = useState();
@@ -200,39 +183,39 @@ const AddAddress = ({ navigation }) => {
         fetchAreas();
     }, [selectedRegion]);
 
-    useEffect(() => {
-        async function fetchNeighborhood() {
-            try {
-                setNeighborhood(
-                    await request(
-                        GET_NEIGHBORHOOD_QUERY,
-                        { regionId: selectedRegion },
-                        userToken
-                    )
-                );
-            } catch (error) {
-                console.log(error);
-            }
-        }
-        fetchNeighborhood();
-    }, [selectedRegion]);
+    // useEffect(() => {
+    //     async function fetchNeighborhood() {
+    //         try {
+    //             setNeighborhood(
+    //                 await request(
+    //                     GET_NEIGHBORHOOD_QUERY,
+    //                     { regionId: selectedRegion },
+    //                     userToken
+    //                 )
+    //             );
+    //         } catch (error) {
+    //             console.log(error);
+    //         }
+    //     }
+    //     fetchNeighborhood();
+    // }, [selectedRegion]);
 
-    useEffect(() => {
-        async function fetchStreet() {
-            try {
-                setStreet(
-                    await request(
-                        GET_STREET_QUERY,
-                        { neighborhoodId: selectedNeighborhood },
-                        userToken
-                    )
-                );
-            } catch (error) {
-                console.log(error);
-            }
-        }
-        fetchStreet();
-    }, [selectedNeighborhood]);
+    // useEffect(() => {
+    //     async function fetchStreet() {
+    //         try {
+    //             setStreet(
+    //                 await request(
+    //                     GET_STREET_QUERY,
+    //                     { neighborhoodId: selectedNeighborhood },
+    //                     userToken
+    //                 )
+    //             );
+    //         } catch (error) {
+    //             console.log(error);
+    //         }
+    //     }
+    //     fetchStreet();
+    // }, [selectedNeighborhood]);
 
     useEffect(() => {
         async function fetchBranches() {
@@ -520,23 +503,25 @@ const AddAddress = ({ navigation }) => {
                                         {
                                             stateId: selectedState,
                                             regionId: selectedRegion,
-                                            neighborhoodId:
-                                                selectedNeighborhood,
-                                            streetId: selectedStreet,
-                                            areaId: selectedArea,
-                                            target: target,
-                                            homeNumber: homeNumber,
                                         },
                                         userToken
                                     );
-                                    let registerClient = await request(
+                                    console.log(
+                                        firstName,
+                                        lastName,
+                                        parseInt(age),
+                                        parseInt(gender),
+                                        selectedBranch,
+                                        addAddress.addAddress.data.address_id
+                                    );
+                                    console.log(addAddress);
+                                    let {registerClient} = await request(
                                         MUTATION_REGISTER_CLIENT,
                                         {
                                             firstName: firstName,
                                             lastName: lastName,
-                                            age: age,
-                                            gender: gender,
-                                            secondContact: null,
+                                            age: parseInt(age),
+                                            gender: parseInt(gender),
                                             branchId: selectedBranch,
                                             addressId:
                                                 addAddress.addAddress.data
@@ -544,23 +529,13 @@ const AddAddress = ({ navigation }) => {
                                         },
                                         userToken
                                     );
-                                    console.log(
-                                        firstName,
-                                        lastName,
-                                        age,
-                                        gender,
-                                        selectedBranch,
-                                        addAddress.addAddress.data.address_id
-                                    );
-                                    console.log(registerClient);
-                                    console.log(
-                                        selectedState,
-                                        selectedRegion,
-                                        selectedNeighborhood,
-                                        selectedStreet,
-                                        selectedArea
-                                    );
-                                    // setUser('aaa')
+                                    if(registerClient.data.is_registered){
+                                        setUser(registerClient.data)
+                                        AsyncStorage.setItem(
+                                            "user_token",
+                                            registerClient.token
+                                        );
+                                    }
                                 } catch (error) {
                                     console.log(error);
                                 }

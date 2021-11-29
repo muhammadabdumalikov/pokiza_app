@@ -137,8 +137,8 @@ const PersonalData = ({ navigation }) => {
                                     setGender(itemValue);
                                 }}
                             >
-                                <Picker.Item label="Erkak" value="male" />
-                                <Picker.Item label="Ayol" value="female" />
+                                <Picker.Item label="Erkak" value="1" />
+                                <Picker.Item label="Ayol" value="2" />
                             </Picker>
                         </View>
                     </View>
