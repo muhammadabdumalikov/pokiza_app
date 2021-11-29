@@ -25,9 +25,6 @@ export const styles = StyleSheet.create({
         justifyContent: "space-between",
         alignItems: "center",
         backgroundColor: "#F4F4F5",
-        // backgroundColor: "#F4F4F5",
-        // borderBottomWidth: .1,
-        // borderBottomColor: "#D5D5D5",
         borderRadius: 10,
         marginBottom:5
     },
@@ -44,5 +41,27 @@ export const styles = StyleSheet.create({
         fontWeight: "bold",
         textDecorationLine: "underline",
         color: "#007AFF"
-    }
+    },
+    inputContainer: {
+        width: "100%",
+        height: height / 13,
+        paddingHorizontal: 15,
+        borderBottomColor: "#ccc",
+        borderBottomWidth: 1,
+        borderRadius: 3,
+        flexDirection: "row",
+        alignItems: "center",
+        backgroundColor: "#fff",
+        justifyContent: "space-between",
+    },
+    preTextWrapperStyle: {
+        paddingLeft: 15,
+        height: "100%",
+        justifyContent: "center",
+        alignItems: "flex-start",
+        width: width * 0.3,
+    },
+    preText: {
+        fontSize: 16,
+    },
 });

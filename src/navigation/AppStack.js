@@ -19,6 +19,7 @@ import AddOrderScreen from "../screens/ClientScreens/OrdersScreen/AddOrderScreen
 import { colors } from "../constants/color";
 import LogoImage from "../components/LogoImage";
 import CallButton from "../components/callButton";
+import EditInfo from "../screens/ClientScreens/SettingsScreen/EditInfo";
 
 const height = Dimensions.get("window").height;
 
@@ -40,7 +41,7 @@ const OrdersStack = ({ navigation, route }) => {
                     backgroundColor: "#F4F4F5",
                     shadowColor: "#fff",
                     elevation: 0,
-                    height: height * 0.15 ,
+                    height: height * 0.15,
                 },
                 headerRight: () => <CallButton />,
                 headerLeft: () => <LogoImage />,
@@ -122,7 +123,23 @@ const LocationStack = ({ navigation, route }) => {
 
 const SettingsStack = ({ navigation, route }) => {
     return (
-        <Stack.Navigator screenOptions={{}}>
+        <Stack.Navigator
+            screenOptions={{
+                headerStyle: {
+                    backgroundColor: "#F4F4F5",
+                    shadowColor: "#fff",
+                    elevation: 0,
+                    height: Dimensions.get("window").height / 5.8,
+                },
+                // title: route.params.id,
+                headerRight: () => (
+                    <TouchableOpacity style={{ marginRight: 20 }}>
+                        <Feather name="phone" size={24} color="#007AFF" />
+                    </TouchableOpacity>
+                ),
+                headerLeft: () => null,
+            }}
+        >
             <Stack.Screen
                 name="SettingsScreen"
                 component={SettingsScreen}
@@ -146,6 +163,20 @@ const SettingsStack = ({ navigation, route }) => {
                         </TouchableOpacity>
                     ),
                     headerLeft: () => null,
+                })}
+            />
+            <Stack.Screen
+                name="EditInfo"
+                component={EditInfo}
+                options={({ route }) => ({
+                    headerTitle: "",
+                    headerStyle: {
+                        backgroundColor: "#F4F4F5",
+                        shadowColor: "#fff",
+                        elevation: 0,
+                        height: Dimensions.get("window").height / 5.8,
+                    },
+                    // title: route.params.id,
                 })}
             />
         </Stack.Navigator>
