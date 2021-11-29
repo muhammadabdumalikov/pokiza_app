@@ -1,4 +1,5 @@
 import { Dimensions, StyleSheet } from "react-native";
+import { colors } from "../../../constants/color";
 
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
@@ -44,8 +45,7 @@ export const styles = StyleSheet.create({
     },
     inputContainer: {
         width: "100%",
-        height: height / 13,
-        paddingHorizontal: 15,
+        height: height / 12,
         borderBottomColor: "#ccc",
         borderBottomWidth: 1,
         borderRadius: 3,
@@ -55,7 +55,6 @@ export const styles = StyleSheet.create({
         justifyContent: "space-between",
     },
     preTextWrapperStyle: {
-        paddingLeft: 15,
         height: "100%",
         justifyContent: "center",
         alignItems: "flex-start",
@@ -64,4 +63,20 @@ export const styles = StyleSheet.create({
     preText: {
         fontSize: 16,
     },
+    confirmPhoneChangedBtn: {
+        width: 120,
+        alignItems: "center",
+        justifyContent: "center",
+        alignSelf: "flex-end",
+        marginTop: 20
+    },
+    confirmPhoneChanged: {
+        paddingHorizontal: 15,
+        paddingVertical: 7,
+        backgroundColor: colors.blue,
+        borderRadius: 5,
+        fontSize: 16,
+        fontWeight: "bold",
+        color: "white",
+    }
 });
