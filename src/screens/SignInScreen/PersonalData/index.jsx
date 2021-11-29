@@ -37,7 +37,7 @@ const PersonalData = ({ navigation }) => {
                         <Text style={styles.signIn}>Tizimga kirish</Text>
                         <Text style={styles.signInDescription}>
                             SMS orqali kod yuborildi, agar kod yuborilmagan
-                            bo'lsa, qayta yuborish tugmasini bosing.{" "}
+                            bo'lsa, qayta yuborish tugmasini bosing.
                         </Text>
                     </View>
                 </View>
@@ -89,12 +89,12 @@ const PersonalData = ({ navigation }) => {
                         />
                     </View>
 
-                    <View style={{ ...styles.inputContainer }}>
+                    <View style={{ ...styles.inputContainer, borderBottomWidth: 0 }}>
                         {/* Age input ----------------------------------------------- */}
                         <View
                             style={{
                                 ...styles.inputContainer,
-                                borderBottomWidth: 0,
+                                borderBottomWidth: 1,
                                 width: "48%",
                             }}
                             behavior={
@@ -120,7 +120,7 @@ const PersonalData = ({ navigation }) => {
                         <View
                             style={{
                                 ...styles.inputContainer,
-                                borderBottomWidth: 0,
+                                borderBottomWidth: 1,
                                 width: "48%",
                             }}
                             behavior={

@@ -55,7 +55,7 @@ export default StyleSheet.create({
     },
     inputContainer: {
         width: "100%",
-        height: height / 10,
+        height: height / 12,
         borderBottomColor: "#ccc",
         borderBottomWidth: 1,
         borderRadius: 3,
@@ -116,6 +116,7 @@ export default StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         borderRadius: 10,
+        marginTop: 100
     },
     sendCodeText: {
         color: "#fff",
