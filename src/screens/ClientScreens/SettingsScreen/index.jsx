@@ -1,10 +1,10 @@
 import React from "react";
 import { View, Text, TouchableOpacity, ScrollView } from "react-native";
-import { Feather } from "@expo/vector-icons";
+import { Feather, Ionicons } from "@expo/vector-icons";
 
 import { styles } from "./styles";
 
-const SettingsScreen = ({navigation}) => {
+const SettingsScreen = ({ navigation }) => {
     return (
         <ScrollView
             style={styles.container}
@@ -12,25 +12,37 @@ const SettingsScreen = ({navigation}) => {
             showsVerticalScrollIndicator={false}
         >
             <View style={styles.settingsBox}>
-                <TouchableOpacity style={styles.oneSettingBox} onPress={() => navigation.navigate("EditInfo")}>
+                <TouchableOpacity
+                    style={styles.oneSettingBox}
+                    onPress={() => navigation.navigate("EditInfo")}
+                >
                     <Text style={styles.settingText}>
                         Ma'lumotlarni o'zgartirish
                     </Text>
                     <Feather name="edit" size={24} color="black" />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.oneSettingBox} onPress={() => navigation.navigate("EditPhoneNumber")}>
+                <TouchableOpacity
+                    style={styles.oneSettingBox}
+                    onPress={() => navigation.navigate("EditPhoneNumber")}
+                >
                     <Text style={styles.settingText}>
                         Telefon raqamini o'zgartirish
                     </Text>
                     <Feather name="smartphone" size={24} color="black" />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.oneSettingBox} onPress={() => navigation.navigate("EditLocation")}>
+                <TouchableOpacity
+                    style={styles.oneSettingBox}
+                    onPress={() => navigation.navigate("EditLocation")}
+                >
                     <Text style={styles.settingText}>
                         Manzilni o'zgartirish
                     </Text>
                     <Feather name="map-pin" size={24} color="black" />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.oneSettingBox} onPress={() => navigation.navigate("EditLanguage")}>
+                <TouchableOpacity
+                    style={styles.oneSettingBox}
+                    onPress={() => navigation.navigate("EditLanguage")}
+                >
                     <Text style={styles.settingText}>Tilni o'zgartirish</Text>
                     <Feather name="globe" size={24} color="black" />
                 </TouchableOpacity>
