@@ -6,6 +6,7 @@ import {
     Text,
     ActivityIndicator,
     TextInput,
+    Dimensions
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -132,12 +133,14 @@ const EditLocation = ({ navigation }) => {
     let target;
     let homeNumber;
 
+    const height = Dimensions.get("window").height;
+
+
     useEffect(() => {
         async function fetchData() {
             try {
                 const value = await AsyncStorage.getItem("user_token");
                 setUserToken(value);
-                console.log(value);
                 setStates(await request(GET_STATE_QUERY, null, value));
                 setLoading(false);
             } catch (error) {
@@ -235,21 +238,22 @@ const EditLocation = ({ navigation }) => {
     return (
         <View>
             <ScrollView
-                style={{...styles.container, padding: 0}}
+                style={{ ...styles.container, padding: 0 }}
                 contentContainerStyle={styles.content}
-                showsVerticalScrollIndicator="false"
+                showsVerticalScrollIndicator={false}
             >
                 {isLoading ? (
                     <View
                         style={{
                             flex: 1,
+                            height: height,
                             justifyContent: "center",
                             alignItems: "center",
                         }}
                     >
                         <ActivityIndicator
                             size="large"
-                            color="#00ff00"
+                            color="#2196F3"
                             style={{ alignSelf: "center" }}
                         />
                     </View>
