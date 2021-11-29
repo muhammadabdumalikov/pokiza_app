@@ -24,13 +24,13 @@ const SettingsScreen = ({navigation}) => {
                     </Text>
                     <Feather name="smartphone" size={24} color="black" />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.oneSettingBox}>
+                <TouchableOpacity style={styles.oneSettingBox} onPress={() => navigation.navigate("EditLocation")}>
                     <Text style={styles.settingText}>
                         Manzilni o'zgartirish
                     </Text>
                     <Feather name="map-pin" size={24} color="black" />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.oneSettingBox}>
+                <TouchableOpacity style={styles.oneSettingBox} onPress={() => navigation.navigate("EditLanguage")}>
                     <Text style={styles.settingText}>Tilni o'zgartirish</Text>
                     <Feather name="globe" size={24} color="black" />
                 </TouchableOpacity>
