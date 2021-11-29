@@ -20,6 +20,7 @@ import { colors } from "../constants/color";
 import LogoImage from "../components/LogoImage";
 import CallButton from "../components/callButton";
 import EditInfo from "../screens/ClientScreens/SettingsScreen/EditInfo";
+import EditPhoneNumber from "../screens/ClientScreens/SettingsScreen/EditPhoneNumber";
 
 const height = Dimensions.get("window").height;
 
@@ -168,6 +169,20 @@ const SettingsStack = ({ navigation, route }) => {
             <Stack.Screen
                 name="EditInfo"
                 component={EditInfo}
+                options={({ route }) => ({
+                    headerTitle: "",
+                    headerStyle: {
+                        backgroundColor: "#F4F4F5",
+                        shadowColor: "#fff",
+                        elevation: 0,
+                        height: Dimensions.get("window").height / 5.8,
+                    },
+                    // title: route.params.id,
+                })}
+            />
+            <Stack.Screen
+                name="EditPhoneNumber"
+                component={EditPhoneNumber}
                 options={({ route }) => ({
                     headerTitle: "",
                     headerStyle: {

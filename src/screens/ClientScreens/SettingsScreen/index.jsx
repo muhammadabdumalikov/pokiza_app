@@ -18,7 +18,7 @@ const SettingsScreen = ({navigation}) => {
                     </Text>
                     <Feather name="edit" size={24} color="black" />
                 </TouchableOpacity>
-                <TouchableOpacity style={styles.oneSettingBox}>
+                <TouchableOpacity style={styles.oneSettingBox} onPress={() => navigation.navigate("EditPhoneNumber")}>
                     <Text style={styles.settingText}>
                         Telefon raqamini o'zgartirish
                     </Text>
