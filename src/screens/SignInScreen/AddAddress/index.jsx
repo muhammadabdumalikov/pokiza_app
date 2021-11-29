@@ -117,17 +117,12 @@ const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
 
 const AddAddress = ({ navigation }) => {
-    const { firstName, lastName, gender, age, setUser } = useContext(AuthContext);
+    const { firstName, lastName, gender, age, setUser, setAddressId } = useContext(AuthContext);
     const [selectedState, setSelectedState] = useState();
     let [states, setStates] = useState();
     const [selectedRegion, setSelectedRegion] = useState();
     let [regions, setRegions] = useState();
-    const [selectedArea, setSelectedArea] = useState();
     let [areas, setAreas] = useState();
-    const [selectedNeighborhood, setSelectedNeighborhood] = useState();
-    let [neighborhood, setNeighborhood] = useState();
-    const [selectedStreet, setSelectedStreet] = useState();
-    let [street, setStreet] = useState();
     const [selectedBranch, setSelectedBranch] = useState();
     let [branches, setBranches] = useState();
     let [isLoading, setLoading] = useState(true);
@@ -514,7 +509,7 @@ const AddAddress = ({ navigation }) => {
                                         selectedBranch,
                                         addAddress.addAddress.data.address_id
                                     );
-                                    console.log(addAddress);
+                                    setAddressId(addAddress.addAddress.data.address_id)
                                     let {registerClient} = await request(
                                         MUTATION_REGISTER_CLIENT,
                                         {

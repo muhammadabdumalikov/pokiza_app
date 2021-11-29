@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
     View,
     Text,
@@ -10,14 +10,16 @@ import {
     ActivityIndicator,
     Pressable,
 } from "react-native";
-import { MaterialIcons, Ionicons } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { AuthContext } from "../../../../navigation/AuthProvider";
 
 import styles from "./styles";
 import { request } from "../../../../helpers/request";
 
 const AddOrderScreen = ({ navigation }) => {
+    const { addressId } = useContext(AuthContext);
     const [selectedState, setSelectedState] = useState();
     let [states, setStates] = useState();
     const [selectedRegion, setSelectedRegion] = useState();
@@ -40,8 +42,8 @@ const AddOrderScreen = ({ navigation }) => {
     const [tariffModalVisible, setTariffModalVisible] = useState(false);
 
     const tariffs = [
-        { id: "1", tariffName: "Tezkor" },
-        { id: "2", tariffName: "Oddiy" },
+        { id: "1", tariffName: "Tezkor", value: true },
+        { id: "2", tariffName: "Oddiy", value: false },
     ];
 
     const GET_STATE_QUERY = `{
@@ -67,12 +69,32 @@ const AddOrderScreen = ({ navigation }) => {
             }
         }`;
 
+    const GET_ADDRESS_ID_QUERY = `query($addressId: ID!){
+        addresses (addressId: $addressId){
+          addressId
+          branch{
+            branchId
+            branchName
+          }
+        }
+      }`;
+
+    const ADD_ORDER_QUERY = `mutation($branchId: ID!, $addressId: ID!, $orderSpecial: Boolean!, $orderBringTime: DateTime!, $orderDeliveryTime: DateTime!, $orderSummary: String){
+        clientAddOrder(branchId: $branchId, addressId: $addressId, orderSpecial: $orderSpecial, orderBringTime: $orderBringTime, orderDeliveryTime: $orderDeliveryTime, orderSummary: $orderSummary){
+          status
+          message
+          data
+        }
+      }`;
+
     useEffect(() => {
         async function fetchData() {
             try {
                 const value = await AsyncStorage.getItem("user_token");
-                console.log(value)
-                setUserToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlblN0YWZmIjp0cnVlLCJ0b2tlbkNsaWVudCI6ZmFsc2UsInVzZXJfaWQiOiI1IiwiYWRkcmVzc19pZCI6IjUiLCJzdGFmZl9pZCI6IjIiLCJjbGllbnRfaWQiOm51bGwsImlzX3JlZ2lzdGVyZWQiOnRydWUsInN0YWZmIjp0cnVlLCJjbGllbnQiOmZhbHNlLCJpYXQiOjE2MzUyNjcyMjN9.148eRCcrVWVn7A2uEx6w0oz5T0hKh-dsglSMCHIBk0U");
+                console.log(value);
+                setUserToken(
+                    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlblN0YWZmIjpmYWxzZSwidG9rZW5DbGllbnQiOnRydWUsInVzZXJfaWQiOiIxNSIsImFkZHJlc3NfaWQiOiIzNiIsImJyYW5jaF9pZCI6IjEiLCJzdGFmZl9pZCI6bnVsbCwiY2xpZW50X2lkIjoiNyIsImlzX3JlZ2lzdGVyZWQiOnRydWUsInN0YWZmIjpmYWxzZSwiY2xpZW50Ijp0cnVlLCJpYXQiOjE2MzgxNjUzMDF9.ZKPli1jycxmmWm9fu-FxKwYFSo1xQRAzZlpJyHYe2DA"
+                );
                 setStates(await request(GET_STATE_QUERY, null, userToken));
                 setLoading(false);
             } catch (error) {
@@ -169,7 +191,7 @@ const AddOrderScreen = ({ navigation }) => {
             <TouchableOpacity
                 style={{ width: "80%", paddingVertical: 15 }}
                 onPress={() => {
-                    setSelectedTariff(item);
+                    setSelectedTariff(item.value);
                     setTariffModalVisible(!tariffModalVisible);
                 }}
             >
@@ -221,7 +243,9 @@ const AddOrderScreen = ({ navigation }) => {
                                     <View style={styles.centeredView}>
                                         <View style={styles.modalWrapper}>
                                             <FlatList
-                                                data={states ? states.states : []}
+                                                data={
+                                                    states ? states.states : []
+                                                }
                                                 renderItem={modalState}
                                                 keyExtractor={(item) =>
                                                     item.stateId
@@ -448,13 +472,13 @@ const AddOrderScreen = ({ navigation }) => {
                         </View>
                         <TouchableOpacity
                             style={styles.sendCodeWrapper}
-                            onPress={() => {
-                                console.log(
-                                    selectedState,
-                                    selectedRegion,
-                                    selectedArea,
-                                    selectedDate
+                            onPress={async() => {
+                                const branchId = await request(
+                                    GET_ADDRESS_ID_QUERY,
+                                    { addressId: "36" },
+                                    userToken
                                 );
+                                const addOrder = await request(ADD_ORDER_QUERY, {branchId: branchId, addressId: "36", orderSpecial: selectedTariff,})
                             }}
                         >
                             <Text style={styles.sendCodeText}>

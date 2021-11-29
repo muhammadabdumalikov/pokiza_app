@@ -16,9 +16,9 @@ export default Routes = () => {
 
     return (
         <NavigationContainer>
-            {user ? <AppStack /> : <AuthStack />}
+            {/* {user ? <AppStack /> : <AuthStack />} */}
             {/* <AddAddress/> */}
-            {/* <AppStack /> */}
+            <AppStack />
         </NavigationContainer>
     );
 };

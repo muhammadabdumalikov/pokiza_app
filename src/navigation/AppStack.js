@@ -34,7 +34,7 @@ const OrdersStack = ({ navigation, route }) => {
                 headerTitleAlign: "center",
                 headerTitleStyle: {
                     fontSize: 18,
-                    top: 40,
+                    top: 20,
                     textAlign: "center",
                 },
                 headerStyle: {
@@ -200,7 +200,7 @@ const AppStack = () => {
                 headerTitleAlign: "center",
                 headerTitleStyle: {
                     fontSize: 18,
-                    top: 40,
+                    top: 30,
                     textAlign: "center",
                 },
                 headerStyle: {

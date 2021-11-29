@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
     const [age, setAge] = useState();
     const [gender, setGender] = useState();
     const [code, setCode] = useState(null);
-    const [state, setState] = useState();
+    const [addressId, setAddressId] = useState();
     const [region, setRegion] = useState();
     const [area, setArea] = useState();
     const [branch, setBranch] = useState();
@@ -33,8 +33,8 @@ export const AuthProvider = ({ children }) => {
                 setPhoneNumber,
                 code,
                 setCode,
-                state,
-                setState,
+                addressId,
+                setAddressId,
                 region,
                 setRegion,
                 area,
