@@ -1,5 +1,8 @@
 import { Dimensions, StyleSheet } from "react-native";
 import { colors } from "../../../constants/color";
+import Constants from "expo-constants";
+
+const statusBarHeight = Constants.statusBarHeight;
 
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
@@ -7,8 +10,13 @@ const height = Dimensions.get("window").height;
 export const styles = StyleSheet.create({
     container: {
         padding: 24,
+        width: "100%",
         height: "100%",
         backgroundColor: "#fff",
+    },
+    content: {
+        width: width,
+        paddingBottom: 100 
     },
     containerContent: {
         height: height < 600 ? 450 : "100%",
@@ -99,6 +107,13 @@ export const styles = StyleSheet.create({
         fontSize: 14,
         // fontWeight: "bold",
         color: "white",
+    },
+    infoWrapper: {
+        alignItems: "center",
+    },
+    pickerStyle: {
+        height: 50,
+        width: "40%",
     },
     fab: {
         width: 64,
