@@ -51,7 +51,7 @@ const ConfirmCode = ({ navigation }) => {
         value,
         setValue,
     });
-    const { setCode, phoneNumber } = useContext(AuthContext);
+    const { setUser, phoneNumber } = useContext(AuthContext);
 
     const handleSubmit = () => {
         verify({
@@ -61,6 +61,13 @@ const ConfirmCode = ({ navigation }) => {
             },
         })
             .then(({ data }) => {
+                if (data.enterClientPassword.data.registered){
+                    setUser(data.enterClientPassword.data)
+                    AsyncStorage.setItem(
+                        "user_token",
+                        data.enterClientPassword.token
+                    );
+                }
                 if (data.enterClientPassword.status == 200) {
                     AsyncStorage.setItem(
                         "user_token",

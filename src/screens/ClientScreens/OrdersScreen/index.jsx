@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { View, Text, ScrollView, TouchableOpacity, Pressable, Touchable } from "react-native";
 import { MaterialIcons, Feather } from "@expo/vector-icons";
 
 import { styles } from "./styles";
-import { useLazyQuery, gql, useQuery } from "@apollo/client";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { AuthContext } from "../../../navigation/AuthProvider";
 import { request } from "../../../helpers/request";
 import { colors } from "../../../constants/color";
 
-const GET_ORDERS = gql`
+const GET_ORDERS = `
     query Orders {
         orders {
             orderId
@@ -21,16 +21,19 @@ const GET_ORDERS = gql`
 const OrderScreen = ({ navigation }) => {
     // const [getOrders, {data, loading, error}] = useLazyQuery(GET_ORDERS);
     // const [data, setData] = useState()
+    const {user} = useContext(AuthContext)
 
-    // useEffect(() => {
-    //     async function fetchData() {
-    //         const token = await AsyncStorage.getItem('user_token');
-    //         // const fetchedData = await request(GET_ORDERS, null, token)
-    //         // console.log(fetchedData)
-    //     }
+    useEffect(() => {
+        async function fetchData() {
+            const token = await AsyncStorage.getItem('user_token');
+            console.log(token)
 
-    //     fetchData()
-    // }, []);
+            // const fetchedData = await request(GET_ORDERS, null, token)
+            // console.log(fetchedData)
+        }
+
+        fetchData()
+    }, []);
 
     // useEffect(() => {
     //     getOrders();
@@ -41,6 +44,8 @@ const OrderScreen = ({ navigation }) => {
     // }, [data]);
 
     let orders = true;
+
+    console.log(user)
 
     return (
         // Orders with scrollable view ------------------------------------

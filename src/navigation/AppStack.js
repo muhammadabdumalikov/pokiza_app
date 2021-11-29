@@ -196,6 +196,21 @@ const AppStack = () => {
                     paddingBottom: height / 40.6,
                     backgroundColor: "#F4F4F5",
                 },
+                headerTitle: "ID: #3493843",
+                headerTitleAlign: "center",
+                headerTitleStyle: {
+                    fontSize: 18,
+                    top: 40,
+                    textAlign: "center",
+                },
+                headerStyle: {
+                    backgroundColor: "#F4F4F5",
+                    shadowColor: "#fff",
+                    elevation: 0,
+                    height: height * 0.15,
+                },
+                headerRight: () => <CallButton />,
+                headerLeft: () => <LogoImage />,
             }}
         >
             <ClientTab.Screen
