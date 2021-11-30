@@ -79,6 +79,14 @@ const AddOrderScreen = ({ navigation }) => {
         }
       }`;
 
+    const ADD_ADDRESS_QUERY = `mutation($stateId:ID!,$regionId:ID!){ 
+        addAddress (stateId: $stateId, regionId: $regionId){
+          status
+          message
+          data
+        }
+      }`;
+
     const ADD_ORDER_QUERY = `mutation($branchId: ID!, $addressId: ID!, $orderSpecial: Boolean!, $orderBringTime: DateTime!, $orderDeliveryTime: DateTime!, $orderSummary: String){
         clientAddOrder(branchId: $branchId, addressId: $addressId, orderSpecial: $orderSpecial, orderBringTime: $orderBringTime, orderDeliveryTime: $orderDeliveryTime, orderSummary: $orderSummary){
           status
@@ -91,7 +99,6 @@ const AddOrderScreen = ({ navigation }) => {
         async function fetchData() {
             try {
                 const value = await AsyncStorage.getItem("user_token");
-                console.log(value);
                 setUserToken(value);
                 setStates(await request(GET_STATE_QUERY, null, value));
                 setLoading(false);
@@ -189,7 +196,7 @@ const AddOrderScreen = ({ navigation }) => {
             <TouchableOpacity
                 style={{ width: "80%", paddingVertical: 15 }}
                 onPress={() => {
-                    setSelectedTariff(item.value);
+                    setSelectedTariff(item);
                     setTariffModalVisible(!tariffModalVisible);
                 }}
             >
@@ -471,19 +478,40 @@ const AddOrderScreen = ({ navigation }) => {
                         <TouchableOpacity
                             style={styles.sendCodeWrapper}
                             onPress={async () => {
-                                const branchId = await request(
-                                    GET_ADDRESS_ID_QUERY,
-                                    { addressId: "36" },
-                                    userToken
-                                );
-                                const addOrder = await request(
-                                    ADD_ORDER_QUERY,
-                                    {
-                                        branchId: branchId,
-                                        addressId: "36",
-                                        orderSpecial: selectedTariff,
-                                    }
-                                );
+                                try {
+                                    const addressId = await request(
+                                        ADD_ADDRESS_QUERY,
+                                        {
+                                            stateId: selectedState.stateId,
+                                            regionId: selectedRegion.regionId,
+                                        },
+                                        userToken
+                                    );
+                                    const branchId = await request(
+                                        GET_ADDRESS_ID_QUERY,
+                                        {
+                                            addressId:
+                                                addressId.addAddress.data
+                                                    .address_id,
+                                        },
+                                            userToken
+                                        );
+                                        console.log(userToken)
+                                    const addOrder = await request(
+                                        ADD_ORDER_QUERY,
+                                        {
+                                            branchId: branchId.addresses[0].branch.branchId,
+                                            addressId: "36",
+                                            orderSpecial: selectedTariff.value,
+                                            orderBringTime: selectedDate,
+                                            orderDeliveryTime: selectedDate,
+                                        },
+                                        userToken
+                                    );
+                                    console.log(userToken)
+                                } catch (error) {
+                                    console.log(error);
+                                }
                             }}
                         >
                             <Text style={styles.sendCodeText}>
