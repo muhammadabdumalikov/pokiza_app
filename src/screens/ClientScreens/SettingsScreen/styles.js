@@ -16,7 +16,7 @@ export const styles = StyleSheet.create({
     },
     content: {
         width: width,
-        paddingBottom: 100 
+        paddingBottom: 100,
     },
     containerContent: {
         height: height < 600 ? 450 : "100%",
@@ -114,6 +114,25 @@ export const styles = StyleSheet.create({
     pickerStyle: {
         height: 50,
         width: "40%",
+    },
+    flagLine: {
+        width: "100%",
+        height: height / 12,
+        borderBottomColor: "#ccc",
+        borderBottomWidth: 1,
+        flexDirection: "row",
+        alignItems: "center",
+        backgroundColor: "#fff",
+        justifyContent: "space-between",
+    },
+    flagTextWrapper: {
+        width: "50%",
+        flexDirection: "row",
+        justifyContent: "flex-start",
+        alignItems: "center"
+    },
+    flagText: {
+        marginLeft: 10
     },
     fab: {
         width: 64,
