@@ -92,10 +92,8 @@ const AddOrderScreen = ({ navigation }) => {
             try {
                 const value = await AsyncStorage.getItem("user_token");
                 console.log(value);
-                setUserToken(
-                    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlblN0YWZmIjpmYWxzZSwidG9rZW5DbGllbnQiOnRydWUsInVzZXJfaWQiOiIxNSIsImFkZHJlc3NfaWQiOiIzNiIsImJyYW5jaF9pZCI6IjEiLCJzdGFmZl9pZCI6bnVsbCwiY2xpZW50X2lkIjoiNyIsImlzX3JlZ2lzdGVyZWQiOnRydWUsInN0YWZmIjpmYWxzZSwiY2xpZW50Ijp0cnVlLCJpYXQiOjE2MzgxNjUzMDF9.ZKPli1jycxmmWm9fu-FxKwYFSo1xQRAzZlpJyHYe2DA"
-                );
-                setStates(await request(GET_STATE_QUERY, null, userToken));
+                setUserToken(value);
+                setStates(await request(GET_STATE_QUERY, null, value));
                 setLoading(false);
             } catch (error) {
                 console.log(error);
@@ -472,13 +470,20 @@ const AddOrderScreen = ({ navigation }) => {
                         </View>
                         <TouchableOpacity
                             style={styles.sendCodeWrapper}
-                            onPress={async() => {
+                            onPress={async () => {
                                 const branchId = await request(
                                     GET_ADDRESS_ID_QUERY,
                                     { addressId: "36" },
                                     userToken
                                 );
-                                const addOrder = await request(ADD_ORDER_QUERY, {branchId: branchId, addressId: "36", orderSpecial: selectedTariff,})
+                                const addOrder = await request(
+                                    ADD_ORDER_QUERY,
+                                    {
+                                        branchId: branchId,
+                                        addressId: "36",
+                                        orderSpecial: selectedTariff,
+                                    }
+                                );
                             }}
                         >
                             <Text style={styles.sendCodeText}>

@@ -6,7 +6,7 @@ import { styles } from "./styles";
 
 const SettingsScreen = ({ navigation }) => {
     const confirmDeleteAccount = () =>
-        Alert.alert("Akkaunt oçhirilishi uchun operator bilan bog'laning", "", [
+        Alert.alert("Akkaunt o'chirilishi uchun operator bilan bog'laning", "", [
             {
                 text: "(97) 501-22-22",
                 onPress: () => console.log("Cancel Pressed"),
@@ -15,12 +15,13 @@ const SettingsScreen = ({ navigation }) => {
         ]);
 
     const confirmExitAccount = () =>
-        Alert.alert("Akkaunt oçhirilishi uchun operator bilan bog'laning", "", [
+        Alert.alert("Tizimdan chiqishni xohlaysizmi?", "", [
             {
-                text: "(97) 501-22-22",
+                text: "yo'q",
                 onPress: () => console.log("Cancel Pressed"),
+                style: "cancel"
             },
-            { text: "1221", onPress: () => console.log("OK Pressed") },
+            { text: "ha, xohlayman", onPress: () => console.log("OK Pressed"), style: "destructive" },
         ]);
     return (
         <ScrollView
