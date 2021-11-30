@@ -13,6 +13,15 @@ const SettingsScreen = ({ navigation }) => {
             },
             { text: "1221", onPress: () => console.log("OK Pressed") },
         ]);
+
+    const confirmExitAccount = () =>
+        Alert.alert("Akkaunt oçhirilishi uchun operator bilan bog'laning", "", [
+            {
+                text: "(97) 501-22-22",
+                onPress: () => console.log("Cancel Pressed"),
+            },
+            { text: "1221", onPress: () => console.log("OK Pressed") },
+        ]);
     return (
         <ScrollView
             style={styles.container}
@@ -56,6 +65,7 @@ const SettingsScreen = ({ navigation }) => {
                 </TouchableOpacity>
                 <TouchableOpacity
                     style={{ ...styles.oneSettingBox, marginTop: 25 }}
+                    onPress={confirmExitAccount}
                 >
                     <Text style={styles.settingText}>Tizimdan chiqish</Text>
                     <Feather name="log-out" size={24} color="black" />
