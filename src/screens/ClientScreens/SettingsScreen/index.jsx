@@ -1,10 +1,18 @@
 import React from "react";
-import { View, Text, TouchableOpacity, ScrollView } from "react-native";
+import { View, Text, TouchableOpacity, ScrollView, Alert } from "react-native";
 import { Feather, Ionicons } from "@expo/vector-icons";
 
 import { styles } from "./styles";
 
 const SettingsScreen = ({ navigation }) => {
+    const confirmDeleteAccount = () =>
+        Alert.alert("Akkaunt oçhirilishi uchun operator bilan bog'laning", "", [
+            {
+                text: "(97) 501-22-22",
+                onPress: () => console.log("Cancel Pressed"),
+            },
+            { text: "1221", onPress: () => console.log("OK Pressed") },
+        ]);
     return (
         <ScrollView
             style={styles.container}
@@ -54,7 +62,10 @@ const SettingsScreen = ({ navigation }) => {
                 </TouchableOpacity>
             </View>
 
-            <TouchableOpacity style={styles.oneSettingBox}>
+            <TouchableOpacity
+                style={styles.oneSettingBox}
+                onPress={confirmDeleteAccount}
+            >
                 <Text style={{ ...styles.settingText, color: "#E50000" }}>
                     Akkauntni o'chirish
                 </Text>

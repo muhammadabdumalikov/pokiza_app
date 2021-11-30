@@ -5,8 +5,18 @@ import { Ionicons } from "@expo/vector-icons";
 import { styles } from "./styles";
 
 const EditPhoneNumber = ({ navigation }) => {
-    const confirmAlert = () =>
+    const confirmMainContact = () =>
         Alert.alert("Asosiy raqamni o'zgartirishni istaysizmi?", "", [
+            {
+                text: "Yo'q",
+                onPress: () => console.log("Cancel Pressed"),
+                style: "cancel",
+            },
+            { text: "Ha, xohlayman", onPress: () => console.log("OK Pressed") },
+        ]);
+
+    const confirmSecondContact = () =>
+        Alert.alert("Qo'shimcha raqamni o'zgartirishni istaysizmi?", "", [
             {
                 text: "Yo'q",
                 onPress: () => console.log("Cancel Pressed"),
@@ -27,7 +37,10 @@ const EditPhoneNumber = ({ navigation }) => {
                         maxLength={12}
                         keyboardType="phone-pad"
                     />
-                    <TouchableOpacity style={styles.confirmPhoneChangedBtn}>
+                    <TouchableOpacity
+                        style={styles.confirmPhoneChangedBtn}
+                        onPress={confirmMainContact}
+                    >
                         <Text style={styles.confirmPhoneChanged}>
                             Tasdiqlash
                         </Text>
@@ -46,7 +59,7 @@ const EditPhoneNumber = ({ navigation }) => {
                     />
                     <TouchableOpacity
                         style={styles.confirmPhoneChangedBtn}
-                        onPress={confirmAlert}
+                        onPress={confirmSecondContact}
                     >
                         <Text style={styles.confirmPhoneChanged}>
                             Tasdiqlash
