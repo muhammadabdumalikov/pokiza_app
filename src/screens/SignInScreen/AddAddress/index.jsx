@@ -117,8 +117,7 @@ const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
 
 const AddAddress = ({ navigation }) => {
-    const { firstName, lastName, gender, age, setUser, setAddressId } =
-        useContext(AuthContext);
+    const { setUser } = useContext(AuthContext);
     const [selectedState, setSelectedState] = useState();
     let [states, setStates] = useState();
     const [selectedRegion, setSelectedRegion] = useState();
@@ -128,6 +127,11 @@ const AddAddress = ({ navigation }) => {
     let [branches, setBranches] = useState();
     let [isLoading, setLoading] = useState(true);
     let [userToken, setUserToken] = useState("");
+    let [firstName, setFirstName] = useState();
+    let [lastName, setLastName] = useState();
+    let [gender, setGender] = useState();
+    let [age, setAge] = useState();
+
     let target;
     let homeNumber;
 
@@ -135,6 +139,10 @@ const AddAddress = ({ navigation }) => {
         async function fetchData() {
             try {
                 const value = await AsyncStorage.getItem("user_token");
+                setFirstName(await AsyncStorage.getItem("firstName"));
+                setLastName(await AsyncStorage.getItem("lastName"));
+                setGender(await AsyncStorage.getItem("gender"));
+                setAge(await AsyncStorage.getItem("age"));
                 setUserToken(value);
                 setStates(await request(GET_STATE_QUERY, null, value));
                 setLoading(false);
@@ -506,7 +514,7 @@ const AddAddress = ({ navigation }) => {
                                         "address_id",
                                         addAddress.addAddress.data.address_id
                                     );
-                                    let { registerClient } = await request(
+                                    let {registerClient} = await request(
                                         MUTATION_REGISTER_CLIENT,
                                         {
                                             firstName: firstName,
@@ -520,11 +528,28 @@ const AddAddress = ({ navigation }) => {
                                         },
                                         userToken
                                     );
+                                    console.log(
+                                        firstName,
+                                        lastName,
+                                        age,
+                                        gender,
+                                        selectedBranch,
+                                        addAddress.addAddress.data.address_id
+                                    );
+                                    console.log(registerClient)
                                     if (registerClient.data.is_registered) {
                                         setUser(registerClient.data);
-                                        AsyncStorage.setItem(
+                                        await AsyncStorage.setItem(
                                             "user_token",
                                             registerClient.token
+                                        );
+                                        await AsyncStorage.setItem(
+                                            "state",
+                                            selectedState
+                                        );
+                                        await AsyncStorage.setItem(
+                                            "region",
+                                            selectedRegion
                                         );
                                     }
                                 } catch (error) {

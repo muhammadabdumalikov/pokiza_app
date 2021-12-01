@@ -7,15 +7,15 @@ import {
     SafeAreaView,
     TouchableOpacity,
     Dimensions,
-    Image
+    Image,
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { AuthContext } from "../../../navigation/AuthProvider";
 import styles from "./styles";
 
 const PersonalData = ({ navigation }) => {
-    
     const { age, setAge, gender, setGender, setFirstName, setLastName } =
         useContext(AuthContext);
     const [selectedFirstname, setSelectedFirstname] = useState("");
@@ -89,7 +89,12 @@ const PersonalData = ({ navigation }) => {
                         />
                     </View>
 
-                    <View style={{ ...styles.inputContainer, borderBottomWidth: 0 }}>
+                    <View
+                        style={{
+                            ...styles.inputContainer,
+                            borderBottomWidth: 0,
+                        }}
+                    >
                         {/* Age input ----------------------------------------------- */}
                         <View
                             style={{
@@ -205,15 +210,23 @@ const PersonalData = ({ navigation }) => {
 
                     <TouchableOpacity
                         style={styles.sendCodeWrapper}
-                        onPress={() => {
+                        onPress={async () => {
                             if (
                                 age &&
                                 gender &&
                                 selectedFirstname &&
                                 selectedLastname
                             ) {
-                                setFirstName(selectedFirstname);
-                                setLastName(selectedLastname);
+                                await AsyncStorage.setItem(
+                                    "firstName",
+                                    selectedFirstname
+                                );
+                                await AsyncStorage.setItem(
+                                    "lastName",
+                                    selectedLastname
+                                );
+                                await AsyncStorage.setItem("gender", gender);
+                                await AsyncStorage.setItem("age", age);
                                 navigation.navigate("AddAddress");
                             }
                         }}
