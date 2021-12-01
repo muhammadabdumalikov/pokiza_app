@@ -501,14 +501,6 @@ const AddAddress = ({ navigation }) => {
                                         },
                                         userToken
                                     );
-                                    console.log(
-                                        firstName,
-                                        lastName,
-                                        parseInt(age),
-                                        parseInt(gender),
-                                        selectedBranch,
-                                        addAddress.addAddress.data.address_id
-                                    );
                                     setAddressId(addAddress.addAddress.data.address_id)
                                     let {registerClient} = await request(
                                         MUTATION_REGISTER_CLIENT,

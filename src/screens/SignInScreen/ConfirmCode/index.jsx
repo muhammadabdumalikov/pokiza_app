@@ -25,8 +25,8 @@ import { useMutation } from "@apollo/client";
 const CELL_COUNT = 4;
 
 const CODE_QUERY = gql`
-    mutation ($phoneNumber: String!, $password: String!) {
-        enterClientPassword(phoneNumber: $phoneNumber, password: $password) {
+    mutation ($password: String!) {
+        enterClientPassword(password: $password) {
             status
             message
             data
@@ -56,11 +56,11 @@ const ConfirmCode = ({ navigation }) => {
     const handleSubmit = () => {
         verify({
             variables: {
-                phoneNumber: phoneNumber,
                 password: value,
             },
         })
             .then(({ data }) => {
+                console.log(data)
                 if (data.enterClientPassword.data.registered){
                     setUser(data.enterClientPassword.data)
                     AsyncStorage.setItem(
@@ -77,7 +77,7 @@ const ConfirmCode = ({ navigation }) => {
                 }
             })
             .catch((err) => {
-                console.log(error);
+                console.log(err);
             });
     };
 
