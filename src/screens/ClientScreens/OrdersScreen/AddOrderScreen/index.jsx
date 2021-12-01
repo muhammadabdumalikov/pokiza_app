@@ -20,6 +20,7 @@ import { request } from "../../../../helpers/request";
 
 const AddOrderScreen = ({ navigation }) => {
     const {addressId, setAddressId} = useContext(AuthContext)
+    console.log(addressId)
 
     const [selectedState, setSelectedState] = useState(addressId.address.state);
     const [selectedRegion, setSelectedRegion] = useState(addressId.address.region);
@@ -46,7 +47,7 @@ const AddOrderScreen = ({ navigation }) => {
         { id: "1", tariffName: "Tezkor", value: true },
         { id: "2", tariffName: "Oddiy", value: false },
     ];
-    
+
     const GET_STATE_QUERY = `{
         states {
           stateId

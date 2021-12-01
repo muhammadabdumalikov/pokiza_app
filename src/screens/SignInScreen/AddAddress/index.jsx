@@ -96,6 +96,20 @@ const GET_BRANCHES_QUERY = `query($regionId: ID!){
     }
   }`;
 
+const GET_ADDRESS_ID_QUERY = `{
+    address{
+      addressId
+      state{
+        stateId
+        stateName
+      }
+      region{
+        regionId
+        regionName
+      }
+    }
+  }`;
+
 const MUTATION_ADD_ADDRESS = `mutation($stateId:ID!,$regionId:ID!){ 
     addAddress (stateId: $stateId, regionId: $regionId){
       status
@@ -117,7 +131,8 @@ const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
 
 const AddAddress = ({ navigation }) => {
-    const { firstName, lastName, gender, age, setUser, setAddressId } = useContext(AuthContext);
+    const { firstName, lastName, gender, age, setUser, setAddressId } =
+        useContext(AuthContext);
     const [selectedState, setSelectedState] = useState();
     let [states, setStates] = useState();
     const [selectedRegion, setSelectedRegion] = useState();
@@ -322,133 +337,6 @@ const AddAddress = ({ navigation }) => {
                                 </Picker>
                             </View>
 
-                            {/* Area input ------------------------------------------ */}
-                            {/* <View
-                            style={styles.inputContainer}
-                            behavior={
-                                Platform.OS === "ios" ? "padding" : "height"
-                            }
-                        >
-                            <View style={styles.preTextWrapperStyle}>
-                                <Text style={styles.preText}>Area</Text>
-                            </View>
-                            <Picker
-                                style={styles.pickerStyle}
-                                selectedValue={selectedArea}
-                                onValueChange={(itemValue, itemIndex) =>
-                                    setSelectedArea(itemValue)
-                                }
-                            >
-                                {areas
-                                    ? areas.areas.map((value) => (
-                                          <Picker.Item
-                                              key={value.areaId}
-                                              label={value.areaName}
-                                              value={value.areaId}
-                                          />
-                                      ))
-                                    : []}
-                            </Picker>
-                        </View> */}
-
-                            {/* Neighborhood input ------------------------------------------ */}
-                            {/* <View
-                            style={styles.inputContainer}
-                            behavior={
-                                Platform.OS === "ios" ? "padding" : "height"
-                            }
-                        >
-                            <View style={styles.preTextWrapperStyle}>
-                                <Text style={styles.preText}>Neighborhood</Text>
-                            </View>
-                            <Picker
-                                style={styles.pickerStyle}
-                                selectedValue={selectedNeighborhood}
-                                onValueChange={(itemValue, itemIndex) => {
-                                    setSelectedNeighborhood(itemValue);
-                                }}
-                            >
-                                {neighborhood
-                                    ? neighborhood.neighborhoods.map(
-                                          (value) => (
-                                              <Picker.Item
-                                                  key={value.neighborhoodId}
-                                                  label={value.neighborhoodName}
-                                                  value={value.neighborhoodId}
-                                              />
-                                          )
-                                      )
-                                    : []}
-                            </Picker>
-                        </View> */}
-
-                            {/* Street input ------------------------------------------ */}
-                            {/* <View
-                            style={styles.inputContainer}
-                            behavior={
-                                Platform.OS === "ios" ? "padding" : "height"
-                            }
-                        >
-                            <View style={styles.preTextWrapperStyle}>
-                                <Text style={styles.preText}>Street</Text>
-                            </View>
-                            <Picker
-                                style={styles.pickerStyle}
-                                selectedValue={selectedStreet}
-                                onValueChange={(itemValue, itemIndex) => {
-                                    setSelectedStreet(itemValue);
-                                }}
-                            >
-                                {street
-                                    ? street.streets.map((value) => (
-                                          <Picker.Item
-                                              key={value.streetId}
-                                              label={value.streetName}
-                                              value={value.streetId}
-                                          />
-                                      ))
-                                    : []}
-                            </Picker>
-                        </View> */}
-
-                            {/* Target options --------------------------------------------- */}
-                            {/* <View
-                            style={styles.inputContainer}
-                            behavior={
-                                Platform.OS === "ios" ? "padding" : "height"
-                            }
-                        >
-                            <TextInput
-                                style={styles.input}
-                                numberOfLines={1}
-                                placeholder="Enter target to find easy"
-                                placeholderTextColor="#B8B8BB"
-                                onChangeText={(value) => (target = value)}
-                                keyboardType="default"
-                                // autoFocus={true}
-                                maxLength={9}
-                            />
-                        </View> */}
-
-                            {/* Home Number input ----------------------------------------------------- */}
-                            {/* <View
-                            style={styles.inputContainer}
-                            behavior={
-                                Platform.OS === "ios" ? "padding" : "height"
-                            }
-                        >
-                            <TextInput
-                                style={styles.input}
-                                numberOfLines={1}
-                                placeholder="Enter your home number"
-                                placeholderTextColor="#B8B8BB"
-                                onChangeText={(value) => (homeNumber = value)}
-                                keyboardType="default"
-                                // autoFocus={true}
-                                maxLength={9}
-                            />
-                        </View> */}
-
                             {/* Branch input ----------------------------------------------- */}
                             <View
                                 style={styles.inputContainer}
@@ -501,16 +389,7 @@ const AddAddress = ({ navigation }) => {
                                         },
                                         userToken
                                     );
-                                    console.log(
-                                        firstName,
-                                        lastName,
-                                        parseInt(age),
-                                        parseInt(gender),
-                                        selectedBranch,
-                                        addAddress,
-                                    );
-                                    setAddressId(addAddress.addAddress.data.address_id)
-                                    let {registerClient} = await request(
+                                    let { registerClient } = await request(
                                         MUTATION_REGISTER_CLIENT,
                                         {
                                             firstName: firstName,
@@ -524,8 +403,23 @@ const AddAddress = ({ navigation }) => {
                                         },
                                         userToken
                                     );
-                                    if(registerClient.data.is_registered){
-                                        setUser(registerClient.data)
+                                    setAddressId(
+                                        await request(
+                                            GET_ADDRESS_ID_QUERY,
+                                            null,
+                                            registerClient.token
+                                        )
+                                    );
+                                    console.log(
+                                        await request(
+                                            GET_ADDRESS_ID_QUERY,
+                                            null,
+                                            registerClient.token
+                                        )
+                                    );
+
+                                    if (registerClient.data.is_registered) {
+                                        setUser(registerClient.data);
                                         AsyncStorage.setItem(
                                             "user_token",
                                             registerClient.token
