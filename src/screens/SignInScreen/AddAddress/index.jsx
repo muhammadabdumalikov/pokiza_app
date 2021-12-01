@@ -524,7 +524,6 @@ const AddAddress = ({ navigation }) => {
                                         },
                                         userToken
                                     );
-                                    console.log(registerClient)
                                     if(registerClient.data.is_registered){
                                         setUser(registerClient.data)
                                         AsyncStorage.setItem(

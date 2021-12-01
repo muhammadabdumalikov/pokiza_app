@@ -1,10 +1,12 @@
-import React from "react";
+import React, {useContext} from "react";
 import { View, Text, TouchableOpacity, ScrollView, Alert } from "react-native";
 import { Feather, Ionicons } from "@expo/vector-icons";
+import { AuthContext } from "../../../navigation/AuthProvider";
 
 import { styles } from "./styles";
 
 const SettingsScreen = ({ navigation }) => {
+    const {setUser} = useContext(AuthContext)
     const confirmDeleteAccount = () =>
         Alert.alert("Akkaunt o'chirilishi uchun operator bilan bog'laning", "", [
             {
@@ -21,7 +23,7 @@ const SettingsScreen = ({ navigation }) => {
                 onPress: () => console.log("Cancel Pressed"),
                 style: "cancel"
             },
-            { text: "ha, xohlayman", onPress: () => console.log("OK Pressed"), style: "destructive" },
+            { text: "ha, xohlayman", onPress: () => setUser(null), style: "destructive" },
         ]);
     return (
         <ScrollView

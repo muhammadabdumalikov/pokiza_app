@@ -43,6 +43,20 @@ const CODE_QUERY = gql`
     }
 `;
 
+const GET_ADDRESS_ID_QUERY = `{
+    address{
+      addressId
+      state{
+        stateId
+        stateName
+      }
+      region{
+        regionId
+        regionName
+      }
+    }
+  }`
+
 const ConfirmCode = ({ navigation }) => {
     const [verify, { loading }] = useMutation(CODE_QUERY);
     const [value, setValue] = useState("");
@@ -51,7 +65,7 @@ const ConfirmCode = ({ navigation }) => {
         value,
         setValue,
     });
-    const { setUser, phoneNumber } = useContext(AuthContext);
+    const { setUser, setAddressId } = useContext(AuthContext);
 
     const handleSubmit = () => {
         verify({
@@ -59,10 +73,11 @@ const ConfirmCode = ({ navigation }) => {
                 password: value,
             },
         })
-            .then(({ data }) => {
+            .then( async ({ data }) => {
                 console.log(data)
                 if (data.enterClientPassword.data.registered){
                     setUser(data.enterClientPassword.data)
+                    setAddressId(await request(GET_ADDRESS_ID_QUERY, null, data.enterClientPassword.token))
                     AsyncStorage.setItem(
                         "user_token",
                         data.enterClientPassword.token
