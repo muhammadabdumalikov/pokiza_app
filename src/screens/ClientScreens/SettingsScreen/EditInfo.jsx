@@ -1,37 +1,13 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { View, Text, TextInput, TouchableOpacity, Alert } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { Ionicons } from "@expo/vector-icons";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { AuthContext } from "../../../navigation/AuthProvider";
 import { styles } from "./styles";
 
 const EditInfo = ({ navigation }) => {
-    const [age, setAge] = useState();
-    const [gender, setGender] = useState();
-    const [firstName, setFirstName] = useState();
-    const [lastName, setLastName] = useState();
-    const [userToken, setUserToken] = useState();
-
-
-    useEffect(() => {
-        async function fetchData() {
-            try {
-                const value = await AsyncStorage.getItem("user_token");
-                setAge(await AsyncStorage.getItem("age"));
-                setGender(await AsyncStorage.getItem("gender"));
-                setFirstName(await AsyncStorage.getItem("firstName"));
-                setLastName(await AsyncStorage.getItem("lastName"));
-                setUserToken(value);
-                // setLoading(false);
-            } catch (error) {
-                console.log(error);
-            }
-        }
-        fetchData();
-    }, []);
-
+    const { age, setAge, gender, setGender } = useContext(AuthContext);
     const confirmAlert = () =>
         Alert.alert("Alert Title", "My Alert Msg", [
             {
@@ -49,7 +25,7 @@ const EditInfo = ({ navigation }) => {
                 <Text style={styles.preText}>Familiya</Text>
                 <TextInput
                     style={styles.preText}
-                    placeholder={`${lastName}`}
+                    placeholder="Familiyangizni kiriting"
                     placeholderTextColor="#B8B8BB"
                     maxLength={20}
                 />
@@ -58,7 +34,7 @@ const EditInfo = ({ navigation }) => {
                 <Text style={styles.preText}>Ism</Text>
                 <TextInput
                     style={styles.preText}
-                    placeholder={`${firstName}`}
+                    placeholder="Ismingizni kiriting"
                     placeholderTextColor="#B8B8BB"
                     maxLength={20}
                 />
@@ -79,7 +55,7 @@ const EditInfo = ({ navigation }) => {
                     <TextInput
                         style={{ height: "100%", width: "50%" }}
                         numberOfLines={1}
-                        placeholder={`${age}`}
+                        placeholder="20"
                         placeholderTextColor="#B8B8BB"
                         onChangeText={(value) => setAge(value)}
                         keyboardType="numeric"
@@ -112,10 +88,7 @@ const EditInfo = ({ navigation }) => {
                     </Picker>
                 </View>
             </View>
-            <TouchableOpacity
-                style={styles.confirmEditInfoBtn}
-                onPress={confirmAlert}
-            >
+            <TouchableOpacity style={styles.confirmEditInfoBtn} onPress={confirmAlert}>
                 <Text style={styles.confirmEditInfoChanged}>Tasdiqlash</Text>
             </TouchableOpacity>
             <TouchableOpacity

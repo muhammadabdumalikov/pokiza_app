@@ -1,10 +1,28 @@
-import React from "react";
+import React, {useState, useEffect  } from "react";
 import { View, Text, TextInput, TouchableOpacity, Alert } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { styles } from "./styles";
 
 const EditPhoneNumber = ({ navigation }) => {
+    const [mainContact, setMainContact] = useState();
+    const [userToken, setUserToken] = useState();
+
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const value = await AsyncStorage.getItem("user_token");
+                setMainContact(await AsyncStorage.getItem("mainContact"));
+                setUserToken(value);
+                // setLoading(false);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        fetchData();
+    }, []);
+
     const confirmMainContact = () =>
         Alert.alert("Asosiy raqamni o'zgartirishni istaysizmi?", "", [
             {
@@ -32,7 +50,7 @@ const EditPhoneNumber = ({ navigation }) => {
                 <View style={styles.inputContainer}>
                     <TextInput
                         style={styles.preText}
-                        placeholder="998"
+                        placeholder={`${mainContact}`}
                         placeholderTextColor="#B8B8BB"
                         maxLength={12}
                         keyboardType="phone-pad"

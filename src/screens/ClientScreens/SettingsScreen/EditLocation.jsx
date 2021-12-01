@@ -113,8 +113,6 @@ const EditLocation = ({ navigation }) => {
         }
       }`;
 
-    const { firstName, lastName, gender, age, setUser, setAddressId } =
-        useContext(AuthContext);
     const [selectedState, setSelectedState] = useState();
     let [states, setStates] = useState();
     const [selectedRegion, setSelectedRegion] = useState();

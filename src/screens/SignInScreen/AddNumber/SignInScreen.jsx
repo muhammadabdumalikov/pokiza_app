@@ -8,13 +8,13 @@ import {
     TouchableOpacity,
     Image,
 } from "react-native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { AuthContext } from "../../../navigation/AuthProvider";
 import { request } from "../../../helpers/request.js";
 import styles from "./styles";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/client";
+import LogoSvg from "../../../../assets/svg/logo";
 
 const LOGIN = gql`
     mutation ($phoneNumber: String!) {
@@ -36,10 +36,9 @@ export default function ({ navigation }) {
                 phoneNumber: phoneNumber,
             },
         })
-            .then(async({ data }) => {
+            .then(({ data }) => {
                 console.log(data);
                 if (data.enterClientPhone.status == 200) {
-                    await AsyncStorage.setItem("mainContact", phoneNumber);
                     navigation.navigate("ConfirmCode");
                 }
             })
@@ -98,7 +97,7 @@ export default function ({ navigation }) {
                             onChangeText={(number) => setPhoneNumber(`998${number}`)}
                             keyboardType="phone-pad"
                             // autoFocus={true}
-                            maxLength={12}
+                            maxLength={9}
                         />
                     </View>
                 </View>

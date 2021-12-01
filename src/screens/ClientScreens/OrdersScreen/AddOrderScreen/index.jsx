@@ -23,7 +23,7 @@ const AddOrderScreen = ({ navigation }) => {
     let [states, setStates] = useState();
     const [selectedRegion, setSelectedRegion] = useState();
     let [regions, setRegions] = useState();
-    let [addressId, setAddressId] = useState();
+    // let [addressId, setAddressId] = useState();
     let [selectedArea, setSelectedArea] = useState();
     let [areas, setAreas] = useState();
     let [isLoading, setLoading] = useState(true);
@@ -40,6 +40,8 @@ const AddOrderScreen = ({ navigation }) => {
     const [regionModalVisible, setRegionModalVisible] = useState(false);
     const [areaModalVisible, setAreaModalVisible] = useState(false);
     const [tariffModalVisible, setTariffModalVisible] = useState(false);
+
+    const {addressId} = useContext(AuthContext)
 
     const tariffs = [
         { id: "1", tariffName: "Tezkor", value: true },
@@ -99,7 +101,7 @@ const AddOrderScreen = ({ navigation }) => {
         async function fetchData() {
             try {
                 const value = await AsyncStorage.getItem("user_token");
-                setAddressId(await AsyncStorage.getItem("address_id"));
+                // setAddressId(await AsyncStorage.getItem("address_id"));
                 setUserToken(value);
                 setStates(await request(GET_STATE_QUERY, null, value));
                 setLoading(false);
@@ -490,8 +492,6 @@ const AddOrderScreen = ({ navigation }) => {
                                             userToken
                                         ))
                                     }
-                                    console.log(addressId);
-                                    console.log(userToken)
                                     const branchId = await request(
                                         GET_ADDRESS_ID_QUERY,
                                         {
@@ -499,7 +499,6 @@ const AddOrderScreen = ({ navigation }) => {
                                         },
                                         userToken
                                     );
-                                    console.log(branchId);
                                     const addOrder = await request(
                                         ADD_ORDER_QUERY,
                                         {
@@ -513,7 +512,7 @@ const AddOrderScreen = ({ navigation }) => {
                                         },
                                         userToken
                                     );
-                                    console.log(addOrder)
+                                    if(addOrder.clientAddOrder.status == 200) navigation.goBack()
                                 } catch (error) {
                                     console.log(error);
                                 }
