@@ -117,7 +117,8 @@ const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
 
 const AddAddress = ({ navigation }) => {
-    const { firstName, lastName, gender, age, setUser, setAddressId } = useContext(AuthContext);
+    const { firstName, lastName, gender, age, setUser, setAddressId } =
+        useContext(AuthContext);
     const [selectedState, setSelectedState] = useState();
     let [states, setStates] = useState();
     const [selectedRegion, setSelectedRegion] = useState();
@@ -501,8 +502,11 @@ const AddAddress = ({ navigation }) => {
                                         },
                                         userToken
                                     );
-                                    setAddressId(addAddress.addAddress.data.address_id)
-                                    let {registerClient} = await request(
+                                    await AsyncStorage.setItem(
+                                        "address_id",
+                                        addAddress.addAddress.data.address_id
+                                    );
+                                    let { registerClient } = await request(
                                         MUTATION_REGISTER_CLIENT,
                                         {
                                             firstName: firstName,
@@ -516,8 +520,8 @@ const AddAddress = ({ navigation }) => {
                                         },
                                         userToken
                                     );
-                                    if(registerClient.data.is_registered){
-                                        setUser(registerClient.data)
+                                    if (registerClient.data.is_registered) {
+                                        setUser(registerClient.data);
                                         AsyncStorage.setItem(
                                             "user_token",
                                             registerClient.token

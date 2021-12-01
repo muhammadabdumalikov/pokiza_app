@@ -19,11 +19,11 @@ import styles from "./styles";
 import { request } from "../../../../helpers/request";
 
 const AddOrderScreen = ({ navigation }) => {
-    const { addressId } = useContext(AuthContext);
     const [selectedState, setSelectedState] = useState();
     let [states, setStates] = useState();
     const [selectedRegion, setSelectedRegion] = useState();
     let [regions, setRegions] = useState();
+    let [addressId, setAddressId] = useState();
     let [selectedArea, setSelectedArea] = useState();
     let [areas, setAreas] = useState();
     let [isLoading, setLoading] = useState(true);
@@ -70,7 +70,7 @@ const AddOrderScreen = ({ navigation }) => {
         }`;
 
     const GET_ADDRESS_ID_QUERY = `query($addressId: ID!){
-        addresses (addressId: $addressId){
+        address (addressId: $addressId){
           addressId
           branch{
             branchId
@@ -99,6 +99,7 @@ const AddOrderScreen = ({ navigation }) => {
         async function fetchData() {
             try {
                 const value = await AsyncStorage.getItem("user_token");
+                setAddressId(await AsyncStorage.getItem("address_id"));
                 setUserToken(value);
                 setStates(await request(GET_STATE_QUERY, null, value));
                 setLoading(false);
@@ -479,36 +480,40 @@ const AddOrderScreen = ({ navigation }) => {
                             style={styles.sendCodeWrapper}
                             onPress={async () => {
                                 try {
-                                    const addressId = await request(
-                                        ADD_ADDRESS_QUERY,
-                                        {
-                                            stateId: selectedState.stateId,
-                                            regionId: selectedRegion.regionId,
-                                        },
-                                        userToken
-                                    );
+                                    if(!addressId){
+                                        setAddressId(await request(
+                                            ADD_ADDRESS_QUERY,
+                                            {
+                                                stateId: selectedState.stateId,
+                                                regionId: selectedRegion.regionId,
+                                            },
+                                            userToken
+                                        ))
+                                    }
+                                    console.log(addressId);
+                                    console.log(userToken)
                                     const branchId = await request(
                                         GET_ADDRESS_ID_QUERY,
                                         {
-                                            addressId:
-                                                addressId.addAddress.data
-                                                    .address_id,
+                                            addressId: addressId,
                                         },
-                                            userToken
-                                        );
-                                        console.log(userToken)
+                                        userToken
+                                    );
+                                    console.log(branchId);
                                     const addOrder = await request(
                                         ADD_ORDER_QUERY,
                                         {
-                                            branchId: branchId.addresses[0].branch.branchId,
-                                            addressId: "36",
+                                            branchId:
+                                                branchId.address.branch
+                                                    .branchId,
+                                            addressId: addressId,
                                             orderSpecial: selectedTariff.value,
                                             orderBringTime: selectedDate,
                                             orderDeliveryTime: selectedDate,
                                         },
                                         userToken
                                     );
-                                    console.log(userToken)
+                                    console.log(addOrder)
                                 } catch (error) {
                                     console.log(error);
                                 }
