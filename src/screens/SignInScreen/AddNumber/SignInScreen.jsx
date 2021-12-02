@@ -92,11 +92,10 @@ export default function ({ navigation }) {
                         <TextInput
                             style={styles.input}
                             numberOfLines={1}
-                            placeholder="Enter phone number"
                             placeholderTextColor="#B8B8BB"
                             onChangeText={(number) => setPhoneNumber(`998${number}`)}
                             keyboardType="phone-pad"
-                            // autoFocus={true}
+                            autoFocus={true}
                             maxLength={9}
                         />
                     </View>

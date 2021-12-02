@@ -20,7 +20,6 @@ import { request } from "../../../../helpers/request";
 
 const AddOrderScreen = ({ navigation }) => {
     const {addressId, setAddressId} = useContext(AuthContext)
-    console.log(addressId)
 
     const [selectedState, setSelectedState] = useState(addressId.address.state);
     const [selectedRegion, setSelectedRegion] = useState(addressId.address.region);
@@ -512,6 +511,7 @@ const AddOrderScreen = ({ navigation }) => {
                                         },
                                         userToken
                                     );
+                                    console.log(addOrder)
                                     if(addOrder.clientAddOrder.status == 200) navigation.goBack()
                                 } catch (error) {
                                     console.log(error);

@@ -265,6 +265,7 @@ const AppStack = () => {
                     tabBarIcon: ({ color, size }) => (
                         <Feather name="menu" size={24} color={color} />
                     ),
+                    title: "Buyurtmalar"
                 })}
             />
             <ClientTab.Screen
@@ -274,6 +275,7 @@ const AppStack = () => {
                     tabBarIcon: ({ color, size }) => (
                         <Feather name="bell" size={24} color={color} />
                     ),
+                    title: "Xabarnoma"
                 })}
             />
             <ClientTab.Screen
@@ -283,6 +285,7 @@ const AppStack = () => {
                     tabBarIcon: ({ color, size }) => (
                         <Feather name="map" size={24} color={color} />
                     ),
+                    title: "Xarita"
                 })}
             />
             <ClientTab.Screen
@@ -293,6 +296,7 @@ const AppStack = () => {
                     tabBarIcon: ({ color, size }) => (
                         <Feather name="user" size={24} color={color} />
                     ),
+                    title: "Sozlamalar"
                 }}
             />
         </ClientTab.Navigator>

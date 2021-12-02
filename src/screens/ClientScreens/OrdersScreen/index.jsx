@@ -26,8 +26,9 @@ const OrderScreen = ({ navigation }) => {
     useEffect(() => {
         async function fetchData() {
             const token = await AsyncStorage.getItem('user_token');
-            // const fetchedData = await request(GET_ORDERS, null, token)
-            // console.log(fetchedData)
+            const fetchedData = await request(GET_ORDERS, null, token)
+
+            console.log(token)
         }
 
         fetchData()
@@ -42,6 +43,7 @@ const OrderScreen = ({ navigation }) => {
     // }, [data]);
 
     let orders = true;
+    // console.log()
 
     return (
         // Orders with scrollable view ------------------------------------
