@@ -3,12 +3,12 @@ import {
     View,
     Text,
     ScrollView,
-    TextInput,
     TouchableOpacity,
     Modal,
     FlatList,
     ActivityIndicator,
     Pressable,
+    Alert,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -19,10 +19,12 @@ import styles from "./styles";
 import { request } from "../../../../helpers/request";
 
 const AddOrderScreen = ({ navigation }) => {
-    const {addressId, setAddressId} = useContext(AuthContext)
+    const { addressId, setAddressId } = useContext(AuthContext);
 
     const [selectedState, setSelectedState] = useState(addressId.address.state);
-    const [selectedRegion, setSelectedRegion] = useState(addressId.address.region);
+    const [selectedRegion, setSelectedRegion] = useState(
+        addressId.address.region
+    );
     let [states, setStates] = useState();
     let [regions, setRegions] = useState();
     let [selectedArea, setSelectedArea] = useState();
@@ -95,6 +97,14 @@ const AddOrderScreen = ({ navigation }) => {
           data
         }
       }`;
+
+    const successOrder = () =>
+        Alert.alert("Muvaffaqiyatli", "Sizning buyurtmangiz qabul qilindi!", [
+            {
+                text: "ok",
+                onPress: () => navigation.navigate("OrdersScreen"),
+            },
+        ]);
 
     useEffect(() => {
         async function fetchData() {
@@ -479,21 +489,26 @@ const AddOrderScreen = ({ navigation }) => {
                             style={styles.sendCodeWrapper}
                             onPress={async () => {
                                 try {
-                                    if(!addressId){
-                                        setAddressId(await request(
-                                            ADD_ADDRESS_QUERY,
-                                            {
-                                                stateId: selectedState.stateId,
-                                                regionId: selectedRegion.regionId,
-                                            },
-                                            userToken
-                                        ))
+                                    if (!addressId) {
+                                        setAddressId(
+                                            await request(
+                                                ADD_ADDRESS_QUERY,
+                                                {
+                                                    stateId:
+                                                        selectedState.stateId,
+                                                    regionId:
+                                                        selectedRegion.regionId,
+                                                },
+                                                userToken
+                                            )
+                                        );
                                     }
 
                                     const branchId = await request(
                                         GET_ADDRESS_ID_QUERY,
                                         {
-                                            addressId: addressId.address.addressId,
+                                            addressId:
+                                                addressId.address.addressId,
                                         },
                                         userToken
                                     );
@@ -504,15 +519,18 @@ const AddOrderScreen = ({ navigation }) => {
                                             branchId:
                                                 branchId.address.branch
                                                     .branchId,
-                                            addressId: addressId.address.addressId,
+                                            addressId:
+                                                addressId.address.addressId,
                                             orderSpecial: selectedTariff.value,
                                             orderBringTime: selectedDate,
                                             orderDeliveryTime: selectedDate,
                                         },
                                         userToken
                                     );
-                                    console.log(addOrder)
-                                    if(addOrder.clientAddOrder.status == 200) navigation.goBack()
+                                    console.log(addOrder);
+                                    if (addOrder.clientAddOrder.status == 200) {
+                                        successOrder();
+                                    }
                                 } catch (error) {
                                     console.log(error);
                                 }
