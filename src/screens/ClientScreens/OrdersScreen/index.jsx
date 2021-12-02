@@ -42,7 +42,7 @@ const OrderScreen = ({ navigation }) => {
     //     console.log(data, error);
     // }, [data]);
 
-    let orders = true;
+    let orders = false;
     // console.log()
 
     return (

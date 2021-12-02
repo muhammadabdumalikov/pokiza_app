@@ -22,41 +22,26 @@ import styles from "./styles";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/client";
 
-const CELL_COUNT = 4;
 
 const CODE_QUERY = gql`
-    mutation ($password: String!) {
-        enterClientPassword(password: $password) {
-            status
-            message
-            data
-            token
-            permissions {
-                branchId
-                branchName
-                permissionsList {
-                    permissionAction
-                    permissionModel
+        mutation ($password: String!) {
+            enterClientPassword(password: $password) {
+                status
+                message
+                data
+                token
+                permissions {
+                    branchId
+                    branchName
+                    permissionsList {
+                        permissionAction
+                        permissionModel
+                    }
                 }
             }
         }
-    }
-`;
-
-const GET_ADDRESS_ID_QUERY = `{
-    address{
-      addressId
-      state{
-        stateId
-        stateName
-      }
-      region{
-        regionId
-        regionName
-      }
-    }
-  }`
-
+    `;
+    
 const ConfirmCode = ({ navigation }) => {
     const [verify, { loading }] = useMutation(CODE_QUERY);
     const [value, setValue] = useState("");
@@ -67,17 +52,39 @@ const ConfirmCode = ({ navigation }) => {
     });
     const { setUser, setAddressId } = useContext(AuthContext);
 
+    const CELL_COUNT = 4;
+
+    const GET_ADDRESS_ID_QUERY = `{
+        address{
+            addressId
+            state{
+                stateId
+                stateName
+            }
+            region{
+                regionId
+                regionName
+            }
+        }
+    }`;
+
     const handleSubmit = () => {
         verify({
             variables: {
                 password: value,
             },
         })
-            .then( async ({ data }) => {
-                console.log(data)
-                if (data.enterClientPassword.data.registered){
-                    setUser(data.enterClientPassword.data)
-                    setAddressId(await request(GET_ADDRESS_ID_QUERY, null, data.enterClientPassword.token))
+            .then(async ({ data }) => {
+                console.log(data);
+                if (data.enterClientPassword.data.registered) {
+                    setUser(data.enterClientPassword.data);
+                    setAddressId(
+                        await request(
+                            GET_ADDRESS_ID_QUERY,
+                            null,
+                            data.enterClientPassword.token
+                        )
+                    );
                     AsyncStorage.setItem(
                         "user_token",
                         data.enterClientPassword.token

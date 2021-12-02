@@ -95,7 +95,7 @@ export default function ({ navigation }) {
                             placeholderTextColor="#B8B8BB"
                             onChangeText={(number) => setPhoneNumber(`998${number}`)}
                             keyboardType="phone-pad"
-                            autoFocus={true}
+                            // autoFocus={true}
                             maxLength={9}
                         />
                     </View>
