@@ -27,8 +27,7 @@ const OrderScreen = ({ navigation }) => {
         async function fetchData() {
             const token = await AsyncStorage.getItem('user_token');
             const fetchedData = await request(GET_ORDERS, null, token)
-
-            console.log(token)
+            console.log(fetchedData)
         }
 
         fetchData()

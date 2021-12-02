@@ -22,26 +22,27 @@ import styles from "./styles";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/client";
 
-
 const CODE_QUERY = gql`
-        mutation ($password: String!) {
-            enterClientPassword(password: $password) {
-                status
-                message
-                data
-                token
-                permissions {
-                    branchId
-                    branchName
-                    permissionsList {
-                        permissionAction
-                        permissionModel
-                    }
+    mutation ($password: String!) {
+        enterClientPassword(password: $password) {
+            status
+            message
+            data
+            token
+            permissions {
+                branchId
+                branchName
+                permissionsList {
+                    permissionAction
+                    permissionModel
                 }
             }
         }
-    `;
-    
+    }
+`;
+
+const CELL_COUNT = 4;
+
 const ConfirmCode = ({ navigation }) => {
     const [verify, { loading }] = useMutation(CODE_QUERY);
     const [value, setValue] = useState("");
@@ -51,8 +52,6 @@ const ConfirmCode = ({ navigation }) => {
         setValue,
     });
     const { setUser, setAddressId } = useContext(AuthContext);
-
-    const CELL_COUNT = 4;
 
     const GET_ADDRESS_ID_QUERY = `{
         address{
