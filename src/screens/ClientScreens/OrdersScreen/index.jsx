@@ -26,16 +26,12 @@ const GET_ORDERS = `{
     }
   }`;
 
-const wait = (timeout) => {
-    return new Promise((resolve) => setTimeout(resolve, timeout));
-};
 
 const OrderScreen = ({ navigation }) => {
     // const [getOrders, {data, loading, error}] = useLazyQuery(GET_ORDERS);
     const [fetchedData, setFetchedData] = useState();
     const [userToken, setUserToken] = useState();
     const [isLoading, setLoading] = useState(true);
-    const { user } = useContext(AuthContext);
 
     const [refreshing, setRefreshing] = React.useState(false);
 
