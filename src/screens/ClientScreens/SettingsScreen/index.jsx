@@ -1,5 +1,12 @@
 import React, { useContext } from "react";
-import { View, Text, TouchableOpacity, ScrollView, Alert } from "react-native";
+import {
+    View,
+    Text,
+    TouchableOpacity,
+    ScrollView,
+    Alert,
+    Linking,
+} from "react-native";
 import { Feather, Ionicons } from "@expo/vector-icons";
 import { AuthContext } from "../../../navigation/AuthProvider";
 
@@ -14,9 +21,12 @@ const SettingsScreen = ({ navigation }) => {
             [
                 {
                     text: "(97) 501-22-22",
-                    onPress: () => console.log("Cancel Pressed"),
+                    onPress: () => Linking.openURL(`tel:${975012222}`),
                 },
-                { text: "1221", onPress: () => console.log("OK Pressed") },
+                {
+                    text: "1221",
+                    onPress: () => Linking.openURL(`tel:${1221}`),
+                },
             ]
         );
 

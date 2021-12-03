@@ -1,5 +1,5 @@
 import React from "react";
-import {TouchableOpacity, Text} from "react-native";
+import {TouchableOpacity, Text, Linking} from "react-native";
 import { Feather } from "@expo/vector-icons";
 
 import { colors } from "../constants/color";
@@ -7,7 +7,7 @@ import { colors } from "../constants/color";
 const CallButton = () => {
     return (
         <TouchableOpacity
-            onPress={() => console.log("123")}
+            onPress={() => Linking.openURL(`tel:${975012222}`)}
             style={{
                 flexDirection: "row",
                 alignItems: "center",
