@@ -1,5 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
-import { View, Text, ScrollView, TouchableOpacity, Pressable, Touchable, FlatList } from "react-native";
+import {
+    View,
+    RefreshControl,
+    TouchableOpacity,
+    FlatList,
+    ActivityIndicator,
+} from "react-native";
 import { MaterialIcons, Feather } from "@expo/vector-icons";
 
 import { styles } from "./styles";
@@ -20,44 +26,81 @@ const GET_ORDERS = `{
     }
   }`;
 
+const wait = (timeout) => {
+    return new Promise((resolve) => setTimeout(resolve, timeout));
+};
+
 const OrderScreen = ({ navigation }) => {
     // const [getOrders, {data, loading, error}] = useLazyQuery(GET_ORDERS);
-    const [fetchedData, setFetchedData] = useState()
-    const {user} = useContext(AuthContext)
+    const [fetchedData, setFetchedData] = useState();
+    const [userToken, setUserToken] = useState();
+    const [isLoading, setLoading] = useState(true);
+    const { user } = useContext(AuthContext);
+
+    const [refreshing, setRefreshing] = React.useState(false);
+
+    const onRefresh = React.useCallback(async () => {
+        setRefreshing(true);
+        setFetchedData(await request(GET_ORDERS, null, userToken));
+        setRefreshing(false)
+    }, []);
 
     useEffect(() => {
         async function fetchData() {
-            const token = await AsyncStorage.getItem('user_token');
-            setFetchedData(await request(GET_ORDERS, null, token))
+            const value = await AsyncStorage.getItem("user_token");
+            setUserToken(value);
+            setFetchedData(await request(GET_ORDERS, null, value));
+            setLoading(false);
         }
 
-        fetchData()
+        fetchData();
     }, []);
-
-    // useEffect(() => {
-    //     getOrders();
-    // }, [])
-
-    // useEffect(() => {
-    //     console.log(data, error);
-    // }, [data]);
 
     return (
         // Orders with scrollable view ------------------------------------
         <View style={styles.containerWrapper}>
-            {fetchedData ? (
-               <FlatList
-               data={fetchedData.orders}
-               renderItem={({item})=> <CardComponent item={item} navigation={navigation}/>}
-               keyExtractor={(item) => item.orderId}
-               style={styles.container}
-               contentContainerStyle={styles.contentStyle}
-               showsVerticalScrollIndicator={false}
-           />
-            ) : (
-                <View style={styles.emptyOrderView}> 
-                    <View style={styles.emptyBox}></View>
+            {isLoading ? (
+                <View
+                    style={{
+                        flex: 1,
+                        justifyContent: "center",
+                        alignItems: "center",
+                    }}
+                >
+                    <ActivityIndicator
+                        size="large"
+                        color="#2196F3"
+                        style={{ alignSelf: "center" }}
+                    />
                 </View>
+            ) : (
+                <>
+                    {fetchedData ? (
+                        <FlatList
+                            data={fetchedData.orders}
+                            renderItem={({ item }) => (
+                                <CardComponent
+                                    item={item}
+                                    navigation={navigation}
+                                />
+                            )}
+                            keyExtractor={(item) => item.orderId}
+                            style={styles.container}
+                            contentContainerStyle={styles.contentStyle}
+                            showsVerticalScrollIndicator={false}
+                            refreshControl={
+                                <RefreshControl
+                                    refreshing={refreshing}
+                                    onRefresh={onRefresh}
+                                />
+                            }
+                        />
+                    ) : (
+                        <View style={styles.emptyOrderView}>
+                            <View style={styles.emptyBox}></View>
+                        </View>
+                    )}
+                </>
             )}
 
             <TouchableOpacity
