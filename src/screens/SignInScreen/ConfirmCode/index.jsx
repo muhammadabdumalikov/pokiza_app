@@ -7,6 +7,7 @@ import {
     SafeAreaView,
     TouchableOpacity,
     Image,
+    Alert,
 } from "react-native";
 import {
     CodeField,
@@ -52,6 +53,15 @@ const ConfirmCode = ({ navigation }) => {
         setValue,
     });
     const { setUser, setAddressId } = useContext(AuthContext);
+    const confirmMainContact = (data) =>
+        Alert.alert(`${data}`, "", [
+            {
+                text: "Yo'q",
+                onPress: () => console.log("Cancel Pressed"),
+                style: "cancel",
+            },
+            { text: "Ha, xohlayman", onPress: () => console.log("OK Pressed") },
+        ]);
 
     const GET_ADDRESS_ID_QUERY = `{
         address{
@@ -74,9 +84,8 @@ const ConfirmCode = ({ navigation }) => {
             },
         })
             .then(async ({ data }) => {
-                console.log(data);
                 if (data.enterClientPassword.data.registered) {
-                    setUser(data.enterClientPassword.data);
+                    // setUser(data.enterClientPassword.data);
                     setAddressId(
                         await request(
                             GET_ADDRESS_ID_QUERY,
@@ -84,13 +93,20 @@ const ConfirmCode = ({ navigation }) => {
                             data.enterClientPassword.token
                         )
                     );
-                    AsyncStorage.setItem(
+                    await AsyncStorage.setItem(
+                        "user",
+                        data.enterClientPassword.token
+                    );
+                    await AsyncStorage.setItem(
                         "user_token",
                         data.enterClientPassword.token
                     );
                 }
-                if (data.enterClientPassword.status == 200) {
-                    AsyncStorage.setItem(
+                if (
+                    data.enterClientPassword.status == 200 &&
+                    data.enterClientPassword.data.registered == false
+                ) {
+                    await AsyncStorage.setItem(
                         "user_token",
                         data.enterClientPassword.token
                     );
@@ -99,6 +115,7 @@ const ConfirmCode = ({ navigation }) => {
             })
             .catch((err) => {
                 console.log(err);
+                confirmMainContact(err);
             });
     };
 
