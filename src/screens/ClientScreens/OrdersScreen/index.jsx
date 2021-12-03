@@ -5,6 +5,7 @@ import {
     TouchableOpacity,
     FlatList,
     ActivityIndicator,
+    ScrollView
 } from "react-native";
 import { MaterialIcons, Feather } from "@expo/vector-icons";
 
@@ -85,6 +86,7 @@ const OrderScreen = ({ navigation }) => {
         return () => (cleanupFunction = true);
     }, []);
 
+    console.log(fetchedData);
     return (
         // Orders with scrollable view ------------------------------------
         <View style={styles.containerWrapper}>
@@ -104,7 +106,7 @@ const OrderScreen = ({ navigation }) => {
                 </View>
             ) : (
                 <>
-                    {fetchedData ? (
+                    {fetchedData.orders.length > 0 ? (
                         <FlatList
                             data={fetchedData.orders}
                             renderItem={({ item }) => (
@@ -125,9 +127,18 @@ const OrderScreen = ({ navigation }) => {
                             }
                         />
                     ) : (
-                        <View style={styles.emptyOrderView}>
+                        <ScrollView
+                            contentContainerStyle={styles.emptyOrderView}
+                            refreshControl={
+                                <RefreshControl
+                                    refreshing={refreshing}
+                                    onRefresh={onRefresh}
+                                />
+                            }
+                            
+                        >
                             <View style={styles.emptyBox}></View>
-                        </View>
+                        </ScrollView>
                     )}
                 </>
             )}
