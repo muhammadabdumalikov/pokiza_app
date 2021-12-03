@@ -5,6 +5,7 @@ import { Feather } from "@expo/vector-icons";
 import { styles } from "./styles";
 
 const CardComponent = ({ item, navigation }) => {
+    console.log(item)
     const statusStyles = {
         1: {
             style: {
@@ -190,7 +191,7 @@ const CardComponent = ({ item, navigation }) => {
             <View style={styles.third}>
                 <View style={styles.orderNumber}>
                     <Text style={styles.summText}>Umumiy summa:</Text>
-                    <Text style={styles.orderSumm}>1 750 00 so'm</Text>
+                    <Text style={styles.orderSumm}>{item.orderTotalPrice.toString()} so'm</Text>
                 </View>
             </View>
         </TouchableOpacity>

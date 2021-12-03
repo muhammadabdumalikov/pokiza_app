@@ -9,16 +9,16 @@ import { request } from "../../../helpers/request";
 import CardComponent from "./CardComponent";
 import { colors } from "../../../constants/color";
 
-const GET_ORDERS = `
-    query Orders {
-        orders {
-            orderId
-            orderCreatedAt
-            orderDeliveryTime
-            orderStatus
-        }
+const GET_ORDERS = `{
+    orders{
+      orderId
+         orderStatus
+      orderTotalPrice
+      orderBringTime
+      orderDeliveryTime
+      orderCreatedAt
     }
-`;
+  }`;
 
 const OrderScreen = ({ navigation }) => {
     // const [getOrders, {data, loading, error}] = useLazyQuery(GET_ORDERS);
