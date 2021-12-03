@@ -85,6 +85,10 @@ const ConfirmCode = ({ navigation }) => {
                         )
                     );
                     AsyncStorage.setItem(
+                        "user_login",
+                        data.enterClientPassword.token
+                    );
+                    AsyncStorage.setItem(
                         "user_token",
                         data.enterClientPassword.token
                     );

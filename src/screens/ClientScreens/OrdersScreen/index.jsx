@@ -29,64 +29,64 @@ const GET_ORDERS = `{
 
 const OrderScreen = ({ navigation }) => {
     // const [getOrders, {data, loading, error}] = useLazyQuery(GET_ORDERS);
-    const [fetchedData, setFetchedData] = useState(null);
-    const [userToken, setUserToken] = useState();
+    // const [fetchedData, setFetchedData] = useState(null);
+    // const [userToken, setUserToken] = useState();
     const [isLoading, setLoading] = useState(true);
 
-    const [refreshing, setRefreshing] = React.useState(false);
+    // const [refreshing, setRefreshing] = React.useState(false);
 
-    const onRefresh = React.useCallback(async () => {
-        setRefreshing(true);
-        const value = await AsyncStorage.getItem("user_token");
-        let data = await fetch("https://pokiza.herokuapp.com/graphql", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                token: value,
-            },
-            body: JSON.stringify({
-                query: GET_ORDERS,
-                variables: null,
-            }),
-        });
-        let jsonData = await data.json();
+    // const onRefresh = React.useCallback(async () => {
+    //     setRefreshing(true);
+    //     const value = await AsyncStorage.getItem("user_token");
+    //     let data = await fetch("https://pokiza.herokuapp.com/graphql", {
+    //         method: "POST",
+    //         headers: {
+    //             "Content-Type": "application/json",
+    //             token: value,
+    //         },
+    //         body: JSON.stringify({
+    //             query: GET_ORDERS,
+    //             variables: null,
+    //         }),
+    //     });
+    //     let jsonData = await data.json();
 
-        setFetchedData(jsonData.data);
-        setRefreshing(false);
-    }, []);
+    //     setFetchedData(jsonData.data);
+    //     setRefreshing(false);
+    // }, []);
 
-    useEffect(() => {
-        let cleanupFunction = false;
-        const fetchData = async () => {
-            try {
-                const value = await AsyncStorage.getItem("user_token");
-                setUserToken(value);
-                let data = await fetch("https://pokiza.herokuapp.com/graphql", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        token: value,
-                    },
-                    body: JSON.stringify({
-                        query: GET_ORDERS,
-                        variables: null,
-                    }),
-                });
-                let jsonData = await data.json();
-                if (!cleanupFunction) {
-                    setFetchedData(jsonData.data);
-                    setLoading(false);
-                }
-            } catch (error) {
-                console.log(error);
-            }
-        };
+    // useEffect(() => {
+    //     let cleanupFunction = false;
+    //     const fetchData = async () => {
+    //         try {
+    //             const value = await AsyncStorage.getItem("user_token");
+    //             setUserToken(value);
+    //             let data = await fetch("https://pokiza.herokuapp.com/graphql", {
+    //                 method: "POST",
+    //                 headers: {
+    //                     "Content-Type": "application/json",
+    //                     token: value,
+    //                 },
+    //                 body: JSON.stringify({
+    //                     query: GET_ORDERS,
+    //                     variables: null,
+    //                 }),
+    //             });
+    //             let jsonData = await data.json();
+    //             if (!cleanupFunction) {
+    //                 setFetchedData(jsonData.data);
+    //                 setLoading(false);
+    //             }
+    //         } catch (error) {
+    //             console.log(error);
+    //         }
+    //     };
 
-        fetchData();
-        return () => (cleanupFunction = true);
-    }, []);
+    //     fetchData();
+    //     return () => (cleanupFunction = true);
+    // }, []);
 
-    console.log(fetchedData);
+    // console.log(fetchedData);
     return (
         // Orders with scrollable view ------------------------------------
         <View style={styles.containerWrapper}>
