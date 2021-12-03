@@ -5,7 +5,6 @@ import { Feather } from "@expo/vector-icons";
 import { styles } from "./styles";
 
 const CardComponent = ({ item, navigation }) => {
-    console.log(item)
     const statusStyles = {
         1: {
             style: {
