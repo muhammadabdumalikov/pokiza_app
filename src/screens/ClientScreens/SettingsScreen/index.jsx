@@ -27,22 +27,28 @@ const SettingsScreen = ({ navigation }) => {
                     text: "1221",
                     onPress: () => Linking.openURL(`tel:${1221}`),
                 },
-            ]
+            ],
+            { cancelable: true }
         );
 
     const confirmExitAccount = () =>
-        Alert.alert("Tizimdan chiqishni xohlaysizmi?", "", [
-            {
-                text: "yo'q",
-                onPress: () => console.log("Cancel Pressed"),
-                style: "cancel",
-            },
-            {
-                text: "ha, xohlayman",
-                onPress: () => setUser(null),
-                style: "destructive",
-            },
-        ]);
+        Alert.alert(
+            "Tizimdan chiqishni xohlaysizmi?",
+            "",
+            [
+                {
+                    text: "yo'q",
+                    onPress: () => console.log("Cancel Pressed"),
+                    style: "cancel",
+                },
+                {
+                    text: "ha, xohlayman",
+                    onPress: () => setUser(null),
+                    style: "destructive",
+                },
+            ],
+            { cancelable: true }
+        );
     return (
         <ScrollView
             style={styles.container}
