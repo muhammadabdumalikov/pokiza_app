@@ -85,7 +85,6 @@ const OrderScreen = ({ navigation }) => {
         return () => (cleanupFunction = true);
     }, []);
 
-    console.log(fetchedData);
     return (
         // Orders with scrollable view ------------------------------------
         <View style={styles.containerWrapper}>

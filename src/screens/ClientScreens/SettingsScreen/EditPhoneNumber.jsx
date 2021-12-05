@@ -8,6 +8,7 @@ import { request } from "../../../helpers/request";
 
 const EditPhoneNumber = ({ navigation }) => {
     const [mainContact, setMainContact] = useState();
+    const [secondContact, setSecondContact] = useState();
     const [newMainContact, setNewMainContact] = useState();
     const [newSecondContact, setNewSecondContact] = useState();
     const [userToken, setUserToken] = useState();
@@ -43,6 +44,7 @@ const EditPhoneNumber = ({ navigation }) => {
                 const value = await AsyncStorage.getItem("user_token");
                 const id = await request(GET_USER_ID, null, value);
                 setMainContact(await AsyncStorage.getItem("mainContact"));
+                setSecondContact(await AsyncStorage.getItem("secondContact"));
                 setUserToken(value);
                 setUserId(id.clients[0].clientInfo.userId);
                 // setLoading(false);
@@ -71,7 +73,6 @@ const EditPhoneNumber = ({ navigation }) => {
                         },
                         userToken
                     );
-                    console.log(newContact);
                 },
             },
         ]);
@@ -80,7 +81,7 @@ const EditPhoneNumber = ({ navigation }) => {
         Alert.alert("Qo'shimcha raqamni o'zgartirishni istaysizmi?", "", [
             {
                 text: "Yo'q",
-                onPress: () => console.log("Cancel Pressed"),
+                onPress: () => null,
                 style: "cancel",
             },
             {
@@ -94,7 +95,10 @@ const EditPhoneNumber = ({ navigation }) => {
                         },
                         userToken
                     );
-                    console.log(secondContact);
+                    await AsyncStorage.setItem(
+                        "secondContact",
+                        secondContact.changeUser.data.second_contact
+                    );
                 },
             },
         ]);
@@ -127,7 +131,7 @@ const EditPhoneNumber = ({ navigation }) => {
                 <View style={styles.inputContainer}>
                     <TextInput
                         style={styles.preText}
-                        placeholder="998"
+                        placeholder={secondContact ? `${secondContact}`: "9989xxxxxxxx"}
                         placeholderTextColor="#B8B8BB"
                         maxLength={12}
                         keyboardType="phone-pad"

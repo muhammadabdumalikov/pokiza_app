@@ -2,9 +2,7 @@ import React, { useState } from "react";
 import {
     View,
     Text,
-    ScrollView,
     TouchableOpacity,
-    Image,
     FlatList,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
