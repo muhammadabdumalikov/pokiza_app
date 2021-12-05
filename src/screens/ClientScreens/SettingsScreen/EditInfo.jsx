@@ -1,22 +1,90 @@
-import React, { useContext } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { View, Text, TextInput, TouchableOpacity, Alert } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { Ionicons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { AuthContext } from "../../../navigation/AuthProvider";
 import { styles } from "./styles";
+import { request } from "../../../helpers/request";
 
 const EditInfo = ({ navigation }) => {
-    const { age, setAge, gender, setGender } = useContext(AuthContext);
-    const confirmAlert = () =>
-        Alert.alert("Alert Title", "My Alert Msg", [
+    // const { age, setAge, gender, setGender } = useContext(AuthContext);
+    const [userId, setUserId] = useState();
+    const [userToken, setUserToken] = useState();
+    const [firstName, setFirstName] = useState();
+    const [lastName, setLastName] = useState();
+    const [age, setAge] = useState();
+    const [gender, setGender] = useState();
+
+    const GET_USER_ID = `{
+        clients{
+          clientInfo{
+            userId
+          }
+        }
+      }`;
+
+    const CHANGE_INFO_QUERY = `mutation($userId:ID!, $firstName:String, $lastName: String, $age:Int, $gender:Int){
+        changeUser(userId: $userId, firstName: $firstName, lastName: $lastName, age: $age, gender: $gender){
+          status
+          message
+          data
+        }
+      }`;
+
+    const onSuccess = () => {
+        Alert.alert("Ma'lumotlar muvaffaqiyatli o'zgartirildi!?", "", [
             {
-                text: "Cancel",
-                onPress: () => console.log("Cancel Pressed"),
+                text: "OK",
+                onPress: () => navigation.goBack(),
                 style: "cancel",
             },
-            { text: "OK", onPress: () => console.log("OK Pressed") },
         ]);
+    };
+
+    const confirmAlert = () => {
+        Alert.alert("Ma'lumotlaringizni o'zgartirishni istaysizmi?", "", [
+            {
+                text: "Cancel",
+                onPress: () => null,
+                style: "cancel",
+            },
+            {
+                text: "OK",
+                onPress: async () => {
+                    let changeInfo = await request(
+                        CHANGE_INFO_QUERY,
+                        {
+                            userId: userId,
+                            firstName: firstName,
+                            lastName: lastName,
+                            age: parseInt(age),
+                            gender: gender,
+                        },
+                        userToken
+                    );
+                    onSuccess();
+                },
+            },
+        ]);
+    };
+
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const value = await AsyncStorage.getItem("user_token");
+                const id = await request(GET_USER_ID, null, value);
+                setUserToken(value);
+                setUserId(id.clients[0].clientInfo.userId);
+                // setLoading(false);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        fetchData();
+    }, []);
+
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Ma'lumotlarni o'zgartirish</Text>
@@ -28,6 +96,7 @@ const EditInfo = ({ navigation }) => {
                     placeholder="Familiyangizni kiriting"
                     placeholderTextColor="#B8B8BB"
                     maxLength={20}
+                    onChangeText={(value) => setLastName(value)}
                 />
             </View>
             <View style={styles.inputContainer}>
@@ -37,6 +106,7 @@ const EditInfo = ({ navigation }) => {
                     placeholder="Ismingizni kiriting"
                     placeholderTextColor="#B8B8BB"
                     maxLength={20}
+                    onChangeText={(value) => setFirstName(value)}
                 />
             </View>
             <View style={{ ...styles.inputContainer, borderBottomWidth: 0 }}>
@@ -83,12 +153,15 @@ const EditInfo = ({ navigation }) => {
                             setGender(itemValue);
                         }}
                     >
-                        <Picker.Item label="Erkak" value="male" />
-                        <Picker.Item label="Ayol" value="female" />
+                        <Picker.Item label="Erkak" value={1} />
+                        <Picker.Item label="Ayol" value={2} />
                     </Picker>
                 </View>
             </View>
-            <TouchableOpacity style={styles.confirmEditInfoBtn} onPress={confirmAlert}>
+            <TouchableOpacity
+                style={styles.confirmEditInfoBtn}
+                onPress={confirmAlert}
+            >
                 <Text style={styles.confirmEditInfoChanged}>Tasdiqlash</Text>
             </TouchableOpacity>
             <TouchableOpacity

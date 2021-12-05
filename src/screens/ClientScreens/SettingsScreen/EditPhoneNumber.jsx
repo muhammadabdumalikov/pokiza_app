@@ -102,6 +102,7 @@ const EditPhoneNumber = ({ navigation }) => {
                 },
             },
         ]);
+        
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Ma'lumotlarni o'zgartirish</Text>
