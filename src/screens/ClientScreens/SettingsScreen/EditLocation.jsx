@@ -6,7 +6,8 @@ import {
     Text,
     ActivityIndicator,
     TextInput,
-    Dimensions
+    Dimensions,
+    Alert,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -96,6 +97,14 @@ const EditLocation = ({ navigation }) => {
         }
       }`;
 
+    const CHANGE_ADDRESS_QUERY = `mutation($addressId: ID!, $stateId: ID, $regionId: ID, $neighborhoodId: ID, $streetId: ID, $areaId: ID, $target: String, $homeNumber: Int) {
+        changeAddress(addressId: $addressId, stateId: $stateId, regionId: $regionId, neighborhoodId: $neighborhoodId, streetId: $streetId, areaId: $areaId, target: $target, homeNumber: $homeNumber){
+          status
+          message
+          data
+        }
+      }`;
+
     const MUTATION_ADD_ADDRESS = `mutation($stateId:ID!,$regionId:ID!){ 
         addAddress (stateId: $stateId, regionId: $regionId){
           status
@@ -113,32 +122,78 @@ const EditLocation = ({ navigation }) => {
         }
       }`;
 
+    const { addressId } = useContext(AuthContext);
+
     const [selectedState, setSelectedState] = useState();
     let [states, setStates] = useState();
     const [selectedRegion, setSelectedRegion] = useState();
     const [selectedArea, setSelectedArea] = useState();
     const [selectedNeighborhood, setSelectedNeighborhood] = useState();
     const [selectedStreet, setSelectedStreet] = useState();
+    const [selectedBranch, setSelectedBranch] = useState();
+    let [target, setTarget] = useState();
+    let [homeNumber, setPhoneNumber] = useState();
 
+    // const [addressId, setAddressId] = useState();
+
+    let [branches, setBranches] = useState();
     let [regions, setRegions] = useState();
     let [areas, setAreas] = useState();
-    const [selectedBranch, setSelectedBranch] = useState();
-    let [branches, setBranches] = useState();
+    let [neighborhood, setNeighborhood] = useState();
+    let [street, setStreet] = useState();
     let [isLoading, setLoading] = useState(true);
     let [userToken, setUserToken] = useState("");
-    let neighborhood;
-    let street;
-    let target;
-    let homeNumber;
 
     const height = Dimensions.get("window").height;
 
+    const onSuccess = () => {
+        Alert.alert("Ma'lumotlar muvaffaqiyatli o'zgartirildi!", "", [
+            {
+                text: "OK",
+                onPress: () => navigation.goBack(),
+                style: "cancel",
+            },
+        ]);
+    };
+
+    const confirmAlert = () => {
+        Alert.alert("Ma'lumotlaringizni o'zgartirishni istaysizmi?", "", [
+            {
+                text: "Cancel",
+                onPress: () => null,
+                style: "cancel",
+            },
+            {
+                text: "OK",
+                onPress: async () => {
+                    let { changeAddress } = await request(
+                        CHANGE_ADDRESS_QUERY,
+                        {
+                            addressId: addressId.address.addressId,
+                            stateId: selectedState,
+                            regionId: selectedRegion,
+                            neighborhoodId: selectedNeighborhood,
+                            streetId: selectedState,
+                            areaId: selectedArea,
+                            target: target,
+                            homeNumber: parseInt(homeNumber),
+                        },
+                        userToken
+                    );
+                    if (changeAddress.status == 200) onSuccess();
+                },
+            },
+        ]);
+    };
 
     useEffect(() => {
         async function fetchData() {
             try {
                 const value = await AsyncStorage.getItem("user_token");
+                // const id = await AsyncStorage.getItem("addressId");
                 setUserToken(value);
+                // setAddressId(id);
+                console.log(addressId);
                 setStates(await request(GET_STATE_QUERY, null, value));
                 setLoading(false);
             } catch (error) {
@@ -182,39 +237,39 @@ const EditLocation = ({ navigation }) => {
         fetchAreas();
     }, [selectedRegion]);
 
-    // useEffect(() => {
-    //     async function fetchNeighborhood() {
-    //         try {
-    //             setNeighborhood(
-    //                 await request(
-    //                     GET_NEIGHBORHOOD_QUERY,
-    //                     { regionId: selectedRegion },
-    //                     userToken
-    //                 )
-    //             );
-    //         } catch (error) {
-    //             console.log(error);
-    //         }
-    //     }
-    //     fetchNeighborhood();
-    // }, [selectedRegion]);
+    useEffect(() => {
+        async function fetchNeighborhood() {
+            try {
+                setNeighborhood(
+                    await request(
+                        GET_NEIGHBORHOOD_QUERY,
+                        { regionId: selectedRegion },
+                        userToken
+                    )
+                );
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        fetchNeighborhood();
+    }, [selectedRegion]);
 
-    // useEffect(() => {
-    //     async function fetchStreet() {
-    //         try {
-    //             setStreet(
-    //                 await request(
-    //                     GET_STREET_QUERY,
-    //                     { neighborhoodId: selectedNeighborhood },
-    //                     userToken
-    //                 )
-    //             );
-    //         } catch (error) {
-    //             console.log(error);
-    //         }
-    //     }
-    //     fetchStreet();
-    // }, [selectedNeighborhood]);
+    useEffect(() => {
+        async function fetchStreet() {
+            try {
+                setStreet(
+                    await request(
+                        GET_STREET_QUERY,
+                        { neighborhoodId: selectedNeighborhood },
+                        userToken
+                    )
+                );
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        fetchStreet();
+    }, [selectedNeighborhood]);
 
     useEffect(() => {
         async function fetchBranches() {
@@ -461,9 +516,9 @@ const EditLocation = ({ navigation }) => {
                                 <TextInput
                                     style={styles.input}
                                     numberOfLines={1}
-                                    placeholder="Enter target to find easy"
+                                    placeholder="Mo'ljalni kiriting"
                                     placeholderTextColor="#B8B8BB"
-                                    onChangeText={(value) => (target = value)}
+                                    onChangeText={(value) => setTarget(value)}
                                     keyboardType="default"
                                     // autoFocus={true}
                                     maxLength={9}
@@ -480,10 +535,10 @@ const EditLocation = ({ navigation }) => {
                                 <TextInput
                                     style={styles.input}
                                     numberOfLines={1}
-                                    placeholder="Enter your home number"
+                                    placeholder="Uy raqamini kiriting"
                                     placeholderTextColor="#B8B8BB"
                                     onChangeText={(value) =>
-                                        (homeNumber = value)
+                                        setPhoneNumber(value)
                                     }
                                     keyboardType="default"
                                     // autoFocus={true}
@@ -491,6 +546,14 @@ const EditLocation = ({ navigation }) => {
                                 />
                             </View>
                         </View>
+                        <TouchableOpacity
+                            style={styles.confirmEditInfoBtn}
+                            onPress={confirmAlert}
+                        >
+                            <Text style={styles.confirmEditInfoChanged}>
+                                Tasdiqlash
+                            </Text>
+                        </TouchableOpacity>
                     </View>
                 )}
             </ScrollView>

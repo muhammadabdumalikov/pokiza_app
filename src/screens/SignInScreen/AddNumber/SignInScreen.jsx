@@ -106,7 +106,7 @@ export default function ({ navigation }) {
                     onPress={handleLoginPress}
                     disabled={loading}
                 >
-                    <Text style={styles.sendCodeText}>Send code</Text>
+                    <Text style={styles.sendCodeText}>Tasdiqlash</Text>
                 </TouchableOpacity>
             </View>
         </ScrollView>
