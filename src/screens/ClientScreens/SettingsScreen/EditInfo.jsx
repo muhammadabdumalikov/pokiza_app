@@ -34,10 +34,20 @@ const EditInfo = ({ navigation }) => {
       }`;
 
     const onSuccess = () => {
-        Alert.alert("Ma'lumotlar muvaffaqiyatli o'zgartirildi!?", "", [
+        Alert.alert("Ma'lumotlar muvaffaqiyatli o'zgartirildi!", "", [
             {
                 text: "OK",
                 onPress: () => navigation.goBack(),
+                style: "cancel",
+            },
+        ]);
+    };
+
+    const onError = () => {
+        Alert.alert("Operatsiya amalga oshmadi!", "", [
+            {
+                text: "Qaytish",
+                onPress: () => null,
                 style: "cancel",
             },
         ]);
@@ -64,7 +74,11 @@ const EditInfo = ({ navigation }) => {
                         },
                         userToken
                     );
-                    onSuccess();
+                    if (changeInfo.changeUser.status == 200) {
+                        onSuccess();
+                    } else {
+                        onError();
+                    }
                 },
             },
         ]);

@@ -1,12 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { View, Text, TextInput, TouchableOpacity, Alert } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+import { AuthContext } from "../../../navigation/AuthProvider";
 import { styles } from "./styles";
 import { request } from "../../../helpers/request";
 
 const EditPhoneNumber = ({ navigation }) => {
+    const { setUser } = useContext(AuthContext);
+
     const [mainContact, setMainContact] = useState();
     const [secondContact, setSecondContact] = useState();
     const [newMainContact, setNewMainContact] = useState();
@@ -55,11 +58,31 @@ const EditPhoneNumber = ({ navigation }) => {
         fetchData();
     }, []);
 
-    const confirmMainContact = () =>
+    const errorAlert = () => {
+        Alert.alert("Bu raqam band qilingan", "", [
+            {
+                text: "Qaytish",
+                onPress: () => null,
+                style: "cancel",
+            },
+        ]);
+    };
+
+    const onSuccess = () => {
+        Alert.alert("Raqam muvaffaqiyatli qo'shildi", "", [
+            {
+                text: "Qaytish",
+                onPress: () => null,
+                style: "cancel",
+            },
+        ]);
+    };
+
+    const confirmMainContact = () => {
         Alert.alert("Asosiy raqamni o'zgartirishni istaysizmi?", "", [
             {
                 text: "Yo'q",
-                onPress: () => console.log("Cancel Pressed"),
+                onPress: () => null,
                 style: "cancel",
             },
             {
@@ -73,11 +96,17 @@ const EditPhoneNumber = ({ navigation }) => {
                         },
                         userToken
                     );
+                    if (newContact.changeUser.status == 200) {
+                        setUser(null);
+                    } else {
+                        errorAlert();
+                    }
                 },
             },
         ]);
+    };
 
-    const confirmSecondContact = () =>
+    const confirmSecondContact = () => {
         Alert.alert("Qo'shimcha raqamni o'zgartirishni istaysizmi?", "", [
             {
                 text: "Yo'q",
@@ -99,10 +128,16 @@ const EditPhoneNumber = ({ navigation }) => {
                         "secondContact",
                         secondContact.changeUser.data.second_contact
                     );
+                    if (secondContact.changeUser.status == 200) {
+                        onSuccess();
+                    } else {
+                        errorAlert();
+                    }
                 },
             },
         ]);
-        
+    };
+
     return (
         <View style={styles.container}>
             <Text style={styles.title}>Ma'lumotlarni o'zgartirish</Text>
@@ -132,7 +167,9 @@ const EditPhoneNumber = ({ navigation }) => {
                 <View style={styles.inputContainer}>
                     <TextInput
                         style={styles.preText}
-                        placeholder={secondContact ? `${secondContact}`: "9989xxxxxxxx"}
+                        placeholder={
+                            secondContact ? `${secondContact}` : "9989xxxxxxxx"
+                        }
                         placeholderTextColor="#B8B8BB"
                         maxLength={12}
                         keyboardType="phone-pad"
