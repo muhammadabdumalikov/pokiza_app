@@ -32,7 +32,7 @@ const OrderScreen = ({ navigation }) => {
     const [userToken, setUserToken] = useState();
     const [isLoading, setLoading] = useState(true);
 
-    const [refreshing, setRefreshing] = React.useState(false);
+    const [refreshing, setRefreshing] = useState(false);
 
     const onRefresh = React.useCallback(async () => {
         setRefreshing(true);
