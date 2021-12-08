@@ -140,7 +140,7 @@ const EditPhoneNumber = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Ma'lumotlarni o'zgartirish</Text>
+            <Text style={styles.title}>Telefon raqamini o'zgartirish</Text>
             <View style={styles.phoneLine}>
                 <Text style={styles.preText}>Asosiy telefon raqam:</Text>
                 <View style={styles.inputContainer}>

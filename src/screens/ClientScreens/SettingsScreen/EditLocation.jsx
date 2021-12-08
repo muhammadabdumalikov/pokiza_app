@@ -313,7 +313,7 @@ const EditLocation = ({ navigation }) => {
                 ) : (
                     <View style={styles.container}>
                         <Text style={styles.title}>
-                            Ma'lumotlarni o'zgartirish
+                            Manzilni o'zgartirish
                         </Text>
 
                         <View style={styles.infoWrapper}>

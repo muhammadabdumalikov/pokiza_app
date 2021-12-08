@@ -67,6 +67,7 @@ const NoticesStack = ({ navigation, route }) => {
                 name="NoticesScreen"
                 component={NoticesScreen}
                 options={({ route }) => ({
+                    headerTitle: "Xabarnomalar",
                     headerTitleAlign: "center",
                     headerTitleStyle: {
                         fontSize: 18,
@@ -80,12 +81,8 @@ const NoticesStack = ({ navigation, route }) => {
                         height: Dimensions.get("window").height / 5.8,
                     },
                     // title: route.params.id,
-                    headerRight: () => (
-                        <TouchableOpacity style={{ marginRight: 20 }}>
-                            <Feather name="phone" size={24} color="#007AFF" />
-                        </TouchableOpacity>
-                    ),
-                    headerLeft: () => null,
+                    headerRight: () => <CallButton />,
+                    headerLeft: () => <LogoImage />,
                 })}
             />
         </Stack.Navigator>
@@ -100,6 +97,7 @@ const LocationStack = ({ navigation, route }) => {
                 component={LocationScreen}
                 options={({ route }) => ({
                     headerTitleAlign: "center",
+                    headerTitle: "Xarita",
                     headerTitleStyle: {
                         fontSize: 18,
                         top: height / 32.48,
@@ -112,12 +110,8 @@ const LocationStack = ({ navigation, route }) => {
                         height: Dimensions.get("window").height / 5.8,
                     },
                     // title: route.params.id,
-                    headerRight: () => (
-                        <TouchableOpacity style={{ marginRight: 20 }}>
-                            <Feather name="phone" size={24} color="#007AFF" />
-                        </TouchableOpacity>
-                    ),
-                    headerLeft: () => null,
+                    headerRight: () => <CallButton />,
+                    headerLeft: () => <LogoImage />,
                 })}
             />
         </Stack.Navigator>
@@ -135,12 +129,8 @@ const SettingsStack = ({ navigation, route }) => {
                     height: Dimensions.get("window").height / 5.8,
                 },
                 // title: route.params.id,
-                headerRight: () => (
-                    <TouchableOpacity style={{ marginRight: 20 }}>
-                        <Feather name="phone" size={24} color="#007AFF" />
-                    </TouchableOpacity>
-                ),
-                headerLeft: () => null,
+                headerRight: () => <CallButton />,
+                headerLeft: () => <LogoImage />,
             }}
         >
             <Stack.Screen
@@ -148,6 +138,7 @@ const SettingsStack = ({ navigation, route }) => {
                 component={SettingsScreen}
                 options={({ route }) => ({
                     headerTitleAlign: "center",
+                    headerTitle: "Sozlamalar",
                     headerTitleStyle: {
                         fontSize: 18,
                         top: height / 32.48,
@@ -160,12 +151,6 @@ const SettingsStack = ({ navigation, route }) => {
                         height: Dimensions.get("window").height / 5.8,
                     },
                     // title: route.params.id,
-                    headerRight: () => (
-                        <TouchableOpacity style={{ marginRight: 20 }}>
-                            <Feather name="phone" size={24} color="#007AFF" />
-                        </TouchableOpacity>
-                    ),
-                    headerLeft: () => null,
                 })}
             />
             <Stack.Screen
@@ -210,7 +195,7 @@ const SettingsStack = ({ navigation, route }) => {
                     // title: route.params.id,
                 })}
             />
-             <Stack.Screen
+            <Stack.Screen
                 name="EditLocation"
                 component={EditLocation}
                 options={({ route }) => ({
@@ -265,7 +250,7 @@ const AppStack = () => {
                     tabBarIcon: ({ color, size }) => (
                         <Feather name="menu" size={24} color={color} />
                     ),
-                    title: "Buyurtmalar"
+                    title: "Buyurtmalar",
                 })}
             />
             <ClientTab.Screen
@@ -275,7 +260,7 @@ const AppStack = () => {
                     tabBarIcon: ({ color, size }) => (
                         <Feather name="bell" size={24} color={color} />
                     ),
-                    title: "Xabarnoma"
+                    title: "Xabarnoma",
                 })}
             />
             <ClientTab.Screen
@@ -285,7 +270,7 @@ const AppStack = () => {
                     tabBarIcon: ({ color, size }) => (
                         <Feather name="map" size={24} color={color} />
                     ),
-                    title: "Xarita"
+                    title: "Xarita",
                 })}
             />
             <ClientTab.Screen
@@ -296,7 +281,7 @@ const AppStack = () => {
                     tabBarIcon: ({ color, size }) => (
                         <Feather name="user" size={24} color={color} />
                     ),
-                    title: "Sozlamalar"
+                    title: "Sozlamalar",
                 }}
             />
         </ClientTab.Navigator>
