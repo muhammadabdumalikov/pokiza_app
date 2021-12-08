@@ -58,12 +58,18 @@ const OrderScreen = ({ navigation }) => {
                         variables: null,
                     }),
                 });
-                navigation.setOptions({
-                    title: `ID #${fetchedData.clients[0].clientId}`,
-                });
+
                 let jsonData = await data.json();
+                console.log(jsonData)
                 if (!cleanupFunction) {
                     setFetchedData(jsonData.data.orders.reverse());
+
+                    fetchedData ? AsyncStorage.setItem("clientId", fetchedData.clients[0].clientId): null;
+
+                    navigation.setOptions({
+                        title: `ID #${fetchedData ? fetchedData.clients[0].clientId : null}`,
+                    });
+
                     setLoading(false);
                 }
             } catch (error) {
