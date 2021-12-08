@@ -5,7 +5,8 @@ import {
     TouchableOpacity,
     FlatList,
     ActivityIndicator,
-    ScrollView
+    ScrollView,
+    ImageBackground,
 } from "react-native";
 import { MaterialIcons, Feather } from "@expo/vector-icons";
 
@@ -17,6 +18,9 @@ import CardComponent from "./CardComponent";
 import { colors } from "../../../constants/color";
 
 const GET_ORDERS = `{
+    clients{
+        clientId
+      }
     orders{
       orderId
          orderStatus
@@ -34,25 +38,8 @@ const OrderScreen = ({ navigation }) => {
 
     const [refreshing, setRefreshing] = useState(false);
 
-    const onRefresh = React.useCallback(async () => {
-        setRefreshing(true);
-        const value = await AsyncStorage.getItem("user_token");
-        let data = await fetch("https://pokiza.herokuapp.com/graphql", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json",
-                token: value,
-            },
-            body: JSON.stringify({
-                query: GET_ORDERS,
-                variables: null,
-            }),
-        });
-        let jsonData = await data.json();
-
-        setFetchedData(jsonData.data);
-        setRefreshing(false);
-    }, []);
+    const {user} = useContext(AuthContext)
+    console.log(user)
 
     useEffect(() => {
         let cleanupFunction = false;
@@ -71,9 +58,12 @@ const OrderScreen = ({ navigation }) => {
                         variables: null,
                     }),
                 });
+                navigation.setOptions({
+                    title: `ID #${fetchedData.clients[0].clientId}`,
+                });
                 let jsonData = await data.json();
                 if (!cleanupFunction) {
-                    setFetchedData(jsonData.data);
+                    setFetchedData(jsonData.data.orders.reverse());
                     setLoading(false);
                 }
             } catch (error) {
@@ -83,6 +73,30 @@ const OrderScreen = ({ navigation }) => {
 
         fetchData();
         return () => (cleanupFunction = true);
+    }, []);
+
+    useEffect(() => {
+        
+    }, []);
+
+    const onRefresh = React.useCallback(async () => {
+        setRefreshing(true);
+        const value = await AsyncStorage.getItem("user_token");
+        let data = await fetch("https://pokiza.herokuapp.com/graphql", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                token: value,
+            },
+            body: JSON.stringify({
+                query: GET_ORDERS,
+                variables: null,
+            }),
+        });
+        let jsonData = await data.json();
+
+        setFetchedData(jsonData.data.orders.reverse());
+        setRefreshing(false);
     }, []);
 
     return (
@@ -104,9 +118,9 @@ const OrderScreen = ({ navigation }) => {
                 </View>
             ) : (
                 <>
-                    {fetchedData.orders.length > 0 ? (
+                    {fetchedData.length > 0 ? (
                         <FlatList
-                            data={fetchedData.orders}
+                            data={fetchedData}
                             renderItem={({ item }) => (
                                 <CardComponent
                                     item={item}
@@ -133,9 +147,13 @@ const OrderScreen = ({ navigation }) => {
                                     onRefresh={onRefresh}
                                 />
                             }
-                            
                         >
-                            <View style={styles.emptyBox}></View>
+                            <View style={styles.emptyBox}>
+                                <ImageBackground
+                                    style={{ width: "100%", height: "100%" }}
+                                    source={require("../../../../assets/carpet.png")}
+                                />
+                            </View>
                         </ScrollView>
                     )}
                 </>

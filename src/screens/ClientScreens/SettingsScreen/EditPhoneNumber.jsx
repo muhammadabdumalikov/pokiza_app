@@ -59,7 +59,7 @@ const EditPhoneNumber = ({ navigation }) => {
     }, []);
 
     const errorAlert = () => {
-        Alert.alert("Bu raqam band qilingan", "", [
+        Alert.alert("Bu raqam bilan ro'yxatdan o'tilgan!", "", [
             {
                 text: "Qaytish",
                 onPress: () => null,

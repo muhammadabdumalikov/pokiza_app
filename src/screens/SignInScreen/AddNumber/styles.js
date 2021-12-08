@@ -26,7 +26,7 @@ export default StyleSheet.create({
     logo: {
         width: "100%",
         height: 60,
-        marginTop: 80
+        marginTop: 80,
     },
     signInWrapper: {
         alignItems: "center",
@@ -67,7 +67,7 @@ export default StyleSheet.create({
     },
     preTextWrapperStyle: {
         flex: 1,
-        justifyContent: "center",
+        justifyContent: "flex-end",
     },
     preText: {
         fontSize: 18,
@@ -82,6 +82,7 @@ export default StyleSheet.create({
         alignItems: "center",
     },
     inputWrapper: {
+        flex: 1,
         flexDirection: "row",
         alignItems: "center",
     },

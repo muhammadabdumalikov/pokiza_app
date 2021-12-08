@@ -145,9 +145,9 @@ const CardComponent = ({ item, navigation }) => {
             <View style={styles.first}>
                 <View style={styles.orderNumber}>
                     <Text style={styles.orderNumberStyle}>
-                        Buyurtma - {item.orderId}
+                        Buyurtma
                     </Text>
-                    <Text style={styles.orderNumberStyle}>#10293</Text>
+                    <Text style={styles.orderNumberStyle}>#{item.orderId}</Text>
                 </View>
                 <View style={styles.orderStatusWrapper}>
                     <Text style={styles.orderStatusText}>Buyurma holati</Text>

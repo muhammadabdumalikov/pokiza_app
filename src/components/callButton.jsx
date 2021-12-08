@@ -1,6 +1,6 @@
 import React from "react";
-import {TouchableOpacity, Text, Linking} from "react-native";
-import { Feather } from "@expo/vector-icons";
+import { TouchableOpacity, Text, Linking } from "react-native";
+import { FontAwesome } from "@expo/vector-icons";
 
 import { colors } from "../constants/color";
 
@@ -17,7 +17,7 @@ const CallButton = () => {
                 marginRight: 16,
             }}
         >
-            <Feather name="phone" size={24} color={colors.blue} />
+            <FontAwesome name="phone" size={24} color={colors.blue} />
             <Text
                 style={{
                     color: colors.blue,

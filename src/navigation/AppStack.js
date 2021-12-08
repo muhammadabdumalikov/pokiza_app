@@ -33,7 +33,7 @@ const OrdersStack = ({ navigation, route }) => {
     return (
         <Stack.Navigator
             screenOptions={{
-                headerTitle: "ID: #3493843",
+                // headerTitle: "ID: #349343",
                 headerTitleAlign: "center",
                 headerTitleStyle: {
                     fontSize: 18,

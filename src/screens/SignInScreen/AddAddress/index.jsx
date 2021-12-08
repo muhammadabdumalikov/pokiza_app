@@ -273,10 +273,7 @@ const AddAddress = ({ navigation }) => {
                         />
                         <View style={styles.signInWrapper}>
                             <Text style={styles.signIn}>Tizimga kirish</Text>
-                            <Text style={styles.signInDescription}>
-                                Tizimga kirish uchun telefon raqamingizni
-                                kiriting.
-                            </Text>
+                           
                         </View>
                     </View>
                     <View style={styles.personalDataBox}>
@@ -316,7 +313,7 @@ const AddAddress = ({ navigation }) => {
                                 }
                             >
                                 <View style={styles.preTextWrapperStyle}>
-                                    <Text style={styles.preText}>Tuman</Text>
+                                    <Text style={styles.preText}>Shahar / Tuman</Text>
                                 </View>
                                 <Picker
                                     style={styles.pickerStyle}
@@ -345,7 +342,7 @@ const AddAddress = ({ navigation }) => {
                                 }
                             >
                                 <View style={styles.preTextWrapperStyle}>
-                                    <Text style={styles.preText}>Branch</Text>
+                                    <Text style={styles.preText}>Filial</Text>
                                 </View>
                                 <Picker
                                     style={styles.pickerStyle}

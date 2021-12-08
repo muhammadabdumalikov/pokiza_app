@@ -83,7 +83,7 @@ export default function ({ navigation }) {
                     behavior={Platform.OS === "ios" ? "padding" : "height"}
                 >
                     <View style={styles.preTextWrapperStyle}>
-                        <Text style={styles.preText}>Telefon raqam</Text>
+                        <Text style={styles.preText}>Telefon Raqam:</Text>
                     </View>
                     <View style={styles.inputWrapper}>
                         <Text style={{ fontSize: 18, color: "black" }}>
@@ -106,7 +106,7 @@ export default function ({ navigation }) {
                     onPress={handleLoginPress}
                     disabled={loading}
                 >
-                    <Text style={styles.sendCodeText}>Tasdiqlash</Text>
+                    <Text style={styles.sendCodeText}>Davom etish</Text>
                 </TouchableOpacity>
             </View>
         </ScrollView>
