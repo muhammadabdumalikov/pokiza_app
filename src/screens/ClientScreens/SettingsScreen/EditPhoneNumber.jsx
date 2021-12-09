@@ -1,5 +1,12 @@
 import React, { useState, useEffect, useContext } from "react";
-import { View, Text, TextInput, TouchableOpacity, Alert } from "react-native";
+import {
+    View,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    Alert,
+    ActivityIndicator,
+} from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -8,19 +15,26 @@ import { styles } from "./styles";
 import { request } from "../../../helpers/request";
 
 const EditPhoneNumber = ({ navigation }) => {
-    const { setUser } = useContext(AuthContext);
+    const { setUser, user } = useContext(AuthContext);
 
-    const [mainContact, setMainContact] = useState();
-    const [secondContact, setSecondContact] = useState();
     const [newMainContact, setNewMainContact] = useState();
     const [newSecondContact, setNewSecondContact] = useState();
     const [userToken, setUserToken] = useState();
     const [userId, setUserId] = useState();
+    const [userInfo, setUserInfo] = useState();
+    const [isLoading, setLoading] = useState(true);
 
-    const GET_USER_ID = `{
-        clients{
+    const GET_USER = `query($clientId: ID){
+        clients(clientId: $clientId){
+          clientId
           clientInfo{
             userId
+            mainContact
+            secondContact
+            firstName
+            lastName
+            age
+            gender
           }
         }
       }`;
@@ -45,12 +59,11 @@ const EditPhoneNumber = ({ navigation }) => {
         async function fetchData() {
             try {
                 const value = await AsyncStorage.getItem("user_token");
-                const id = await request(GET_USER_ID, null, value);
-                setMainContact(await AsyncStorage.getItem("mainContact"));
-                setSecondContact(await AsyncStorage.getItem("secondContact"));
+                const user = await request(GET_USER, null, value);
                 setUserToken(value);
-                setUserId(id.clients[0].clientInfo.userId);
-                // setLoading(false);
+                setUserId(user.clients[0].clientInfo.userId);
+                setUserInfo(user);
+                setLoading(false);
             } catch (error) {
                 console.log(error);
             }
@@ -139,59 +152,97 @@ const EditPhoneNumber = ({ navigation }) => {
     };
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Telefon raqamini o'zgartirish</Text>
-            <View style={styles.phoneLine}>
-                <Text style={styles.preText}>Asosiy telefon raqam:</Text>
-                <View style={styles.inputContainer}>
-                    <TextInput
-                        style={styles.preText}
-                        placeholder={`${mainContact}`}
-                        placeholderTextColor="#B8B8BB"
-                        maxLength={12}
-                        keyboardType="phone-pad"
-                        onChangeText={(value) => setNewMainContact(value)}
+        <>
+            {isLoading ? (
+                <View
+                    style={{
+                        flex: 1,
+                        justifyContent: "center",
+                        alignItems: "center",
+                    }}
+                >
+                    <ActivityIndicator
+                        size="large"
+                        color="#2196F3"
+                        style={{ alignSelf: "center" }}
                     />
-                    <TouchableOpacity
-                        style={styles.confirmPhoneChangedBtn}
-                        onPress={confirmMainContact}
-                    >
-                        <Text style={styles.confirmPhoneChanged}>
-                            Tasdiqlash
+                </View>
+            ) : (
+                <View style={styles.container}>
+                    <Text style={styles.title}>
+                        Telefon raqamini o'zgartirish
+                    </Text>
+                    <View style={styles.phoneLine}>
+                        <Text style={styles.preText}>
+                            Asosiy telefon raqam:
                         </Text>
+                        <View style={styles.inputContainer}>
+                            <TextInput
+                                style={styles.preText}
+                                placeholder={
+                                    userInfo
+                                        ? `${userInfo.clients[0].clientInfo.mainContact}`
+                                        : "Asosiy raqamingizni kiriting"
+                                }
+                                placeholderTextColor="#B8B8BB"
+                                maxLength={12}
+                                keyboardType="phone-pad"
+                                onChangeText={(value) =>
+                                    setNewMainContact(value)
+                                }
+                            />
+                            <TouchableOpacity
+                                style={styles.confirmPhoneChangedBtn}
+                                onPress={confirmMainContact}
+                            >
+                                <Text style={styles.confirmPhoneChanged}>
+                                    Tasdiqlash
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                    <View style={styles.phoneLine}>
+                        <Text style={styles.preText}>
+                            Qo'shimcha telefon raqam:
+                        </Text>
+                        <View style={styles.inputContainer}>
+                            <TextInput
+                                style={styles.preText}
+                                placeholder={
+                                    userInfo.clients[0].clientInfo.secondContact
+                                        ? `${userInfo.clients[0].clientInfo.secondContact}`
+                                        : "Qo'shimcha raqamingizni kiriting"
+                                }
+                                placeholderTextColor="#B8B8BB"
+                                maxLength={12}
+                                keyboardType="phone-pad"
+                                onChangeText={(value) =>
+                                    setNewSecondContact(value)
+                                }
+                            />
+                            <TouchableOpacity
+                                style={styles.confirmPhoneChangedBtn}
+                                onPress={confirmSecondContact}
+                            >
+                                <Text style={styles.confirmPhoneChanged}>
+                                    Tasdiqlash
+                                </Text>
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                    <TouchableOpacity
+                        style={styles.fab}
+                        onPress={() => navigation.goBack()}
+                    >
+                        <Ionicons
+                            name="ios-arrow-back"
+                            size={28}
+                            color="white"
+                        />
                     </TouchableOpacity>
                 </View>
-            </View>
-            <View style={styles.phoneLine}>
-                <Text style={styles.preText}>Qo'shimcha telefon raqam:</Text>
-                <View style={styles.inputContainer}>
-                    <TextInput
-                        style={styles.preText}
-                        placeholder={
-                            secondContact ? `${secondContact}` : "9989xxxxxxxx"
-                        }
-                        placeholderTextColor="#B8B8BB"
-                        maxLength={12}
-                        keyboardType="phone-pad"
-                        onChangeText={(value) => setNewSecondContact(value)}
-                    />
-                    <TouchableOpacity
-                        style={styles.confirmPhoneChangedBtn}
-                        onPress={confirmSecondContact}
-                    >
-                        <Text style={styles.confirmPhoneChanged}>
-                            Tasdiqlash
-                        </Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
-            <TouchableOpacity
-                style={styles.fab}
-                onPress={() => navigation.goBack()}
-            >
-                <Ionicons name="ios-arrow-back" size={28} color="white" />
-            </TouchableOpacity>
-        </View>
+            )}
+        </>
     );
 };
 
