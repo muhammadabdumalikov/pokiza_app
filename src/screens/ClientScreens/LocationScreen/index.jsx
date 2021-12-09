@@ -6,7 +6,7 @@ import {styles} from "./styles"
 const LocationScreen = () => {
     return (
         <ScrollView contentContainerStyle={styles.container}>
-           <Text style={styles.txt}>This screen unsupported now</Text>
+           <Text style={styles.txt}>Bu sahifa tez orada ishga tushadi</Text>
         </ScrollView>
     )
 }
