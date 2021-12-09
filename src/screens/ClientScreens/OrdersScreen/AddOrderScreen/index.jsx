@@ -17,9 +17,10 @@ import { AuthContext } from "../../../../navigation/AuthProvider";
 
 import styles from "./styles";
 import { request } from "../../../../helpers/request";
+import { showDate } from "../../../../components/DateFormatter";
 
 const AddOrderScreen = ({ navigation }) => {
-    const { addressId, setAddressId } = useContext(AuthContext);
+    const { user, addressId, setAddressId } = useContext(AuthContext);
 
     const [selectedState, setSelectedState] = useState(addressId.address.state);
     const [selectedRegion, setSelectedRegion] = useState(
@@ -32,9 +33,7 @@ const AddOrderScreen = ({ navigation }) => {
     let [isLoading, setLoading] = useState(true);
     let [userToken, setUserToken] = useState();
 
-    let [selectedDate, setSelectedDate] = useState(
-        new Date().toLocaleDateString()
-    );
+    let [selectedDate, setSelectedDate] = useState(new Date());
 
     let [selectedTariff, setSelectedTariff] = useState();
 
@@ -114,9 +113,9 @@ const AddOrderScreen = ({ navigation }) => {
                 setUserToken(value);
 
                 navigation.setOptions({
-                    title: `ID #${clientId}`,
+                    title: `ID: #${user.client_id}`,
                 });
-                
+
                 setStates(await request(GET_STATE_QUERY, null, value));
                 setLoading(false);
             } catch (error) {
@@ -476,7 +475,7 @@ const AddOrderScreen = ({ navigation }) => {
                                             color: "#2196F3",
                                         }}
                                     >
-                                        {selectedDate}
+                                        {showDate(selectedDate)}
                                     </Text>
                                 </TouchableOpacity>
                             </View>

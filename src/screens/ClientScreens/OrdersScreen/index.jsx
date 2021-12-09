@@ -63,7 +63,7 @@ const OrderScreen = ({ navigation }) => {
                     setFetchedData(jsonData.data.orders.reverse());
 
                     navigation.setOptions({
-                        title: `ID #${user.client_id}`,
+                        title: `ID: #${user.client_id}`,
                     });
 
                     setLoading(false);
@@ -92,6 +92,7 @@ const OrderScreen = ({ navigation }) => {
             }),
         });
         let jsonData = await data.json();
+        console.log(jsonData)
 
         setFetchedData(jsonData.data.orders.reverse());
         setRefreshing(false);
@@ -160,9 +161,7 @@ const OrderScreen = ({ navigation }) => {
             <TouchableOpacity
                 style={styles.fab}
                 onPress={() =>
-                    navigation.navigate("AddOrderScreen", {
-                        id: "ID: #329304",
-                    })
+                    navigation.navigate("AddOrderScreen")
                 }
             >
                 <MaterialIcons name="add" size={32} color="white" />

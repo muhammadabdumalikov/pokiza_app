@@ -9,18 +9,27 @@ import { styles } from "./styles";
 import { request } from "../../../helpers/request";
 
 const EditInfo = ({ navigation }) => {
-    // const { age, setAge, gender, setGender } = useContext(AuthContext);
+    const { user } = useContext(AuthContext);
     const [userId, setUserId] = useState();
+    const [userInfo, setUserInfo] = useState();
     const [userToken, setUserToken] = useState();
     const [firstName, setFirstName] = useState();
     const [lastName, setLastName] = useState();
     const [age, setAge] = useState();
     const [gender, setGender] = useState();
+    const [isLoading, setLoading] = useState(false);
 
-    const GET_USER_ID = `{
-        clients{
+    const GET_USER = `query($clientId: ID){
+        clients(clientId: $clientId){
+          clientId
           clientInfo{
             userId
+            mainContact
+            secondContact
+            firstName
+            lastName
+            age
+            gender
           }
         }
       }`;
@@ -88,10 +97,11 @@ const EditInfo = ({ navigation }) => {
         async function fetchData() {
             try {
                 const value = await AsyncStorage.getItem("user_token");
-                const id = await request(GET_USER_ID, null, value);
+                const user = await request(GET_USER, null, value);
                 setUserToken(value);
-                setUserId(id.clients[0].clientInfo.userId);
-                // setLoading(false);
+                setUserId(user.clients[0].clientInfo.userId);
+                setUserInfo(user);
+                setLoading(false);
             } catch (error) {
                 console.log(error);
             }
@@ -100,91 +110,124 @@ const EditInfo = ({ navigation }) => {
     }, []);
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Ma'lumotlarni o'zgartirish</Text>
-
-            <View style={styles.inputContainer}>
-                <Text style={styles.preText}>Familiya</Text>
-                <TextInput
-                    style={styles.preText}
-                    placeholder="Familiyangizni kiriting"
-                    placeholderTextColor="#B8B8BB"
-                    maxLength={20}
-                    onChangeText={(value) => setLastName(value)}
-                />
-            </View>
-            <View style={styles.inputContainer}>
-                <Text style={styles.preText}>Ism</Text>
-                <TextInput
-                    style={styles.preText}
-                    placeholder="Ismingizni kiriting"
-                    placeholderTextColor="#B8B8BB"
-                    maxLength={20}
-                    onChangeText={(value) => setFirstName(value)}
-                />
-            </View>
-            <View style={{ ...styles.inputContainer, borderBottomWidth: 0 }}>
-                {/* Age input ----------------------------------------------- */}
+        <>
+            {isLoading ? (
                 <View
                     style={{
-                        ...styles.inputContainer,
-                        borderBottomWidth: 1,
-                        width: "50%",
+                        flex: 1,
+                        justifyContent: "center",
+                        alignItems: "center",
                     }}
-                    behavior={Platform.OS === "ios" ? "padding" : "height"}
                 >
-                    <View style={styles.preTextWrapperStyle}>
-                        <Text style={styles.preText}>Yosh</Text>
-                    </View>
-                    <TextInput
-                        style={{ height: "100%", width: "50%" }}
-                        numberOfLines={1}
-                        placeholder="20"
-                        placeholderTextColor="#B8B8BB"
-                        onChangeText={(value) => setAge(value)}
-                        keyboardType="numeric"
-                        // autoFocus={true}
-                        maxLength={3}
+                    <ActivityIndicator
+                        size="large"
+                        color="#2196F3"
+                        style={{ alignSelf: "center" }}
                     />
                 </View>
+            ) : (
+                <View style={styles.container}>
+                    <Text style={styles.title}>Ma'lumotlarni o'zgartirish</Text>
 
-                {/* Gender input --------------------------------------------- */}
-                <View
-                    style={{
-                        ...styles.inputContainer,
-                        borderBottomWidth: 1,
-                        width: "50%",
-                    }}
-                    behavior={Platform.OS === "ios" ? "padding" : "height"}
-                >
-                    <View style={styles.preTextWrapperStyle}>
-                        <Text style={styles.preText}>Jins</Text>
+                    <View style={styles.inputContainer}>
+                        <Text style={styles.preText}>Familiya</Text>
+                        <TextInput
+                            style={styles.preText}
+                            placeholder={userInfo ? `${userInfo.clients[0].clientInfo.lastName}` : "Familiyangizni kiriting"}
+                            placeholderTextColor="#B8B8BB"
+                            maxLength={20}
+                            onChangeText={(value) => setLastName(value)}
+                        />
                     </View>
-                    <Picker
-                        style={{ height: "100%", width: 120 }}
-                        selectedValue={gender}
-                        onValueChange={(itemValue, itemIndex) => {
-                            setGender(itemValue);
+                    <View style={styles.inputContainer}>
+                        <Text style={styles.preText}>Ism</Text>
+                        <TextInput
+                            style={styles.preText}
+                            placeholder={userInfo ? `${userInfo.clients[0].clientInfo.firstName}` : "Ismingizni kiriting"}
+                            placeholderTextColor="#B8B8BB"
+                            maxLength={20}
+                            onChangeText={(value) => setFirstName(value)}
+                        />
+                    </View>
+                    <View
+                        style={{
+                            ...styles.inputContainer,
+                            borderBottomWidth: 0,
                         }}
                     >
-                        <Picker.Item label="Erkak" value={1} />
-                        <Picker.Item label="Ayol" value={2} />
-                    </Picker>
+                        {/* Age input ----------------------------------------------- */}
+                        <View
+                            style={{
+                                ...styles.inputContainer,
+                                borderBottomWidth: 1,
+                                width: "50%",
+                            }}
+                            behavior={
+                                Platform.OS === "ios" ? "padding" : "height"
+                            }
+                        >
+                            <View style={styles.preTextWrapperStyle}>
+                                <Text style={styles.preText}>Yosh</Text>
+                            </View>
+                            <TextInput
+                                style={{ height: "100%", width: "50%" }}
+                                numberOfLines={1}
+                                placeholder={userInfo ? `${userInfo.clients[0].clientInfo.age}` : "20"}
+                                placeholderTextColor="#B8B8BB"
+                                onChangeText={(value) => setAge(value)}
+                                keyboardType="numeric"
+                                // autoFocus={true}
+                                maxLength={3}
+                            />
+                        </View>
+
+                        {/* Gender input --------------------------------------------- */}
+                        <View
+                            style={{
+                                ...styles.inputContainer,
+                                borderBottomWidth: 1,
+                                width: "50%",
+                            }}
+                            behavior={
+                                Platform.OS === "ios" ? "padding" : "height"
+                            }
+                        >
+                            <View style={styles.preTextWrapperStyle}>
+                                <Text style={styles.preText}>Jins</Text>
+                            </View>
+                            <Picker
+                                style={{ height: "100%", width: 120 }}
+                                selectedValue={gender}
+                                onValueChange={(itemValue, itemIndex) => {
+                                    setGender(itemValue);
+                                }}
+                            >
+                                <Picker.Item label="Erkak" value={1} />
+                                <Picker.Item label="Ayol" value={2} />
+                            </Picker>
+                        </View>
+                    </View>
+                    <TouchableOpacity
+                        style={styles.confirmEditInfoBtn}
+                        onPress={confirmAlert}
+                    >
+                        <Text style={styles.confirmEditInfoChanged}>
+                            Tasdiqlash
+                        </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={styles.fab}
+                        onPress={() => navigation.goBack()}
+                    >
+                        <Ionicons
+                            name="ios-arrow-back"
+                            size={28}
+                            color="white"
+                        />
+                    </TouchableOpacity>
                 </View>
-            </View>
-            <TouchableOpacity
-                style={styles.confirmEditInfoBtn}
-                onPress={confirmAlert}
-            >
-                <Text style={styles.confirmEditInfoChanged}>Tasdiqlash</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-                style={styles.fab}
-                onPress={() => navigation.goBack()}
-            >
-                <Ionicons name="ios-arrow-back" size={28} color="white" />
-            </TouchableOpacity>
-        </View>
+            )}
+        </>
     );
 };
 
