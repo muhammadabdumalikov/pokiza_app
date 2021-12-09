@@ -486,7 +486,7 @@ const AddOrderScreen = ({ navigation }) => {
                                 mode="datetime"
                                 onCancel={() => setDatePickerVisibility(false)}
                                 onConfirm={(date) => {
-                                    setSelectedDate(date.toLocaleString());
+                                    setSelectedDate(date);
                                     setDatePickerVisibility(false);
                                 }}
                             />

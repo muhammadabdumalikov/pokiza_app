@@ -38,8 +38,7 @@ const OrderScreen = ({ navigation }) => {
 
     const [refreshing, setRefreshing] = useState(false);
 
-    const {user} = useContext(AuthContext)
-    console.log(user)
+    const { user } = useContext(AuthContext);
 
     useEffect(() => {
         let cleanupFunction = false;
@@ -60,14 +59,11 @@ const OrderScreen = ({ navigation }) => {
                 });
 
                 let jsonData = await data.json();
-                console.log(jsonData)
                 if (!cleanupFunction) {
                     setFetchedData(jsonData.data.orders.reverse());
 
-                    fetchedData ? AsyncStorage.setItem("clientId", fetchedData.clients[0].clientId): null;
-
                     navigation.setOptions({
-                        title: `ID #${fetchedData ? fetchedData.clients[0].clientId : null}`,
+                        title: `ID #${user.client_id}`,
                     });
 
                     setLoading(false);
@@ -79,10 +75,6 @@ const OrderScreen = ({ navigation }) => {
 
         fetchData();
         return () => (cleanupFunction = true);
-    }, []);
-
-    useEffect(() => {
-        
     }, []);
 
     const onRefresh = React.useCallback(async () => {

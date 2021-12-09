@@ -12,8 +12,6 @@ export default Routes = () => {
     const { user, setUser } = useContext(AuthContext);
     const [initializing, setInitializing] = useState(true);
 
-    useEffect(() => {}, []);
-
     return (
         <NavigationContainer>
             {user ? <AppStack /> : <AuthStack />}

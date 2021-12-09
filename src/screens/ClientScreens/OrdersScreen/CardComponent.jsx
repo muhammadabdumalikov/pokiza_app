@@ -3,6 +3,7 @@ import { View, TouchableOpacity, Text, Image } from "react-native";
 import { Feather } from "@expo/vector-icons";
 
 import { styles } from "./styles";
+import { showDate } from "../../../components/DateFormatter";
 
 const CardComponent = ({ item, navigation }) => {
     const statusStyles = {
@@ -133,6 +134,8 @@ const CardComponent = ({ item, navigation }) => {
             text: "Yetkazilgan",
         },
     };
+
+    console.log(item)
     return (
         <TouchableOpacity
             style={styles.orderBox}
@@ -165,7 +168,7 @@ const CardComponent = ({ item, navigation }) => {
                             Ro'yxatdan o'tgan sana
                         </Text>
                     </View>
-                    <Text style={styles.orderRegisterDate}>18.11.2020</Text>
+                    <Text style={styles.orderRegisterDate}>{showDate(new Date(), false)}</Text>
                 </View>
                 <View style={styles.orderRegisterBox}>
                     <View style={styles.orderRegisterTextWrapper}>
