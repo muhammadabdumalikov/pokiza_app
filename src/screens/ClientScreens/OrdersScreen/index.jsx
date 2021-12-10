@@ -39,19 +39,17 @@ const OrderScreen = ({ navigation }) => {
 
     const [refreshing, setRefreshing] = useState(false);
 
-    const { user } = useContext(AuthContext);
+    const { user, token } = useContext(AuthContext);
 
     useEffect(() => {
         let cleanupFunction = false;
         const fetchData = async () => {
             try {
-                const value = await AsyncStorage.getItem("user_token");
-                setUserToken(value);
                 let data = await fetch("https://pokiza.herokuapp.com/graphql", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
-                        token: value,
+                        token: token,
                     },
                     body: JSON.stringify({
                         query: GET_ORDERS,
@@ -79,12 +77,11 @@ const OrderScreen = ({ navigation }) => {
 
     const onRefresh = React.useCallback(async () => {
         setRefreshing(true);
-        const value = await AsyncStorage.getItem("user_token");
         let data = await fetch("https://pokiza.herokuapp.com/graphql", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json",
-                token: value,
+                token: token,
             },
             body: JSON.stringify({
                 query: GET_ORDERS,
