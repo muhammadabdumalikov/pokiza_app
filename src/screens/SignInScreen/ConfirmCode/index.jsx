@@ -70,47 +70,47 @@ const ConfirmCode = ({ navigation }) => {
     const handleSubmit = () => {
         navigation.navigate("App");
 
-        // verify({
-        //     variables: {
-        //         password: value,
-        //     },
-        // })
-        //     .then(async ({ data }) => {
-        //         console.log(data)
+        verify({
+            variables: {
+                password: value,
+            },
+        })
+            .then(async ({ data }) => {
+                console.log(data)
 
-        //         if (data.enterClientPassword.data.is_registered) {
-        //             setUser(data.enterClientPassword.data);
-        //             setAddressId(
-        //                 await request(
-        //                     GET_ADDRESS_ID_QUERY,
-        //                     null,
-        //                     data.enterClientPassword.token
-        //                 )
-        //             );
-        //             navigation.navigate("App")
-        //             // AsyncStorage.setItem(
-        //             //     "user_login",
-        //             //     data.enterClientPassword.token
-        //             // );
-        //             // AsyncStorage.setItem(
-        //             //     "user_token",
-        //             //     data.enterClientPassword.token
-        //             // );
-        //         }
-        //         if (
-        //             data.enterClientPassword.status == 200 &&
-        //             data.enterClientPassword.data.is_registered == false
-        //         ) {
-        //             // AsyncStorage.setItem(
-        //             //     "user_token",
-        //             //     data.enterClientPassword.token
-        //             // );
-        //             navigation.navigate("Auth", {screen: "PersonalData"});
-        //         }
-        //     })
-        //     .catch((err) => {
-        //         console.log(err);
-        //     });
+                if (data.enterClientPassword.data.is_registered) {
+                    setUser(data.enterClientPassword.data);
+                    setAddressId(
+                        await request(
+                            GET_ADDRESS_ID_QUERY,
+                            null,
+                            data.enterClientPassword.token
+                        )
+                    );
+                    navigation.navigate("App")
+                    AsyncStorage.setItem(
+                        "user_login",
+                        data.enterClientPassword.token
+                    );
+                    AsyncStorage.setItem(
+                        "user_token",
+                        data.enterClientPassword.token
+                    );
+                }
+                if (
+                    data.enterClientPassword.status == 200 &&
+                    data.enterClientPassword.data.is_registered == false
+                ) {
+                    AsyncStorage.setItem(
+                        "user_token",
+                        data.enterClientPassword.token
+                    );
+                    navigation.navigate("Auth", {screen: "PersonalData"});
+                }
+            })
+            .catch((err) => {
+                console.log(err);
+            });
     };
 
     return (
