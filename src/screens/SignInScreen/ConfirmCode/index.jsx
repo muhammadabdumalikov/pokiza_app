@@ -51,7 +51,7 @@ const ConfirmCode = ({ navigation }) => {
         value,
         setValue,
     });
-    const { setUser, setAddressId } = useContext(AuthContext);
+    const { setUser, setAddressId, setToken } = useContext(AuthContext);
 
     const GET_ADDRESS_ID_QUERY = `{
         address{
@@ -85,25 +85,15 @@ const ConfirmCode = ({ navigation }) => {
                             data.enterClientPassword.token
                         )
                     );
-                    navigation.navigate("App")
-                    AsyncStorage.setItem(
-                        "user_login",
-                        data.enterClientPassword.token
-                    );
-                    AsyncStorage.setItem(
-                        "user_token",
-                        data.enterClientPassword.token
-                    );
+                    setToken(data.enterClientPassword.token);
+                    navigation.navigate("App");
                 }
                 if (
                     data.enterClientPassword.status == 200 &&
                     data.enterClientPassword.data.is_registered == false
                 ) {
-                    AsyncStorage.setItem(
-                        "user_token",
-                        data.enterClientPassword.token
-                    );
-                    navigation.navigate("Auth", {screen: "PersonalData"});
+                    setToken(data.enterClientPassword.token);
+                    navigation.navigate("Auth", { screen: "PersonalData" });
                 }
             })
             .catch((err) => {
