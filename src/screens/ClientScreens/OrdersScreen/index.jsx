@@ -43,13 +43,12 @@ const OrderScreen = ({ navigation }) => {
         let cleanupFunction = false;
         const fetchData = async () => {
             try {
-                const value = await AsyncStorage.getItem("user_token");
-                setUserToken(value);
+                // setUserToken(value);
                 let data = await fetch("https://pokiza.herokuapp.com/graphql", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
-                        token: value,
+                        token: await AsyncStorage.getItem("user_token"),
                     },
                     body: JSON.stringify({
                         query: GET_ORDERS,
