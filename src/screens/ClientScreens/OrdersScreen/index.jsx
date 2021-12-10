@@ -7,6 +7,7 @@ import {
     ActivityIndicator,
     ScrollView,
     ImageBackground,
+    Alert,
 } from "react-native";
 import { MaterialIcons, Feather } from "@expo/vector-icons";
 
@@ -59,13 +60,12 @@ const OrderScreen = ({ navigation }) => {
                 });
 
                 let jsonData = await data.json();
+                Alert.alert(JSON.stringify(jsonData));
                 if (!cleanupFunction) {
                     setFetchedData(jsonData.data.orders.reverse());
-
                     navigation.setOptions({
                         title: `ID: #000`,
                     });
-
                     setLoading(false);
                 }
             } catch (error) {
@@ -92,7 +92,6 @@ const OrderScreen = ({ navigation }) => {
             }),
         });
         let jsonData = await data.json();
-        console.log(jsonData)
 
         setFetchedData(jsonData.data.orders.reverse());
         setRefreshing(false);

@@ -407,20 +407,13 @@ const AddAddress = ({ navigation }) => {
                                             registerClient.token
                                         )
                                     );
-                                    console.log(
-                                        await request(
-                                            GET_ADDRESS_ID_QUERY,
-                                            null,
-                                            registerClient.token
-                                        )
-                                    );
 
                                     if (registerClient.data.is_registered) {
-                                        setUser(registerClient.data);
                                         AsyncStorage.setItem(
                                             "user_token",
                                             registerClient.token
                                         );
+                                        navigation.navigate("App")
                                     }
                                 } catch (error) {
                                     console.log(error);

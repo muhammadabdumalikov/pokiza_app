@@ -76,8 +76,6 @@ const ConfirmCode = ({ navigation }) => {
             },
         })
             .then(async ({ data }) => {
-                console.log(data)
-
                 if (data.enterClientPassword.data.is_registered) {
                     setUser(data.enterClientPassword.data);
                     setAddressId(
