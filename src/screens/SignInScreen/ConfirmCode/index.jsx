@@ -84,6 +84,7 @@ const ConfirmCode = ({ navigation }) => {
                             data.enterClientPassword.token
                         )
                     );
+                    navigation.navigate("App")
                     AsyncStorage.setItem(
                         "user_login",
                         data.enterClientPassword.token
@@ -95,13 +96,13 @@ const ConfirmCode = ({ navigation }) => {
                 }
                 if (
                     data.enterClientPassword.status == 200 &&
-                    data.enterClientPassword.data.registered == false
+                    data.enterClientPassword.data.is_registered == false
                 ) {
                     AsyncStorage.setItem(
                         "user_token",
                         data.enterClientPassword.token
                     );
-                    navigation.navigate("PersonalData");
+                    navigation.navigate("Auth", {screen: "PersonalData"});
                 }
             })
             .catch((err) => {
