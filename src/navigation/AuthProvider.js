@@ -12,7 +12,6 @@ export const AuthProvider = ({ children }) => {
     const [code, setCode] = useState(null);
     const [addressId, setAddressId] = useState();
     const [user, setUser] = useState();
-    const [token, setToken] = useState();
 
     return (
         <AuthContext.Provider
@@ -32,21 +31,7 @@ export const AuthProvider = ({ children }) => {
                 code,
                 setCode,
                 addressId,
-                setAddressId,
-                token,
-                setToken,
-                login: async (password) => {
-                    try {
-                    } catch (e) {
-                        console.log(e);
-                    }
-                },
-                register: async (phone) => {
-                    try {
-                    } catch (e) {
-                        console.log(e);
-                    }
-                },
+                setAddressId
             }}
         >
             <AuthContext.Consumer>{() => children}</AuthContext.Consumer>
