@@ -85,23 +85,23 @@ const ConfirmCode = ({ navigation }) => {
                         )
                     );
                     navigation.navigate("App")
-                    AsyncStorage.setItem(
-                        "user_login",
-                        data.enterClientPassword.token
-                    );
-                    AsyncStorage.setItem(
-                        "user_token",
-                        data.enterClientPassword.token
-                    );
+                    // AsyncStorage.setItem(
+                    //     "user_login",
+                    //     data.enterClientPassword.token
+                    // );
+                    // AsyncStorage.setItem(
+                    //     "user_token",
+                    //     data.enterClientPassword.token
+                    // );
                 }
                 if (
                     data.enterClientPassword.status == 200 &&
                     data.enterClientPassword.data.is_registered == false
                 ) {
-                    AsyncStorage.setItem(
-                        "user_token",
-                        data.enterClientPassword.token
-                    );
+                    // AsyncStorage.setItem(
+                    //     "user_token",
+                    //     data.enterClientPassword.token
+                    // );
                     navigation.navigate("Auth", {screen: "PersonalData"});
                 }
             })
