@@ -7,6 +7,7 @@ import {
     SafeAreaView,
     TouchableOpacity,
     Image,
+    ActivityIndicator,
 } from "react-native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -31,20 +32,22 @@ const LOGIN = gql`
 export default function ({ navigation }) {
     const { phoneNumber, setPhoneNumber } = useContext(AuthContext);
     const [login, { loading }] = useMutation(LOGIN);
+    const [send, setSend] = useState(false);
 
     const handleLoginPress = () => {
+        setSend(true);
         login({
             variables: {
                 phoneNumber: phoneNumber,
             },
         })
             .then(async ({ data }) => {
-                console.log(data)
                 if (data.enterClientPhone.status == 200) {
                     navigation.navigate("ConfirmCode", {
                         phoneToken: data.enterClientPhone.token,
                     });
                 }
+                setSend(false);
             })
             .catch((err) => {
                 console.log(err);
@@ -67,6 +70,7 @@ export default function ({ navigation }) {
         <ScrollView
             style={styles.container}
             contentContainerStyle={styles.content}
+            showsVerticalScrollIndicator={false}
         >
             <View style={styles.logoBox}>
                 <Image
@@ -112,7 +116,23 @@ export default function ({ navigation }) {
                     onPress={handleLoginPress}
                     disabled={loading}
                 >
-                    <Text style={styles.sendCodeText}>Davom etish</Text>
+                    {send ? (
+                        <View
+                            style={{
+                                flex: 1,
+                                justifyContent: "center",
+                                alignItems: "center",
+                            }}
+                        >
+                            <ActivityIndicator
+                                size="large"
+                                color="white"
+                                style={{ alignSelf: "center" }}
+                            />
+                        </View>
+                    ) : (
+                        <Text style={styles.sendCodeText}>Davom etish</Text>
+                    )}
                 </TouchableOpacity>
             </View>
         </ScrollView>
