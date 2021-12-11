@@ -159,6 +159,18 @@ export const styles = StyleSheet.create({
         height: "100%",
         backgroundColor: "gray",
     },
+    emptyOrderView: {
+        height: "100%",
+        width: "100%",
+        backgroundColor: "white",
+        justifyContent: "center",
+        alignItems: "center",
+    },
+    emptyBox: {
+        backgroundColor: colors.gray,
+        height: 200,
+        width: 200,
+    },
     fab: {
         width: 64,
         height: 64,

@@ -4,6 +4,9 @@ import {
     Text,
     TouchableOpacity,
     FlatList,
+    ScrollView,
+    RefreshControl,
+    ImageBackground,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -11,13 +14,32 @@ import { styles } from "./styles";
 import { CardComponent } from "./CardComponent";
 
 const OrderDetailScreen = ({ navigation, route }) => {
-
     const DATA = [
-        { id: "1", key: "1111" },
-        { id: "2", key: "1111" },
-        { id: "3", key: "1111" },
-        { id: "4", key: "1111" },
+        // { id: "1", key: "1111" },
+        // { id: "2", key: "1111" },
+        // { id: "3", key: "1111" },
+        // { id: "4", key: "1111" },
     ];
+    const [refreshing, setRefreshing] = useState(false);
+    const onRefresh = React.useCallback(async () => {
+        setRefreshing(true);
+        const value = await AsyncStorage.getItem("user_token");
+        let data = await fetch("https://pokiza.herokuapp.com/graphql", {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                token: value,
+            },
+            body: JSON.stringify({
+                query: GET_ORDERS,
+                variables: null,
+            }),
+        });
+        let jsonData = await data.json();
+
+        setFetchedData(jsonData.data.orders.reverse());
+        setRefreshing(false);
+    }, []);
 
     return (
         // Orders with scrollable view ------------------------------------
@@ -30,22 +52,38 @@ const OrderDetailScreen = ({ navigation, route }) => {
                 <Text style={styles.orderStatus}>Buyurtma holati</Text>
                 <Text style={styles.orderStatusTxt}>Jarayonda</Text>
             </View>
-            <View style={styles.sumLine}>
+            {/* <View style={styles.sumLine}>
                 <Text style={styles.sumText}>
                     Umumiy <Text style={styles.sumNum}>120.000</Text> so'm
                 </Text>
                 <Text style={styles.outOfTurn}>
                     Tariff: <Text style={styles.outOfTurn}>Tezkor</Text>
                 </Text>
-            </View>
-            <FlatList
+            </View> */}
+            {/* <FlatList
                 data={DATA}
                 renderItem={({item})=> <CardComponent item={item}/>}
                 keyExtractor={(item) => item.id}
                 style={styles.container}
                 contentContainerStyle={styles.contentStyle}
                 showsVerticalScrollIndicator={false}
-            />
+            /> */}
+            <ScrollView
+                contentContainerStyle={styles.emptyOrderView}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={refreshing}
+                        onRefresh={onRefresh}
+                    />
+                }
+            >
+                <View style={styles.emptyBox}>
+                    <ImageBackground
+                        style={{ width: "100%", height: "100%" }}
+                        source={require("../../../../assets/carpet.png")}
+                    />
+                </View>
+            </ScrollView>
             <TouchableOpacity
                 style={styles.fab}
                 onPress={() => navigation.goBack()}

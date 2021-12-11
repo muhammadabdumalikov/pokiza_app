@@ -37,14 +37,14 @@ const OrdersStack = ({ navigation, route }) => {
                 headerTitleAlign: "center",
                 headerTitleStyle: {
                     fontSize: 18,
-                    top: 20,
+                    top: height / 32.4,
                     textAlign: "center",
                 },
                 headerStyle: {
                     backgroundColor: "#F4F4F5",
                     shadowColor: "#fff",
                     elevation: 0,
-                    height: height * 0.15,
+                    height: Dimensions.get("window").height / 5.8,
                 },
                 headerRight: () => <CallButton />,
                 headerLeft: () => <LogoImage />,
@@ -71,7 +71,7 @@ const NoticesStack = ({ navigation, route }) => {
                     headerTitleAlign: "center",
                     headerTitleStyle: {
                         fontSize: 18,
-                        top: height / 32.48,
+                        top: height / 32.4,
                         textAlign: "center",
                     },
                     headerStyle: {
@@ -100,7 +100,7 @@ const LocationStack = ({ navigation, route }) => {
                     headerTitle: "Xarita",
                     headerTitleStyle: {
                         fontSize: 18,
-                        top: height / 32.48,
+                        top: height / 32.4,
                         textAlign: "center",
                     },
                     headerStyle: {
@@ -141,7 +141,7 @@ const SettingsStack = ({ navigation, route }) => {
                     headerTitle: "Sozlamalar",
                     headerTitleStyle: {
                         fontSize: 18,
-                        top: height / 32.48,
+                        top: height / 32.4,
                         textAlign: "center",
                     },
                     headerStyle: {
