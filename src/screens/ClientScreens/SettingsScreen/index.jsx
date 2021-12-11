@@ -48,7 +48,7 @@ const SettingsScreen = ({ navigation }) => {
                         let keys = [];
                         keys = await AsyncStorage.getAllKeys();
                         await AsyncStorage.multiRemove(keys);
-                        navigation.navigate("Auth", {screen: "SignInScreen  "});
+                        navigation.navigate("Auth", {screen: "SignInScreen"});
                     },
                     style: "destructive",
                 },

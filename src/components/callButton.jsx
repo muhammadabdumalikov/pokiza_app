@@ -7,7 +7,7 @@ import { colors } from "../constants/color";
 const CallButton = () => {
     return (
         <TouchableOpacity
-            onPress={() => Linking.openURL(`tel:${975012222}`)}
+            onPress={() => Linking.openURL(`tel:${1221}`)}
             style={{
                 flexDirection: "row",
                 alignItems: "center",
