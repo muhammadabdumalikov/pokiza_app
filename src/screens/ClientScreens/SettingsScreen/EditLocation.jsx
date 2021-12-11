@@ -18,7 +18,6 @@ import { request } from "../../../helpers/request";
 import { styles } from "./styles";
 
 const EditLocation = ({ navigation }) => {
-
     const GET_FULL_ADDRESS_QUERY = `{
         address{
           addressId
@@ -44,7 +43,7 @@ const EditLocation = ({ navigation }) => {
           homeNumber
         }
       }
-    `
+    `;
 
     const GET_STATE_QUERY = `{
         states {
@@ -91,6 +90,22 @@ const EditLocation = ({ navigation }) => {
         }
       }`;
 
+    const GET_USER_ID = `{
+        clients{
+          clientInfo{
+            userId
+          }
+        }
+      }`;
+
+    const CHANGE_ADDRESS_ID_QUERY = `mutation($userId:ID!,$addressId:ID){
+        changeUser(userId: $userId,addressId: $addressId){
+          status
+          message
+          data
+        }
+      }`;
+
     const CHANGE_ADDRESS_QUERY = `mutation($addressId: ID!, $stateId: ID, $regionId: ID, $neighborhoodId: ID, $streetId: ID, $areaId: ID, $target: String, $homeNumber: Int) {
         changeAddress(addressId: $addressId, stateId: $stateId, regionId: $regionId, neighborhoodId: $neighborhoodId, streetId: $streetId, areaId: $areaId, target: $target, homeNumber: $homeNumber){
           status
@@ -117,7 +132,7 @@ const EditLocation = ({ navigation }) => {
       }`;
 
     const { addressId } = useContext(AuthContext);
-      
+
     const [fullAddress, setFullAddress] = useState();
 
     const [selectedState, setSelectedState] = useState();
@@ -129,8 +144,6 @@ const EditLocation = ({ navigation }) => {
     const [selectedBranch, setSelectedBranch] = useState();
     let [target, setTarget] = useState();
     let [homeNumber, setPhoneNumber] = useState();
-
-    // const [addressId, setAddressId] = useState();
 
     let [branches, setBranches] = useState();
     let [regions, setRegions] = useState();
@@ -144,6 +157,16 @@ const EditLocation = ({ navigation }) => {
 
     const onSuccess = () => {
         Alert.alert("Ma'lumotlar muvaffaqiyatli o'zgartirildi!", "", [
+            {
+                text: "OK",
+                onPress: () => navigation.goBack(),
+                style: "cancel",
+            },
+        ]);
+    };
+
+    const onError = () => {
+        Alert.alert("Tizimda xatolik!", "", [
             {
                 text: "OK",
                 onPress: () => navigation.goBack(),
@@ -176,8 +199,21 @@ const EditLocation = ({ navigation }) => {
                         },
                         userToken
                     );
-                    console.log(changeAddress)
-                    if (changeAddress.status == 200) onSuccess();
+                    let {clients} = await request(GET_USER_ID, null, userToken);
+                    await request(
+                        CHANGE_ADDRESS_ID_QUERY,
+                        {
+                            userId: clients[0].clientInfo.userId,
+                            addressId: changeAddress.data.address_id,
+                        },
+                        userToken
+                    );
+
+                    if (changeAddress.status == 200) {
+                        onSuccess();
+                    } else {
+                        onError();
+                    }
                 },
             },
         ]);
@@ -187,11 +223,10 @@ const EditLocation = ({ navigation }) => {
         async function fetchData() {
             try {
                 const value = await AsyncStorage.getItem("user_token");
-                // const id = await AsyncStorage.getItem("addressId");
                 setUserToken(value);
-                // setAddressId(id);
-                console.log(addressId);
-                setFullAddress(await request(GET_FULL_ADDRESS_QUERY, null, value))
+                setFullAddress(
+                    await request(GET_FULL_ADDRESS_QUERY, null, value)
+                );
                 setStates(await request(GET_STATE_QUERY, null, value));
                 setLoading(false);
             } catch (error) {
@@ -285,7 +320,7 @@ const EditLocation = ({ navigation }) => {
         }
         fetchBranches();
     }, [selectedRegion]);
-
+    console.log(fullAddress);
     return (
         <View>
             <ScrollView
@@ -310,9 +345,7 @@ const EditLocation = ({ navigation }) => {
                     </View>
                 ) : (
                     <View style={styles.container}>
-                        <Text style={styles.title}>
-                            Manzilni o'zgartirish
-                        </Text>
+                        <Text style={styles.title}>Manzilni o'zgartirish</Text>
 
                         <View style={styles.infoWrapper}>
                             {/* Branch input ----------------------------------------------- */}
