@@ -109,7 +109,6 @@ const AddOrderScreen = ({ navigation }) => {
         async function fetchData() {
             try {
                 const value = await AsyncStorage.getItem("user_token");
-                const clientId = await AsyncStorage.getItem("clientId");
                 setUserToken(value);
 
                 navigation.setOptions({
