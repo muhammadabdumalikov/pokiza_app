@@ -246,6 +246,7 @@ const AddAddress = ({ navigation }) => {
         <ScrollView
             style={styles.container}
             contentContainerStyle={styles.content}
+            showsVerticalScrollIndicator={false}
         >
             {isLoading ? (
                 <View

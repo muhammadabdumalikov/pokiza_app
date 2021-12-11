@@ -25,6 +25,7 @@ const PersonalData = ({ navigation }) => {
         <ScrollView
             style={styles.container}
             contentContainerStyle={styles.content}
+            showsVerticalScrollIndicator={false}
         >
             <View>
                 <View style={styles.logoBox}>

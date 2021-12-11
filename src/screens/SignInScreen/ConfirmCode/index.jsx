@@ -100,6 +100,7 @@ const ConfirmCode = ({ navigation, route }) => {
         <ScrollView
             style={styles.container}
             contentContainerStyle={styles.content}
+            showsVerticalScrollIndicator={false}
         >
             <View style={styles.logoBox}>
                 <Image
