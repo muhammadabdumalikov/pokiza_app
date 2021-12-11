@@ -18,8 +18,8 @@ import { request } from "../../../helpers/request";
 const EditPhoneNumber = ({ navigation }) => {
     const { setUser, user } = useContext(AuthContext);
 
-    const [newMainContact, setNewMainContact] = useState();
-    const [newSecondContact, setNewSecondContact] = useState();
+    const [newMainContact, setNewMainContact] = useState("");
+    const [newSecondContact, setNewSecondContact] = useState("");
     const [userToken, setUserToken] = useState();
     const [userId, setUserId] = useState();
     const [userInfo, setUserInfo] = useState();
@@ -106,12 +106,18 @@ const EditPhoneNumber = ({ navigation }) => {
                         CHANGE_MAINCONTACT_QUERY,
                         {
                             userId: userId,
-                            mainContact: newMainContact,
+                            mainContact: newMainContact
+                                ? newMainContact
+                                : userInfo.clients[0].clientInfo.mainContact,
                         },
                         userToken
                     );
+
                     if (newContact.changeUser.status == 200) {
-                        setUser(null);
+                        let keys = [];
+                        keys = await AsyncStorage.getAllKeys();
+                        await AsyncStorage.multiRemove(keys);
+                        navigation.navigate("Auth", { screen: "SignInScreen" });
                     } else {
                         errorAlert();
                     }
@@ -134,10 +140,13 @@ const EditPhoneNumber = ({ navigation }) => {
                         ADD_SECOND_CONTACT,
                         {
                             userId: userId,
-                            secondContact: newSecondContact,
+                            secondContact: newSecondContact
+                                ? newSecondContact
+                                : userInfo.clients[0].clientInfo.secondContact,
                         },
                         userToken
                     );
+
                     await AsyncStorage.setItem(
                         "secondContact",
                         secondContact.changeUser.data.second_contact
@@ -199,8 +208,17 @@ const EditPhoneNumber = ({ navigation }) => {
                             <TouchableOpacity
                                 style={styles.confirmPhoneChangedBtn}
                                 onPress={confirmMainContact}
+                                disabled={newMainContact.length < 12}
                             >
-                                <Text style={styles.confirmPhoneChanged}>
+                                <Text
+                                    style={{
+                                        ...styles.confirmPhoneChanged,
+                                        backgroundColor:
+                                            newMainContact.length < 12
+                                                ? "#AAADB0"
+                                                : "#007AFF",
+                                    }}
+                                >
                                     Tasdiqlash
                                 </Text>
                             </TouchableOpacity>
@@ -228,8 +246,17 @@ const EditPhoneNumber = ({ navigation }) => {
                             <TouchableOpacity
                                 style={styles.confirmPhoneChangedBtn}
                                 onPress={confirmSecondContact}
+                                disabled={newSecondContact.length < 12}
                             >
-                                <Text style={styles.confirmPhoneChanged}>
+                                <Text
+                                    style={{
+                                        ...styles.confirmPhoneChanged,
+                                        backgroundColor:
+                                            newSecondContact.length < 12
+                                                ? "#AAADB0"
+                                                : "#007AFF",
+                                    }}
+                                >
                                     Tasdiqlash
                                 </Text>
                             </TouchableOpacity>

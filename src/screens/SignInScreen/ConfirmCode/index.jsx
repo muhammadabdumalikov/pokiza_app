@@ -68,7 +68,11 @@ const ConfirmCode = ({ navigation, route }) => {
     }`;
 
     const handleSubmit = async () => {
-        let data = await request(CODE_QUERY, { password: value }, route.params.phoneToken);
+        let data = await request(
+            CODE_QUERY,
+            { password: value },
+            route.params.phoneToken
+        );
 
         if (data.enterClientPassword.data.is_registered) {
             setAddressId(
@@ -78,12 +82,16 @@ const ConfirmCode = ({ navigation, route }) => {
                     data.enterClientPassword.token
                 )
             );
-            setUser(data.enterClientPassword.data)
+            setUser(data.enterClientPassword.data);
 
             await AsyncStorage.removeItem("phone_token");
             await AsyncStorage.setItem(
                 "user_token",
                 data.enterClientPassword.token
+            );
+            await AsyncStorage.setItem(
+                "clientId",
+                data.enterClientPassword.data.client_id
             );
             navigation.navigate("App");
         }

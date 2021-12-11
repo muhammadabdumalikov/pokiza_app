@@ -73,7 +73,7 @@ const EditInfo = ({ navigation }) => {
     const confirmAlert = () => {
         Alert.alert("Ma'lumotlaringizni o'zgartirishni istaysizmi?", "", [
             {
-                text: "Cancel",
+                text: "Qaytish",
                 onPress: () => null,
                 style: "cancel",
             },
@@ -84,13 +84,23 @@ const EditInfo = ({ navigation }) => {
                         CHANGE_INFO_QUERY,
                         {
                             userId: userId,
-                            firstName: firstName,
-                            lastName: lastName,
-                            age: parseInt(age),
-                            gender: gender,
+                            firstName: firstName
+                                ? firstName
+                                : userInfo.clients[0].clientInfo.firstName,
+                            lastName: lastName
+                                ? lastName
+                                : userInfo.clients[0].clientInfo.lastName,
+                            age: age
+                                ? parseInt(age)
+                                : userInfo.clients[0].clientInfo.age,
+
+                            gender: gender
+                                ? gender
+                                : userInfo.clients[0].clientInfo.gender,
                         },
                         userToken
                     );
+
                     if (changeInfo.changeUser.status == 200) {
                         onSuccess();
                     } else {
@@ -105,7 +115,12 @@ const EditInfo = ({ navigation }) => {
         async function fetchData() {
             try {
                 const value = await AsyncStorage.getItem("user_token");
-                const user = await request(GET_USER, null, value);
+                const clientId = await AsyncStorage.getItem("clientId");
+                const user = await request(
+                    GET_USER,
+                    { clientId: clientId },
+                    value
+                );
                 setUserToken(value);
                 setUserId(user.clients[0].clientInfo.userId);
                 setUserInfo(user);

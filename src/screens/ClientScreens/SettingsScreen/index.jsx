@@ -83,6 +83,7 @@ const SettingsScreen = ({ navigation }) => {
                 <TouchableOpacity
                     style={styles.oneSettingBox}
                     onPress={() => navigation.navigate("EditLocation")}
+                    disabled={true}
                 >
                     <Text style={styles.settingText}>
                         Manzilni o'zgartirish
