@@ -131,7 +131,7 @@ const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
 
 const AddAddress = ({ navigation }) => {
-    const { firstName, lastName, gender, age, setUser, setAddressId } =
+    const { firstName, lastName, gender, age, setAddressId } =
         useContext(AuthContext);
     const [selectedState, setSelectedState] = useState();
     let [states, setStates] = useState();
@@ -142,8 +142,6 @@ const AddAddress = ({ navigation }) => {
     let [branches, setBranches] = useState();
     let [isLoading, setLoading] = useState(true);
     let [userToken, setUserToken] = useState("");
-    let target;
-    let homeNumber;
 
     useEffect(() => {
         async function fetchData() {
