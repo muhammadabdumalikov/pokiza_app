@@ -8,6 +8,7 @@ import {
     Linking,
 } from "react-native";
 import { Feather, Ionicons } from "@expo/vector-icons";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AuthContext } from "../../../navigation/AuthProvider";
 
 import { styles } from "./styles";
@@ -38,12 +39,17 @@ const SettingsScreen = ({ navigation }) => {
             [
                 {
                     text: "yo'q",
-                    onPress: () => console.log("Cancel Pressed"),
+                    onPress: () => null,
                     style: "cancel",
                 },
                 {
                     text: "ha, xohlayman",
-                    onPress: () => setUser(null),
+                    onPress: async () => {
+                        let keys = [];
+                        keys = await AsyncStorage.getAllKeys();
+                        await AsyncStorage.multiRemove(keys);
+                        navigation.navigate("Auth", {screen: "SignInScreen  "});
+                    },
                     style: "destructive",
                 },
             ],
