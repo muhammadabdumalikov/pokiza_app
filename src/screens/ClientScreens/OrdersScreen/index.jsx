@@ -43,12 +43,13 @@ const OrderScreen = ({ navigation }) => {
         let cleanupFunction = false;
         const fetchData = async () => {
             try {
-                // setUserToken(value);
+                const value = await AsyncStorage.getItem("user_token");
+                setUserToken(value);
                 let data = await fetch("https://pokiza.herokuapp.com/graphql", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json",
-                        token: await AsyncStorage.getItem("user_token"),
+                        token: value,
                     },
                     body: JSON.stringify({
                         query: GET_ORDERS,
@@ -156,9 +157,7 @@ const OrderScreen = ({ navigation }) => {
 
             <TouchableOpacity
                 style={styles.fab}
-                onPress={() =>
-                    navigation.navigate("AddOrderScreen")
-                }
+                onPress={() => navigation.navigate("AddOrderScreen")}
             >
                 <MaterialIcons name="add" size={32} color="white" />
             </TouchableOpacity>

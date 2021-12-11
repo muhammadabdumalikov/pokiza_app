@@ -8,6 +8,7 @@ import {
     TouchableOpacity,
     Image,
 } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import { AuthContext } from "../../../navigation/AuthProvider";
 import { request } from "../../../helpers/request.js";
@@ -21,6 +22,7 @@ const LOGIN = gql`
         enterClientPhone(phoneNumber: $phoneNumber) {
             status
             data
+            token
             message
         }
     }
@@ -36,10 +38,12 @@ export default function ({ navigation }) {
                 phoneNumber: phoneNumber,
             },
         })
-            .then(({ data }) => {
-                console.log(data);
+            .then(async ({ data }) => {
+                console.log(data)
                 if (data.enterClientPhone.status == 200) {
-                    navigation.navigate("ConfirmCode");
+                    navigation.navigate("ConfirmCode", {
+                        phoneToken: data.enterClientPhone.token,
+                    });
                 }
             })
             .catch((err) => {
@@ -93,7 +97,9 @@ export default function ({ navigation }) {
                             style={styles.input}
                             numberOfLines={1}
                             placeholderTextColor="#B8B8BB"
-                            onChangeText={(number) => setPhoneNumber(`998${number}`)}
+                            onChangeText={(number) =>
+                                setPhoneNumber(`998${number}`)
+                            }
                             keyboardType="phone-pad"
                             // autoFocus={true}
                             maxLength={9}

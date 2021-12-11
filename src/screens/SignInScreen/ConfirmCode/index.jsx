@@ -22,7 +22,7 @@ import styles from "./styles";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/client";
 
-const CODE_QUERY = gql`
+const CODE_QUERY = `
     mutation ($password: String!) {
         enterClientPassword(password: $password) {
             status
@@ -43,8 +43,8 @@ const CODE_QUERY = gql`
 
 const CELL_COUNT = 4;
 
-const ConfirmCode = ({ navigation }) => {
-    const [verify, { loading }] = useMutation(CODE_QUERY);
+const ConfirmCode = ({ navigation, route }) => {
+    // const [verify, { loading }] = useMutation(CODE_QUERY);
     const [value, setValue] = useState("");
     const ref = useBlurOnFulfill({ value, cellCount: CELL_COUNT });
     const [props, getCellOnLayoutHandler] = useClearByFocusCell({
@@ -67,47 +67,31 @@ const ConfirmCode = ({ navigation }) => {
         }
     }`;
 
-    const handleSubmit = () => {
-        navigation.navigate("App");
+    const handleSubmit = async () => {
+        let data = await request(CODE_QUERY, { password: value }, route.params.phoneToken);
 
-        verify({
-            variables: {
-                password: value,
-            },
-        })
-            .then(async ({ data }) => {
-                if (data.enterClientPassword.data.is_registered) {
-                    setAddressId(
-                        await request(
-                            GET_ADDRESS_ID_QUERY,
-                            null,
-                            data.enterClientPassword.token
-                        )
-                    );
-                    navigation.navigate("App")
-                    await AsyncStorage.setItem(
-                        "user_login",
-                        data.enterClientPassword.token
-                    );
-                    await AsyncStorage.setItem(
-                        "user_token",
-                        data.enterClientPassword.token
-                    );
-                }
-                if (
-                    data.enterClientPassword.status == 200 &&
-                    data.enterClientPassword.data.is_registered == false
-                ) {
-                    AsyncStorage.setItem(
-                        "user_token",
-                        data.enterClientPassword.token
-                    );
-                    navigation.navigate("Auth", {screen: "PersonalData"});
-                }
-            })
-            .catch((err) => {
-                console.log(err);
-            });
+        if (data.enterClientPassword.data.is_registered) {
+            setAddressId(
+                await request(
+                    GET_ADDRESS_ID_QUERY,
+                    null,
+                    data.enterClientPassword.token
+                )
+            );
+            await AsyncStorage.removeItem("phone_token");
+            await AsyncStorage.setItem(
+                "user_token",
+                data.enterClientPassword.token
+            );
+            navigation.navigate("App");
+        }
+        if (
+            data.enterClientPassword.status == 200 &&
+            data.enterClientPassword.data.is_registered == false
+        ) {
+            AsyncStorage.setItem("user_token", data.enterClientPassword.token);
+            navigation.navigate("Auth", { screen: "PersonalData" });
+        }
     };
 
     return (
