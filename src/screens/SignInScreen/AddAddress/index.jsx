@@ -131,13 +131,12 @@ const height = Dimensions.get("window").height;
 const width = Dimensions.get("window").width;
 
 const AddAddress = ({ navigation }) => {
-    const { firstName, lastName, gender, age, setAddressId } =
+    const { firstName, lastName, gender, age, setAddressId, setUser } =
         useContext(AuthContext);
     const [selectedState, setSelectedState] = useState();
     let [states, setStates] = useState();
     const [selectedRegion, setSelectedRegion] = useState();
     let [regions, setRegions] = useState();
-    let [areas, setAreas] = useState();
     const [selectedBranch, setSelectedBranch] = useState();
     let [branches, setBranches] = useState();
     let [isLoading, setLoading] = useState(true);
@@ -173,57 +172,6 @@ const AddAddress = ({ navigation }) => {
         }
         fetchRegions();
     }, [selectedState]);
-
-    useEffect(() => {
-        async function fetchAreas() {
-            try {
-                setAreas(
-                    await request(
-                        GET_AREAS_QUERY,
-                        { regionId: selectedRegion },
-                        userToken
-                    )
-                );
-            } catch (error) {
-                console.log(error);
-            }
-        }
-        fetchAreas();
-    }, [selectedRegion]);
-
-    // useEffect(() => {
-    //     async function fetchNeighborhood() {
-    //         try {
-    //             setNeighborhood(
-    //                 await request(
-    //                     GET_NEIGHBORHOOD_QUERY,
-    //                     { regionId: selectedRegion },
-    //                     userToken
-    //                 )
-    //             );
-    //         } catch (error) {
-    //             console.log(error);
-    //         }
-    //     }
-    //     fetchNeighborhood();
-    // }, [selectedRegion]);
-
-    // useEffect(() => {
-    //     async function fetchStreet() {
-    //         try {
-    //             setStreet(
-    //                 await request(
-    //                     GET_STREET_QUERY,
-    //                     { neighborhoodId: selectedNeighborhood },
-    //                     userToken
-    //                 )
-    //             );
-    //         } catch (error) {
-    //             console.log(error);
-    //         }
-    //     }
-    //     fetchStreet();
-    // }, [selectedNeighborhood]);
 
     useEffect(() => {
         async function fetchBranches() {
@@ -272,7 +220,6 @@ const AddAddress = ({ navigation }) => {
                         />
                         <View style={styles.signInWrapper}>
                             <Text style={styles.signIn}>Tizimga kirish</Text>
-                           
                         </View>
                     </View>
                     <View style={styles.personalDataBox}>
@@ -312,7 +259,9 @@ const AddAddress = ({ navigation }) => {
                                 }
                             >
                                 <View style={styles.preTextWrapperStyle}>
-                                    <Text style={styles.preText}>Shahar / Tuman</Text>
+                                    <Text style={styles.preText}>
+                                        Shahar / Tuman
+                                    </Text>
                                 </View>
                                 <Picker
                                     style={styles.pickerStyle}
@@ -408,11 +357,17 @@ const AddAddress = ({ navigation }) => {
                                     );
 
                                     if (registerClient.data.is_registered) {
+                                        setUser(registerClient.data);
                                         AsyncStorage.setItem(
                                             "user_token",
                                             registerClient.token
                                         );
-                                        navigation.navigate("App")
+                                        await AsyncStorage.setItem(
+                                            "clientId",
+                                            registerClient.data.user_id
+                                        );
+                                        // console.log(registerClient)
+                                        navigation.navigate("App");
                                     }
                                 } catch (error) {
                                     console.log(error);

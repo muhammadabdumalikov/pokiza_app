@@ -63,7 +63,7 @@ const OrderScreen = ({ navigation }) => {
                 if (!cleanupFunction) {
                     setFetchedData(jsonData.data.orders.reverse());
                     navigation.setOptions({
-                        title: `ID: #${user.client_id}`,
+                        title: `ID: #${user.client_id || user.user_id}`,
                     });
                     setLoading(false);
                 }

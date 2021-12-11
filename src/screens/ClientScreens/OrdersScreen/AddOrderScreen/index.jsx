@@ -112,7 +112,7 @@ const AddOrderScreen = ({ navigation }) => {
                 setUserToken(value);
 
                 navigation.setOptions({
-                    title: `ID: #${user.client_id}`,
+                    title: `ID: #${user.client_id || user.user_id}`,
                 });
 
                 setStates(await request(GET_STATE_QUERY, null, value));
