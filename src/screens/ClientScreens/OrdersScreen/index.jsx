@@ -59,7 +59,7 @@ const OrderScreen = ({ navigation }) => {
                 });
 
                 let jsonData = await data.json();
-                console.log(jsonData);
+
                 if (!cleanupFunction) {
                     setFetchedData(jsonData.data.orders.reverse());
                     navigation.setOptions({
