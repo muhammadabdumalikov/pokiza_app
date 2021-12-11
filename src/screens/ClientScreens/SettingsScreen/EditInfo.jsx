@@ -1,5 +1,13 @@
 import React, { useContext, useState, useEffect } from "react";
-import { View, Text, TextInput, TouchableOpacity, Alert, ActivityIndicator } from "react-native";
+import {
+    View,
+    Text,
+    TextInput,
+    TouchableOpacity,
+    Alert,
+    ActivityIndicator,
+    ScrollView,
+} from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -126,14 +134,22 @@ const EditInfo = ({ navigation }) => {
                     />
                 </View>
             ) : (
-                <View style={styles.container}>
+                <ScrollView
+                    style={styles.container}
+                    contentContainerStyle={styles.content}
+                    showsVerticalScrollIndicator={false}
+                >
                     <Text style={styles.title}>Ma'lumotlarni o'zgartirish</Text>
 
                     <View style={styles.inputContainer}>
                         <Text style={styles.preText}>Familiya</Text>
                         <TextInput
                             style={styles.preText}
-                            placeholder={userInfo ? `${userInfo.clients[0].clientInfo.lastName}` : "Familiyangizni kiriting"}
+                            placeholder={
+                                userInfo
+                                    ? `${userInfo.clients[0].clientInfo.lastName}`
+                                    : "Familiyangizni kiriting"
+                            }
                             placeholderTextColor="#B8B8BB"
                             maxLength={20}
                             onChangeText={(value) => setLastName(value)}
@@ -143,7 +159,11 @@ const EditInfo = ({ navigation }) => {
                         <Text style={styles.preText}>Ism</Text>
                         <TextInput
                             style={styles.preText}
-                            placeholder={userInfo ? `${userInfo.clients[0].clientInfo.firstName}` : "Ismingizni kiriting"}
+                            placeholder={
+                                userInfo
+                                    ? `${userInfo.clients[0].clientInfo.firstName}`
+                                    : "Ismingizni kiriting"
+                            }
                             placeholderTextColor="#B8B8BB"
                             maxLength={20}
                             onChangeText={(value) => setFirstName(value)}
@@ -172,7 +192,11 @@ const EditInfo = ({ navigation }) => {
                             <TextInput
                                 style={{ height: "100%", width: "50%" }}
                                 numberOfLines={1}
-                                placeholder={userInfo ? `${userInfo.clients[0].clientInfo.age}` : "20"}
+                                placeholder={
+                                    userInfo
+                                        ? `${userInfo.clients[0].clientInfo.age}`
+                                        : "20"
+                                }
                                 placeholderTextColor="#B8B8BB"
                                 onChangeText={(value) => setAge(value)}
                                 keyboardType="numeric"
@@ -215,18 +239,14 @@ const EditInfo = ({ navigation }) => {
                             Tasdiqlash
                         </Text>
                     </TouchableOpacity>
-                    <TouchableOpacity
-                        style={styles.fab}
-                        onPress={() => navigation.goBack()}
-                    >
-                        <Ionicons
-                            name="ios-arrow-back"
-                            size={28}
-                            color="white"
-                        />
-                    </TouchableOpacity>
-                </View>
+                </ScrollView>
             )}
+            <TouchableOpacity
+                style={styles.fab}
+                onPress={() => navigation.goBack()}
+            >
+                <Ionicons name="ios-arrow-back" size={28} color="white" />
+            </TouchableOpacity>
         </>
     );
 };

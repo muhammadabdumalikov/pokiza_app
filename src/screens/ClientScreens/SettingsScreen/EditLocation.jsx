@@ -18,39 +18,33 @@ import { request } from "../../../helpers/request";
 import { styles } from "./styles";
 
 const EditLocation = ({ navigation }) => {
-    const ADDRESS_QUERY = `mutation(
-        $firstName: String!
-        $lastName: String
-        $secondContact: String
-        $age: Int!
-        $gender: Int!
-        $branchId: ID!
-        $addressId: ID!
-      ) {
-        registerClient(
-          firstName: $firstName
-          lastName: $lastName
-          age: $age
-          gender: $gender
-          secondContact: $secondContact
-          branchId: $branchId
-          addressId: 5
-        ) {
-          status
-          message
-          data
-          token
-          permissions {
-            branchId
-            branchName
-            permissionsList {
-              permissionAction
-              permissionModel
-            }
+
+    const GET_FULL_ADDRESS_QUERY = `{
+        address{
+          addressId
+          state{
+            stateName
           }
+          region{
+            regionName
+          }
+          neighborhood{
+            neighborhoodName
+          }
+          street{
+            streetName
+          }
+          area{
+            areaName
+          }
+          branch{
+            branchName
+          }
+          target
+          homeNumber
         }
       }
-      `;
+    `
 
     const GET_STATE_QUERY = `{
         states {
@@ -123,9 +117,11 @@ const EditLocation = ({ navigation }) => {
       }`;
 
     const { addressId } = useContext(AuthContext);
+      
+    const [fullAddress, setFullAddress] = useState();
 
     const [selectedState, setSelectedState] = useState();
-    let [states, setStates] = useState();
+    const [states, setStates] = useState();
     const [selectedRegion, setSelectedRegion] = useState();
     const [selectedArea, setSelectedArea] = useState();
     const [selectedNeighborhood, setSelectedNeighborhood] = useState();
@@ -180,6 +176,7 @@ const EditLocation = ({ navigation }) => {
                         },
                         userToken
                     );
+                    console.log(changeAddress)
                     if (changeAddress.status == 200) onSuccess();
                 },
             },
@@ -194,6 +191,7 @@ const EditLocation = ({ navigation }) => {
                 setUserToken(value);
                 // setAddressId(id);
                 console.log(addressId);
+                setFullAddress(await request(GET_FULL_ADDRESS_QUERY, null, value))
                 setStates(await request(GET_STATE_QUERY, null, value));
                 setLoading(false);
             } catch (error) {

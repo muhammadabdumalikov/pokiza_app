@@ -6,6 +6,7 @@ import {
     TouchableOpacity,
     Alert,
     ActivityIndicator,
+    ScrollView,
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -168,7 +169,11 @@ const EditPhoneNumber = ({ navigation }) => {
                     />
                 </View>
             ) : (
-                <View style={styles.container}>
+                <ScrollView
+                    style={styles.container}
+                    contentContainerStyle={styles.content}
+                    showsVerticalScrollIndicator={false}
+                >
                     <Text style={styles.title}>
                         Telefon raqamini o'zgartirish
                     </Text>
@@ -230,18 +235,14 @@ const EditPhoneNumber = ({ navigation }) => {
                             </TouchableOpacity>
                         </View>
                     </View>
-                    <TouchableOpacity
-                        style={styles.fab}
-                        onPress={() => navigation.goBack()}
-                    >
-                        <Ionicons
-                            name="ios-arrow-back"
-                            size={28}
-                            color="white"
-                        />
-                    </TouchableOpacity>
-                </View>
+                </ScrollView>
             )}
+            <TouchableOpacity
+                style={styles.fab}
+                onPress={() => navigation.goBack()}
+            >
+                <Ionicons name="ios-arrow-back" size={28} color="white" />
+            </TouchableOpacity>
         </>
     );
 };
