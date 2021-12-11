@@ -78,6 +78,8 @@ const ConfirmCode = ({ navigation, route }) => {
                     data.enterClientPassword.token
                 )
             );
+            setUser(data.enterClientPassword.data)
+
             await AsyncStorage.removeItem("phone_token");
             await AsyncStorage.setItem(
                 "user_token",

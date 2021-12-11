@@ -33,6 +33,7 @@ const GET_ORDERS = `{
   }`;
 
 const OrderScreen = ({ navigation }) => {
+    const { user } = useContext(AuthContext);
     const [fetchedData, setFetchedData] = useState(null);
     const [userToken, setUserToken] = useState();
     const [isLoading, setLoading] = useState(true);
@@ -58,11 +59,11 @@ const OrderScreen = ({ navigation }) => {
                 });
 
                 let jsonData = await data.json();
-                Alert.alert(JSON.stringify(jsonData));
+                console.log(jsonData);
                 if (!cleanupFunction) {
                     setFetchedData(jsonData.data.orders.reverse());
                     navigation.setOptions({
-                        title: `ID: #000`,
+                        title: `ID: #${user.client_id}`,
                     });
                     setLoading(false);
                 }
