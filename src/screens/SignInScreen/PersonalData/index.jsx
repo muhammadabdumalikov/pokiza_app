@@ -57,7 +57,7 @@ const PersonalData = ({ navigation }) => {
                         <TextInput
                             style={styles.input}
                             numberOfLines={1}
-                            placeholder="Familiyangizni kiriting"
+                            placeholder="Ismingizni kiriting"
                             placeholderTextColor="#B8B8BB"
                             onChangeText={(value) =>
                                 setSelectedFirstname(value)
@@ -81,7 +81,7 @@ const PersonalData = ({ navigation }) => {
                         <TextInput
                             style={styles.input}
                             numberOfLines={1}
-                            placeholder="Ismingizni kiriting"
+                            placeholder="Familiyangizni kiriting"
                             placeholderTextColor="#B8B8BB"
                             onChangeText={(value) => setSelectedLastname(value)}
                             keyboardType="default"

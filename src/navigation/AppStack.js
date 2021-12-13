@@ -50,7 +50,14 @@ const OrdersStack = ({ navigation, route }) => {
                 headerLeft: () => <LogoImage />,
             }}
         >
-            <Stack.Screen name="OrdersScreen" component={OrderScreen} />
+            <Stack.Screen
+                name="OrdersScreen"
+                component={OrderScreen}
+                options={{
+                    gestureEnabled: false,
+                    index: 0
+                }}
+            />
             <Stack.Screen
                 name="OrderDetailScreen"
                 component={OrderDetailScreen}
