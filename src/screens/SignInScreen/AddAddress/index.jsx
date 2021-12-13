@@ -367,7 +367,14 @@ const AddAddress = ({ navigation }) => {
                                             registerClient.data.user_id
                                         );
                                         // console.log(registerClient)
-                                        navigation.navigate("App");
+                                        navigation.reset({
+                                            index: 0,
+                                            routes: [
+                                                {
+                                                    name: "App",
+                                                },
+                                            ],
+                                        });
                                     }
                                 } catch (error) {
                                     console.log(error);

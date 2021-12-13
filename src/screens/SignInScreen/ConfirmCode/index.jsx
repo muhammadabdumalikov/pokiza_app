@@ -93,7 +93,14 @@ const ConfirmCode = ({ navigation, route }) => {
                 "clientId",
                 data.enterClientPassword.data.client_id
             );
-            navigation.navigate("App");
+            navigation.reset({
+                index: 0,
+                routes: [
+                    {
+                        name: "App",
+                    },
+                ],
+            });
         }
         if (
             data.enterClientPassword.status == 200 &&
