@@ -2,8 +2,6 @@ import { Dimensions, StyleSheet } from "react-native";
 import { colors } from "../../../constants/color";
 import Constants from "expo-constants";
 
-const statusBarHeight = Constants.statusBarHeight;
-
 const width = Dimensions.get("window").width;
 const height = Dimensions.get("window").height;
 
