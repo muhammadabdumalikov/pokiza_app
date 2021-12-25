@@ -53,18 +53,6 @@ export default function ({ navigation }) {
             .catch((err) => {
                 console.log(err);
             });
-
-        // try {
-        //     let data = await request(LOGIN, {
-        //         phoneNumber: phoneNumber,
-        //     });
-        //     console.log(data)
-        //     if (data.enterClientPhone.status == 200) {
-        //         navigation.navigate("ConfirmCode");
-        //     }
-        // } catch (error) {
-        //     console.log(error);
-        // }
     };
 
     return (
