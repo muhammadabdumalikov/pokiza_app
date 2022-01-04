@@ -108,7 +108,7 @@ export const styles = StyleSheet.create({
     orderSumm: {
         fontSize: 16,
         fontWeight: "bold",
-        color: colors.blue,
+        color: "black"
     },
     fab: {
         width: 64,

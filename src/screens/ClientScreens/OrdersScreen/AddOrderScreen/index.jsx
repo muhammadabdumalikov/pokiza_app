@@ -43,6 +43,8 @@ const AddOrderScreen = ({ navigation }) => {
     const [areaModalVisible, setAreaModalVisible] = useState(false);
     const [tariffModalVisible, setTariffModalVisible] = useState(false);
 
+    const [send, setSend] = useState(false);
+
     const tariffs = [
         { id: "1", tariffName: "Tezkor", value: true },
         { id: "2", tariffName: "Oddiy", value: false },
@@ -462,7 +464,9 @@ const AddOrderScreen = ({ navigation }) => {
                                     borderBottomWidth: 0,
                                 }}
                             >
-                                <Text style={styles.preText}>Olib ketilish sanasi:</Text>
+                                <Text style={styles.preText}>
+                                    Olib ketilish sanasi:
+                                </Text>
                                 <TouchableOpacity
                                     onPress={() =>
                                         setDatePickerVisibility(true)
@@ -493,6 +497,7 @@ const AddOrderScreen = ({ navigation }) => {
                             style={styles.sendCodeWrapper}
                             onPress={async () => {
                                 try {
+                                    setSend(true);
                                     if (!addressId) {
                                         setAddressId(
                                             await request(
@@ -531,8 +536,8 @@ const AddOrderScreen = ({ navigation }) => {
                                         },
                                         userToken
                                     );
-                                    console.log(addOrder);
                                     if (addOrder.clientAddOrder.status == 200) {
+                                        setSend(false);
                                         successOrder();
                                     }
                                 } catch (error) {
@@ -540,9 +545,25 @@ const AddOrderScreen = ({ navigation }) => {
                                 }
                             }}
                         >
-                            <Text style={styles.sendCodeText}>
-                                Buyurtma berish
-                            </Text>
+                            {send ? (
+                                <View
+                                    style={{
+                                        flex: 1,
+                                        justifyContent: "center",
+                                        alignItems: "center",
+                                    }}
+                                >
+                                    <ActivityIndicator
+                                        size="large"
+                                        color="white"
+                                        style={{ alignSelf: "center" }}
+                                    />
+                                </View>
+                            ) : (
+                                <Text style={styles.sendCodeText}>
+                                    Davom etish
+                                </Text>
+                            )}
                         </TouchableOpacity>
                     </ScrollView>
                     <TouchableOpacity
