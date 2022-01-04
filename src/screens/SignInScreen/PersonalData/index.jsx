@@ -194,7 +194,7 @@ const PersonalData = ({ navigation }) => {
                                         }
                                     >
                                         <Text style={styles.hideModalButton}>
-                                            Hide Modal
+                                            Yopish
                                         </Text>
                                     </Pressable>
                                 </View>
