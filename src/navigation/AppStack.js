@@ -55,12 +55,15 @@ const OrdersStack = ({ navigation, route }) => {
                 component={OrderScreen}
                 options={{
                     gestureEnabled: false,
-                    index: 0
+                    index: 0,
                 }}
             />
             <Stack.Screen
                 name="OrderDetailScreen"
                 component={OrderDetailScreen}
+                options={{
+                    headerTitle: "",
+                }}
             />
             <Stack.Screen name="AddOrderScreen" component={AddOrderScreen} />
         </Stack.Navigator>

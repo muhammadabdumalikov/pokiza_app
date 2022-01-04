@@ -3,7 +3,7 @@ export const showDate = (date, withTime = true) => {
         return num < 10 ? "0" + num : num;
     };
     return `${addZero(date.getDate())}.${addZero(
-        date.getMonth()
+        date.getMonth()+1
     )}.${date.getFullYear()} ${
         withTime
             ? `${addZero(date.getHours())}:${addZero(date.getMinutes())}`
