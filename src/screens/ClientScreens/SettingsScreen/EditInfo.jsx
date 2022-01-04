@@ -7,8 +7,10 @@ import {
     Alert,
     ActivityIndicator,
     ScrollView,
+    Modal,
+    Pressable,
+    FlatList
 } from "react-native";
-import { Picker } from "@react-native-picker/picker";
 import { Ionicons } from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
@@ -17,7 +19,6 @@ import { styles } from "./styles";
 import { request } from "../../../helpers/request";
 
 const EditInfo = ({ navigation }) => {
-    const { user } = useContext(AuthContext);
     const [userId, setUserId] = useState();
     const [userInfo, setUserInfo] = useState();
     const [userToken, setUserToken] = useState();
@@ -25,8 +26,11 @@ const EditInfo = ({ navigation }) => {
     const [lastName, setLastName] = useState();
     const [age, setAge] = useState();
     const [gender, setGender] = useState();
+    const [selectedGender, setSelectedGender] = useState();
     const [isLoading, setLoading] = useState(true);
-    const [send, setSend] = useState(false)
+    const [send, setSend] = useState(false);
+
+    const [genderModalVisible, setGenderModalVisible] = useState(false);
 
     const GET_USER = `query($clientId: ID){
         clients(clientId: $clientId){
@@ -51,6 +55,48 @@ const EditInfo = ({ navigation }) => {
         }
       }`;
 
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const value = await AsyncStorage.getItem("user_token");
+                const clientId = await AsyncStorage.getItem("clientId");
+                const user = await request(
+                    GET_USER,
+                    { clientId: clientId },
+                    value
+                );
+                setUserToken(value);
+                setUserId(user.clients[0].clientInfo.userId);
+                setUserInfo(user);
+                setLoading(false);
+            } catch (error) {
+                console.log(error);
+            }
+        }
+        fetchData();
+    }, []);
+
+    const genders = [
+        { id: 1, value: "Erkak" },
+        { id: 2, value: "Ayol" },
+    ];
+
+    const modalGender = ({ item }) => {
+        return (
+            <TouchableOpacity
+                style={{ width: "80%", paddingVertical: 15 }}
+                onPress={() => {
+                    setGender(item.id);
+                    setSelectedGender(item);
+                    setGenderModalVisible(!genderModalVisible);
+                }}
+            >
+                <Text style={{ flex: 1, fontSize: 15, color: "#2196F3" }}>
+                    {item.value}
+                </Text>
+            </TouchableOpacity>
+        );
+    };
     const onSuccess = () => {
         Alert.alert("Ma'lumotlar muvaffaqiyatli o'zgartirildi!", "", [
             {
@@ -104,7 +150,7 @@ const EditInfo = ({ navigation }) => {
                     );
 
                     if (changeInfo.changeUser.status == 200) {
-                        setSend(false)
+                        setSend(false);
                         onSuccess();
                     } else {
                         onError();
@@ -113,27 +159,6 @@ const EditInfo = ({ navigation }) => {
             },
         ]);
     };
-
-    useEffect(() => {
-        async function fetchData() {
-            try {
-                const value = await AsyncStorage.getItem("user_token");
-                const clientId = await AsyncStorage.getItem("clientId");
-                const user = await request(
-                    GET_USER,
-                    { clientId: clientId },
-                    value
-                );
-                setUserToken(value);
-                setUserId(user.clients[0].clientInfo.userId);
-                setUserInfo(user);
-                setLoading(false);
-            } catch (error) {
-                console.log(error);
-            }
-        }
-        fetchData();
-    }, []);
 
     return (
         <>
@@ -237,16 +262,59 @@ const EditInfo = ({ navigation }) => {
                             <View style={styles.preTextWrapperStyle}>
                                 <Text style={styles.preText}>Jins</Text>
                             </View>
-                            <Picker
-                                style={{ height: "100%", width: 120 }}
-                                selectedValue={gender}
-                                onValueChange={(itemValue, itemIndex) => {
-                                    setGender(itemValue);
+                            <Modal
+                                animationType="slide"
+                                transparent={true}
+                                visible={genderModalVisible}
+                                onRequestClose={() => {
+                                    setGenderModalVisible(!genderModalVisible);
                                 }}
                             >
-                                <Picker.Item label="Erkak" value={1} />
-                                <Picker.Item label="Ayol" value={2} />
-                            </Picker>
+                                <View style={styles.centeredView}>
+                                    <View
+                                        style={[
+                                            styles.modalWrapper,
+                                            styles.tariffModalWrapper,
+                                        ]}
+                                    >
+                                        <FlatList
+                                            data={genders}
+                                            renderItem={modalGender}
+                                            keyExtractor={(item) => item.id}
+                                            contentContainerStyle={
+                                                styles.modalView
+                                            }
+                                            style={styles.contenModalView}
+                                            showsVerticalScrollIndicator={false}
+                                        />
+                                    </View>
+                                    <Pressable
+                                        style={[
+                                            styles.button,
+                                            styles.buttonClose,
+                                        ]}
+                                        onPress={() =>
+                                            setGenderModalVisible(
+                                                !genderModalVisible
+                                            )
+                                        }
+                                    >
+                                        <Text style={styles.hideModalButton}>
+                                            Yopish
+                                        </Text>
+                                    </Pressable>
+                                </View>
+                            </Modal>
+                            <Pressable
+                                style={styles.buttonOpen}
+                                onPress={() => setGenderModalVisible(true)}
+                            >
+                                <Text style={styles.textStyle}>
+                                    {selectedGender
+                                        ? selectedGender.value
+                                        : "Tanlang"}
+                                </Text>
+                            </Pressable>
                         </View>
                     </View>
                     <TouchableOpacity
