@@ -2,13 +2,14 @@ import React, { useContext, useEffect, useState } from "react";
 import {
     View,
     Text,
-    TextInput,
+    Pressable,
     ScrollView,
-    SafeAreaView,
+    FlatList,
     TouchableOpacity,
     Dimensions,
     ActivityIndicator,
     Image,
+    Modal,
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -142,6 +143,10 @@ const AddAddress = ({ navigation }) => {
     let [isLoading, setLoading] = useState(true);
     let [userToken, setUserToken] = useState("");
 
+    const [stateModalVisible, setStateModalVisible] = useState(false);
+    const [regionModalVisible, setRegionModalVisible] = useState(false);
+    const [branchModalVisible, setBranchModalVisible] = useState(false);
+
     useEffect(() => {
         async function fetchData() {
             try {
@@ -189,6 +194,54 @@ const AddAddress = ({ navigation }) => {
         }
         fetchBranches();
     }, [selectedRegion]);
+
+    const modalState = ({ item }) => {
+        return (
+            <TouchableOpacity
+                style={{ width: "80%", paddingVertical: 15 }}
+                onPress={() => {
+                    setSelectedState(item);
+                    setStateModalVisible(!stateModalVisible);
+                }}
+            >
+                <Text style={{ flex: 1, fontSize: 15, color: "#2196F3" }}>
+                    {item.stateName}
+                </Text>
+            </TouchableOpacity>
+        );
+    };
+
+    const modalRegion = ({ item }) => {
+        return (
+            <TouchableOpacity
+                style={{ width: "80%", paddingVertical: 15 }}
+                onPress={() => {
+                    setSelectedRegion(item);
+                    setRegionModalVisible(!regionModalVisible);
+                }}
+            >
+                <Text style={{ flex: 1, fontSize: 15, color: "#2196F3" }}>
+                    {item.regionName}
+                </Text>
+            </TouchableOpacity>
+        );
+    };
+
+    const modalBranch = ({ item }) => {
+        return (
+            <TouchableOpacity
+                style={{ width: "80%", paddingVertical: 15 }}
+                onPress={() => {
+                    setSelectedBranch(item);
+                    setBranchModalVisible(!branchModalVisible);
+                }}
+            >
+                <Text style={{ flex: 1, fontSize: 15, color: "#2196F3" }}>
+                    {item.branchName}
+                </Text>
+            </TouchableOpacity>
+        );
+    };
 
     return (
         <ScrollView
@@ -292,33 +345,73 @@ const AddAddress = ({ navigation }) => {
                                 <View style={styles.preTextWrapperStyle}>
                                     <Text style={styles.preText}>Filial</Text>
                                 </View>
-                                <Picker
-                                    style={styles.pickerStyle}
-                                    selectedValue={selectedBranch}
-                                    enabled={false}
-                                    onValueChange={(itemValue, itemIndex) =>
-                                        setSelectedBranch(itemValue)
-                                    }
+
+                                <Modal
+                                    animationType="slide"
+                                    transparent={true}
+                                    visible={branchModalVisible}
+                                    onRequestClose={() => {
+                                        setBranchModalVisible(
+                                            !branchModalVisible
+                                        );
+                                    }}
                                 >
-                                    {branches ? (
-                                        <Picker.Item
-                                            key={
-                                                branches.regions[0].branch
-                                                    .branchId
+                                    <View style={styles.centeredView}>
+                                        <View
+                                            style={[
+                                                styles.modalWrapper,
+                                                styles.tariffModalWrapper,
+                                            ]}
+                                        >
+                                            <FlatList
+                                                data={
+                                                    branches
+                                                        ? branches.branches
+                                                        : []
+                                                }
+                                                renderItem={modalBranch}
+                                                keyExtractor={(item) =>
+                                                    item.branchId
+                                                }
+                                                contentContainerStyle={
+                                                    styles.modalView
+                                                }
+                                                style={styles.contenModalView}
+                                                showsVerticalScrollIndicator={
+                                                    false
+                                                }
+                                            />
+                                        </View>
+                                        <Pressable
+                                            style={[
+                                                styles.button,
+                                                styles.buttonClose,
+                                            ]}
+                                            onPress={() =>
+                                                setBranchModalVisible(
+                                                    !branchModalVisible
+                                                )
                                             }
-                                            label={
-                                                branches.regions[0].branch
-                                                    .branchName
-                                            }
-                                            value={
-                                                branches.regions[0].branch
-                                                    .branchId
-                                            }
-                                        />
-                                    ) : (
-                                        []
-                                    )}
-                                </Picker>
+                                        >
+                                            <Text
+                                                style={styles.hideModalButton}
+                                            >
+                                                Yopish
+                                            </Text>
+                                        </Pressable>
+                                    </View>
+                                </Modal>
+                                <Pressable
+                                    style={styles.buttonOpen}
+                                    onPress={() => setBranchModalVisible(true)}
+                                    disabled={true}
+                                >
+                                    <Text style={styles.textStyle}>
+                                        {selectedBranch
+                                            ? selectedBranch.branchName
+                                            : "Filialni tanlang"}
+                                    </Text>
+                                </Pressable>
                             </View>
                         </View>
 

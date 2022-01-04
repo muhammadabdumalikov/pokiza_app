@@ -112,6 +112,64 @@ export default StyleSheet.create({
         color: "#007AFF",
         fontSize: 12,
     },
+    centeredView: {
+        flex: 1,
+        justifyContent: "center",
+        alignItems: "center",
+        marginTop: 22,
+        backgroundColor: "rgba(0,0,0,0.5)",
+    },
+    modalWrapper: {
+        width: "70%",
+        height: "30%",
+        shadowColor: "#000",
+        borderRadius: 20,
+        shadowOffset: {
+            width: 0,
+            height: 2,
+        },
+        backgroundColor: "white",
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5,
+        overflow: "hidden",
+        marginBottom: 10,
+    },
+    tariffModalWrapper: {
+        height: "15%",
+    },
+    contenModalView: {
+        flex: 1,
+        height: "100%",
+    },
+    modalView: {
+        padding: 16,
+        alignItems: "center",
+    },
+    buttonOpen: {
+        justifyContent: "flex-end",
+        alignItems: "flex-end",
+    },
+    buttonClose: {
+        backgroundColor: "#2196F3",
+        height: 30,
+        width: "33%",
+        alignItems: "center",
+        justifyContent: "center",
+        borderRadius: 15,
+        elevation: 2,
+    },
+    textStyle: {
+        color: "gray",
+        textAlign: "center",
+        marginRight: 16,
+    },
+    modalText: {
+        textAlign: "center",
+    },
+    hideModalButton: {
+        color: "white",
+    },
     sendCodeWrapper: {
         backgroundColor: "#007AFF",
         width: 344,

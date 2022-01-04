@@ -34,7 +34,8 @@ const PersonalData = ({ navigation }) => {
             <TouchableOpacity
                 style={{ width: "80%", paddingVertical: 15 }}
                 onPress={() => {
-                    setSelectedGender(item);
+                    setGender(item);
+                    setSelectedGender(item)
                     setGenderModalVisible(!genderModalVisible);
                 }}
             >
