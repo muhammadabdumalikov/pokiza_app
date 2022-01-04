@@ -89,10 +89,6 @@ const ConfirmCode = ({ navigation, route }) => {
                 "user_token",
                 data.enterClientPassword.token
             );
-            await AsyncStorage.setItem(
-                "clientId",
-                data.enterClientPassword.data.client_id
-            );
             navigation.reset({
                 index: 0,
                 routes: [

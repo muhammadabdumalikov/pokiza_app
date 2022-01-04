@@ -32,6 +32,12 @@ const GET_ORDERS = `{
     }
   }`;
 
+const GET_CLIENT_ID = `{
+    clients{
+      clientId
+    }
+  }`
+
 const OrderScreen = ({ navigation }) => {
     const { user } = useContext(AuthContext);
     const [fetchedData, setFetchedData] = useState(null);
@@ -57,13 +63,13 @@ const OrderScreen = ({ navigation }) => {
                         variables: null,
                     }),
                 });
-
+                let client = await request(GET_CLIENT_ID, null, value)
                 let jsonData = await data.json();
 
                 if (!cleanupFunction) {
                     setFetchedData(jsonData.data.orders.reverse());
                     navigation.setOptions({
-                        title: `ID: @${user.client_id || user.user_id}`,
+                        title: `ID: @${client.clients[0].clientId}`,
                     });
                     setLoading(false);
                 }

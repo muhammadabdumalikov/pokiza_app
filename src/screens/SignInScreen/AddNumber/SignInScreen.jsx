@@ -42,7 +42,6 @@ export default function ({ navigation }) {
             },
         })
             .then(async ({ data }) => {
-                console.log(data)
                 if (data.enterClientPhone.status == 200) {
                     navigation.navigate("ConfirmCode", {
                         phoneToken: data.enterClientPhone.token,
