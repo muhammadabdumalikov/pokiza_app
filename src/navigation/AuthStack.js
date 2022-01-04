@@ -1,13 +1,6 @@
 import React, {useState, useEffect} from "react";
 import { Text, TouchableOpacity, Dimensions } from "react-native";
 import { createStackNavigator } from "@react-navigation/stack";
-import {
-    Ionicons,
-    MaterialIcons,
-    MaterialCommunityIcons,
-    FontAwesome,
-    Feather,
-} from "@expo/vector-icons";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import SignInScreen from "../screens/SignInScreen/AddNumber/SignInScreen";
@@ -20,14 +13,12 @@ const height = Dimensions.get("window").height;
 const Stack = createStackNavigator();
 
 const AuthStack = ({ navigation, route }) => {
-    const [token, setToken] = useState("");
 
     useEffect(() => {
         async function getData() {
             try {
                 const value = await AsyncStorage.getItem("user_token");
                 if (value !== null) {
-                    setToken(value);
                     navigation.navigate("App")
                 }
             } catch (e) {
