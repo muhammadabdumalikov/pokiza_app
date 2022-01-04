@@ -462,7 +462,7 @@ const AddOrderScreen = ({ navigation }) => {
                                     borderBottomWidth: 0,
                                 }}
                             >
-                                <Text style={styles.preText}>Sana:</Text>
+                                <Text style={styles.preText}>Olib ketilish sanasi:</Text>
                                 <TouchableOpacity
                                     onPress={() =>
                                         setDatePickerVisibility(true)

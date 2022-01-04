@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import { View, TouchableOpacity, Text, Image } from "react-native";
 import { Feather } from "@expo/vector-icons";
+import { useNavigation } from '@react-navigation/native';
 
 import { styles } from "./styles";
 import { showDate } from "../../../components/DateFormatter";
 
-const CardComponent = ({ item, navigation }) => {
+const CardComponent = ({ item }) => {
+    const navigation = useNavigation()
     const statusStyles = {
         1: {
             style: {
@@ -134,6 +136,8 @@ const CardComponent = ({ item, navigation }) => {
             text: "Yetkazilgan",
         },
     };
+
+    console.log(item)
 
     return (
         <TouchableOpacity

@@ -36,10 +36,6 @@ const PersonalData = ({ navigation }) => {
                     />
                     <View style={styles.signInWrapper}>
                         <Text style={styles.signIn}>Tizimga kirish</Text>
-                        <Text style={styles.signInDescription}>
-                            SMS orqali kod yuborildi, agar kod yuborilmagan
-                            bo'lsa, qayta yuborish tugmasini bosing.
-                        </Text>
                     </View>
                 </View>
 
