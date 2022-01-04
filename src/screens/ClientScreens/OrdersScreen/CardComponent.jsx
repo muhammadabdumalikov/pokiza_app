@@ -137,8 +137,6 @@ const CardComponent = ({ item }) => {
         },
     };
 
-    console.log(item)
-
     return (
         <TouchableOpacity
             style={styles.orderBox}

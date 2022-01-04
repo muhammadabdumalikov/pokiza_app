@@ -112,7 +112,7 @@ const OrderDetailScreen = ({ navigation, route }) => {
                         </Text>
                     </View>
                     <FlatList
-                        data={DATA}
+                        data={products ? products.products : []}
                         renderItem={({ item }) => <CardComponent item={item} />}
                         keyExtractor={(item) => item.id}
                         style={styles.container}
