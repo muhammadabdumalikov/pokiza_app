@@ -4,10 +4,11 @@ import {
     Text,
     TextInput,
     ScrollView,
-    SafeAreaView,
+    FlatList,
+    Pressable,
     TouchableOpacity,
-    Dimensions,
-    Image
+    Modal,
+    Image,
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 
@@ -15,11 +16,34 @@ import { AuthContext } from "../../../navigation/AuthProvider";
 import styles from "./styles";
 
 const PersonalData = ({ navigation }) => {
-    
     const { age, setAge, gender, setGender, setFirstName, setLastName } =
         useContext(AuthContext);
     const [selectedFirstname, setSelectedFirstname] = useState("");
     const [selectedLastname, setSelectedLastname] = useState("");
+    const [selectedGender, setSelectedGender] = useState();
+
+    const [genderModalVisible, setGenderModalVisible] = useState(false);
+
+    const genders = [
+        { id: 1, value: "Erkak" },
+        { id: 2, value: "Ayol" },
+    ];
+
+    const modalGender = ({ item }) => {
+        return (
+            <TouchableOpacity
+                style={{ width: "80%", paddingVertical: 15 }}
+                onPress={() => {
+                    setSelectedGender(item);
+                    setGenderModalVisible(!genderModalVisible);
+                }}
+            >
+                <Text style={{ flex: 1, fontSize: 15, color: "#2196F3" }}>
+                    {item.value}
+                </Text>
+            </TouchableOpacity>
+        );
+    };
 
     return (
         <ScrollView
@@ -86,7 +110,12 @@ const PersonalData = ({ navigation }) => {
                         />
                     </View>
 
-                    <View style={{ ...styles.inputContainer, borderBottomWidth: 0 }}>
+                    <View
+                        style={{
+                            ...styles.inputContainer,
+                            borderBottomWidth: 0,
+                        }}
+                    >
                         {/* Age input ----------------------------------------------- */}
                         <View
                             style={{
@@ -127,78 +156,61 @@ const PersonalData = ({ navigation }) => {
                             <View style={styles.preTextWrapperStyle}>
                                 <Text style={styles.preText}>Jins</Text>
                             </View>
-                            <Picker
-                                style={{ height: "100%", width: 120 }}
-                                selectedValue={gender}
-                                onValueChange={(itemValue, itemIndex) => {
-                                    setGender(itemValue);
+                            <Modal
+                                animationType="slide"
+                                transparent={true}
+                                visible={genderModalVisible}
+                                onRequestClose={() => {
+                                    setGenderModalVisible(!genderModalVisible);
                                 }}
                             >
-                                <Picker.Item label="Erkak" value="1" />
-                                <Picker.Item label="Ayol" value="2" />
-                            </Picker>
+                                <View style={styles.centeredView}>
+                                    <View
+                                        style={[
+                                            styles.modalWrapper,
+                                            styles.tariffModalWrapper,
+                                        ]}
+                                    >
+                                        <FlatList
+                                            data={genders}
+                                            renderItem={modalGender}
+                                            keyExtractor={(item) => item.id}
+                                            contentContainerStyle={
+                                                styles.modalView
+                                            }
+                                            style={styles.contenModalView}
+                                            showsVerticalScrollIndicator={false}
+                                        />
+                                    </View>
+                                    <Pressable
+                                        style={[
+                                            styles.button,
+                                            styles.buttonClose,
+                                        ]}
+                                        onPress={() =>
+                                            setGenderModalVisible(
+                                                !genderModalVisible
+                                            )
+                                        }
+                                    >
+                                        <Text style={styles.hideModalButton}>
+                                            Hide Modal
+                                        </Text>
+                                    </Pressable>
+                                </View>
+                            </Modal>
+                            <Pressable
+                                style={styles.buttonOpen}
+                                onPress={() => setGenderModalVisible(true)}
+                            >
+                                <Text style={styles.textStyle}>
+                                    {selectedGender
+                                        ? selectedGender.value
+                                        : "Tanlang"}
+                                </Text>
+                            </Pressable>
                         </View>
                     </View>
-
-                    {/* State input ------------------------------------
-                        <View
-                            style={{
-                                ...styles.inputContainer,
-                            }}
-                            behavior={
-                                Platform.OS === "ios" ? "padding" : "height"
-                            }
-                        >
-                            <View style={styles.preTextWrapperStyle}>
-                                <Text style={styles.preText}>State</Text>
-                            </View>
-                            <Picker
-                                style={styles.pickerStyle}
-                                selectedValue={selectedState}
-                                onValueChange={(itemValue, itemIndex) => {
-                                    setSelectedState(itemValue);
-                                }}
-                            >
-                                {states.states.map((value) => (
-                                    <Picker.Item
-                                        key={value.stateId}
-                                        label={value.stateName}
-                                        value={value.stateId}
-                                    />
-                                ))}
-                            </Picker>
-                        </View> */}
-
-                    {/* Region input ------------------------------------------
-                        <View
-                            style={{
-                                ...styles.inputContainer,
-                            }}
-                            behavior={
-                                Platform.OS === "ios" ? "padding" : "height"
-                            }
-                        >
-                            <View style={styles.preTextWrapperStyle}>
-                                <Text style={styles.preText}>Region</Text>
-                            </View>
-                            <Picker
-                                style={styles.pickerStyle}
-                                selectedValue={selectedRegion}
-                                onValueChange={(itemValue, itemIndex) => {
-                                    setSelectedRegion(itemValue);
-                                }}
-                            >
-                                {regions
-                                    ? regions.regions.map((value) => (
-                                          <Picker.Item
-                                              key={value.regionId}
-                                              label={value.regionName}
-                                              value={value.regionId}
-                                          />
-                                      ))
-                                    : []}
-                            </Picker>
-                        </View> */}
 
                     <TouchableOpacity
                         style={styles.sendCodeWrapper}
