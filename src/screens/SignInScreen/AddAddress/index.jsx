@@ -167,7 +167,7 @@ const AddAddress = ({ navigation }) => {
                 setRegions(
                     await request(
                         GET_REGION_QUERY,
-                        { stateId: selectedState },
+                        { stateId: selectedState.stateId },
                         userToken
                     )
                 );
@@ -184,7 +184,7 @@ const AddAddress = ({ navigation }) => {
                 setBranches(
                     await request(
                         GET_BRANCHES_QUERY,
-                        { regionId: selectedRegion },
+                        { regionId: selectedRegion.regionId },
                         userToken
                     )
                 );
@@ -243,6 +243,8 @@ const AddAddress = ({ navigation }) => {
         );
     };
 
+    console.log(regions);
+
     return (
         <ScrollView
             style={styles.container}
@@ -287,21 +289,64 @@ const AddAddress = ({ navigation }) => {
                                 <View style={styles.preTextWrapperStyle}>
                                     <Text style={styles.preText}>Viloyat</Text>
                                 </View>
-                                <Picker
-                                    style={styles.pickerStyle}
-                                    selectedValue={selectedState}
-                                    onValueChange={(itemValue, itemIndex) => {
-                                        setSelectedState(itemValue);
+                                <Modal
+                                    animationType="slide"
+                                    transparent={true}
+                                    visible={stateModalVisible}
+                                    onRequestClose={() => {
+                                        setStateModalVisible(
+                                            !stateModalVisible
+                                        );
                                     }}
                                 >
-                                    {states.states.map((value) => (
-                                        <Picker.Item
-                                            key={value.stateId}
-                                            label={value.stateName}
-                                            value={value.stateId}
-                                        />
-                                    ))}
-                                </Picker>
+                                    <View style={styles.centeredView}>
+                                        <View style={styles.modalWrapper}>
+                                            <FlatList
+                                                data={
+                                                    states ? states.states : []
+                                                }
+                                                renderItem={modalState}
+                                                keyExtractor={(item) =>
+                                                    item.stateId
+                                                }
+                                                contentContainerStyle={
+                                                    styles.modalView
+                                                }
+                                                style={styles.contenModalView}
+                                                showsVerticalScrollIndicator={
+                                                    false
+                                                }
+                                            />
+                                        </View>
+                                        <Pressable
+                                            style={[
+                                                styles.button,
+                                                styles.buttonClose,
+                                            ]}
+                                            onPress={() =>
+                                                setStateModalVisible(
+                                                    !stateModalVisible
+                                                )
+                                            }
+                                        >
+                                            <Text
+                                                style={styles.hideModalButton}
+                                            >
+                                                Yopish
+                                            </Text>
+                                        </Pressable>
+                                    </View>
+                                </Modal>
+                                <Pressable
+                                    style={styles.buttonOpen}
+                                    onPress={() => setStateModalVisible(true)}
+                                >
+                                    <Text style={styles.textStyle}>
+                                        {selectedState
+                                            ? selectedState.stateName
+                                            : "Shaharni tanlang"}
+                                    </Text>
+                                </Pressable>
                             </View>
 
                             {/* Region input ------------------------------------------ */}
@@ -327,12 +372,7 @@ const AddAddress = ({ navigation }) => {
                                     }}
                                 >
                                     <View style={styles.centeredView}>
-                                        <View
-                                            style={[
-                                                styles.modalWrapper,
-                                                styles.tariffModalWrapper,
-                                            ]}
-                                        >
+                                        <View style={styles.modalWrapper}>
                                             <FlatList
                                                 data={
                                                     regions
@@ -404,12 +444,7 @@ const AddAddress = ({ navigation }) => {
                                     }}
                                 >
                                     <View style={styles.centeredView}>
-                                        <View
-                                            style={[
-                                                styles.modalWrapper,
-                                                styles.tariffModalWrapper,
-                                            ]}
-                                        >
+                                        <View style={styles.modalWrapper}>
                                             <FlatList
                                                 data={
                                                     branches
