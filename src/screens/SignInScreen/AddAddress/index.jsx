@@ -316,23 +316,71 @@ const AddAddress = ({ navigation }) => {
                                         Shahar / Tuman
                                     </Text>
                                 </View>
-                                <Picker
-                                    style={styles.pickerStyle}
-                                    selectedValue={selectedRegion}
-                                    onValueChange={(itemValue, itemIndex) => {
-                                        setSelectedRegion(itemValue);
+                                <Modal
+                                    animationType="slide"
+                                    transparent={true}
+                                    visible={regionModalVisible}
+                                    onRequestClose={() => {
+                                        setRegionModalVisible(
+                                            !regionModalVisible
+                                        );
                                     }}
                                 >
-                                    {regions
-                                        ? regions.regions.map((value) => (
-                                              <Picker.Item
-                                                  key={value.regionId}
-                                                  label={value.regionName}
-                                                  value={value.regionId}
-                                              />
-                                          ))
-                                        : []}
-                                </Picker>
+                                    <View style={styles.centeredView}>
+                                        <View
+                                            style={[
+                                                styles.modalWrapper,
+                                                styles.tariffModalWrapper,
+                                            ]}
+                                        >
+                                            <FlatList
+                                                data={
+                                                    regions
+                                                        ? regions.regions
+                                                        : []
+                                                }
+                                                renderItem={modalRegion}
+                                                keyExtractor={(item) =>
+                                                    item.regionId
+                                                }
+                                                contentContainerStyle={
+                                                    styles.modalView
+                                                }
+                                                style={styles.contenModalView}
+                                                showsVerticalScrollIndicator={
+                                                    false
+                                                }
+                                            />
+                                        </View>
+                                        <Pressable
+                                            style={[
+                                                styles.button,
+                                                styles.buttonClose,
+                                            ]}
+                                            onPress={() =>
+                                                setRegionModalVisible(
+                                                    !regionModalVisible
+                                                )
+                                            }
+                                        >
+                                            <Text
+                                                style={styles.hideModalButton}
+                                            >
+                                                Yopish
+                                            </Text>
+                                        </Pressable>
+                                    </View>
+                                </Modal>
+                                <Pressable
+                                    style={styles.buttonOpen}
+                                    onPress={() => setRegionModalVisible(true)}
+                                >
+                                    <Text style={styles.textStyle}>
+                                        {selectedRegion
+                                            ? selectedRegion.regionName
+                                            : "Tumanni tanlang"}
+                                    </Text>
+                                </Pressable>
                             </View>
 
                             {/* Branch input ----------------------------------------------- */}
@@ -345,7 +393,6 @@ const AddAddress = ({ navigation }) => {
                                 <View style={styles.preTextWrapperStyle}>
                                     <Text style={styles.preText}>Filial</Text>
                                 </View>
-
                                 <Modal
                                     animationType="slide"
                                     transparent={true}
