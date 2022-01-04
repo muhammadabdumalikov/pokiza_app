@@ -74,36 +74,33 @@ export const styles = StyleSheet.create({
         fontSize: 16,
     },
     confirmEditInfoBtn: {
-        width: 120,
+        width: 105,
+        height: 35,
         alignItems: "center",
         justifyContent: "center",
         alignSelf: "flex-end",
         marginTop: 20,
-    },
-    confirmEditInfoChanged: {
-        paddingHorizontal: 15,
-        paddingVertical: 7,
         backgroundColor: colors.blue,
         borderRadius: 5,
+    },
+    confirmEditInfoChanged: {
         fontSize: 16,
         fontWeight: "bold",
         color: "white",
     },
     confirmPhoneChangedBtn: {
         width: 100,
+        height: 25,
         alignItems: "center",
         justifyContent: "center",
+        backgroundColor: colors.blue,
+        borderRadius: 5,
     },
     phoneLine: {
         marginBottom: 16,
     },
     confirmPhoneChanged: {
-        paddingHorizontal: 15,
-        paddingVertical: 7,
-        backgroundColor: colors.blue,
-        borderRadius: 5,
         fontSize: 14,
-        // fontWeight: "bold",
         color: "white",
     },
     infoWrapper: {

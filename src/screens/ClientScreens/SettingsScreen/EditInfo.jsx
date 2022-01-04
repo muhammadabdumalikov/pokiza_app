@@ -26,6 +26,7 @@ const EditInfo = ({ navigation }) => {
     const [age, setAge] = useState();
     const [gender, setGender] = useState();
     const [isLoading, setLoading] = useState(true);
+    const [send, setSend] = useState(false)
 
     const GET_USER = `query($clientId: ID){
         clients(clientId: $clientId){
@@ -80,6 +81,7 @@ const EditInfo = ({ navigation }) => {
             {
                 text: "OK",
                 onPress: async () => {
+                    setSend(true);
                     let changeInfo = await request(
                         CHANGE_INFO_QUERY,
                         {
@@ -102,6 +104,7 @@ const EditInfo = ({ navigation }) => {
                     );
 
                     if (changeInfo.changeUser.status == 200) {
+                        setSend(false)
                         onSuccess();
                     } else {
                         onError();
@@ -250,9 +253,25 @@ const EditInfo = ({ navigation }) => {
                         style={styles.confirmEditInfoBtn}
                         onPress={confirmAlert}
                     >
-                        <Text style={styles.confirmEditInfoChanged}>
-                            Tasdiqlash
-                        </Text>
+                        {send ? (
+                            <View
+                                style={{
+                                    flex: 1,
+                                    justifyContent: "center",
+                                    alignItems: "center",
+                                }}
+                            >
+                                <ActivityIndicator
+                                    size="small"
+                                    color="white"
+                                    style={{ alignSelf: "center" }}
+                                />
+                            </View>
+                        ) : (
+                            <Text style={styles.confirmEditInfoChanged}>
+                                Tasdiqlash
+                            </Text>
+                        )}
                     </TouchableOpacity>
                 </ScrollView>
             )}
