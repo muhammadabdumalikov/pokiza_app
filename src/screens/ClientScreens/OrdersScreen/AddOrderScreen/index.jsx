@@ -190,21 +190,21 @@ const AddOrderScreen = ({ navigation }) => {
         );
     };
 
-    const modalArea = ({ item }) => {
-        return (
-            <TouchableOpacity
-                style={{ width: "80%", paddingVertical: 15 }}
-                onPress={() => {
-                    setSelectedArea(item);
-                    setAreaModalVisible(!areaModalVisible);
-                }}
-            >
-                <Text style={{ flex: 1, fontSize: 15, color: "#2196F3" }}>
-                    {item.areaName}
-                </Text>
-            </TouchableOpacity>
-        );
-    };
+    // const modalArea = ({ item }) => {
+    //     return (
+    //         <TouchableOpacity
+    //             style={{ width: "80%", paddingVertical: 15 }}
+    //             onPress={() => {
+    //                 setSelectedArea(item);
+    //                 setAreaModalVisible(!areaModalVisible);
+    //             }}
+    //         >
+    //             <Text style={{ flex: 1, fontSize: 15, color: "#2196F3" }}>
+    //                 {item.areaName}
+    //             </Text>
+    //         </TouchableOpacity>
+    //     );
+    // };
     const modalTariff = ({ item }) => {
         return (
             <TouchableOpacity
