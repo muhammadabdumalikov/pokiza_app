@@ -232,18 +232,18 @@ const AddAddress = ({ navigation }) => {
             <TouchableOpacity
                 style={{ width: "80%", paddingVertical: 15 }}
                 onPress={() => {
-                    setSelectedBranch(item);
+                    setSelectedBranch(item.branch);
                     setBranchModalVisible(!branchModalVisible);
                 }}
             >
                 <Text style={{ flex: 1, fontSize: 15, color: "#2196F3" }}>
-                    {item.branchName}
+                    {item.branch.branchName}
                 </Text>
             </TouchableOpacity>
         );
     };
 
-    console.log(regions);
+    // console.log(branches)
 
     return (
         <ScrollView
@@ -444,11 +444,16 @@ const AddAddress = ({ navigation }) => {
                                     }}
                                 >
                                     <View style={styles.centeredView}>
-                                        <View style={styles.modalWrapper}>
+                                        <View
+                                            style={[
+                                                styles.modalWrapper,
+                                                styles.tariffModalWrapper,
+                                            ]}
+                                        >
                                             <FlatList
                                                 data={
                                                     branches
-                                                        ? branches.branches
+                                                        ? branches.regions
                                                         : []
                                                 }
                                                 renderItem={modalBranch}
@@ -486,7 +491,7 @@ const AddAddress = ({ navigation }) => {
                                 <Pressable
                                     style={styles.buttonOpen}
                                     onPress={() => setBranchModalVisible(true)}
-                                    disabled={true}
+                                    // disabled={true}
                                 >
                                     <Text style={styles.textStyle}>
                                         {selectedBranch
@@ -504,25 +509,27 @@ const AddAddress = ({ navigation }) => {
                                     let addAddress = await request(
                                         MUTATION_ADD_ADDRESS,
                                         {
-                                            stateId: selectedState,
-                                            regionId: selectedRegion,
+                                            stateId: selectedState.stateId,
+                                            regionId: selectedRegion.regionId,
                                         },
                                         userToken
                                     );
+                                    console.log(userToken);
                                     let { registerClient } = await request(
                                         MUTATION_REGISTER_CLIENT,
                                         {
                                             firstName: firstName,
                                             lastName: lastName,
-                                            age: parseInt(age),
-                                            gender: parseInt(gender),
-                                            branchId: selectedBranch,
+                                            age: +age,
+                                            gender: +gender,
+                                            branchId: selectedBranch.branchId,
                                             addressId:
                                                 addAddress.addAddress.data
                                                     .address_id,
                                         },
                                         userToken
                                     );
+
                                     setAddressId(
                                         await request(
                                             GET_ADDRESS_ID_QUERY,
