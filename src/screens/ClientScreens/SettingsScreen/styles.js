@@ -93,13 +93,15 @@ export const styles = StyleSheet.create({
         height: 25,
         alignItems: "center",
         justifyContent: "center",
-        backgroundColor: colors.blue,
+        // backgroundColor: colors.blue,
         borderRadius: 5,
     },
     phoneLine: {
         marginBottom: 16,
     },
     confirmPhoneChanged: {
+        paddingHorizontal: 7,
+        paddingVertical: 10,
         fontSize: 14,
         color: "white",
     },
