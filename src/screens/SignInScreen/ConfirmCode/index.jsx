@@ -53,19 +53,21 @@ const ConfirmCode = ({ navigation, route }) => {
     });
     const { setUser, setAddressId } = useContext(AuthContext);
 
-    const GET_ADDRESS_ID_QUERY = `{
-        address{
-            addressId
-            state{
-                stateId
-                stateName
-            }
-            region{
-                regionId
-                regionName
+    const GET_ADDRESS_ID_QUERY = `
+        mutation($password:Code!){
+            enterClientPassword(password:$password){
+                status
+                message
+                registered
+                data{
+                    ... on Client{
+                        clientId
+                    }
+                }
+                token
             }
         }
-    }`;
+    `;
 
     const handleSubmit = async () => {
         let data = await request(
@@ -74,7 +76,7 @@ const ConfirmCode = ({ navigation, route }) => {
             route.params.phoneToken
         );
 
-        if (data.enterClientPassword.data.is_registered) {
+        if (data.enterClientPassword.registered) {
             setAddressId(
                 await request(
                     GET_ADDRESS_ID_QUERY,
@@ -100,7 +102,7 @@ const ConfirmCode = ({ navigation, route }) => {
         }
         if (
             data.enterClientPassword.status == 200 &&
-            data.enterClientPassword.data.is_registered == false
+            data.enterClientPassword.registered == false
         ) {
             AsyncStorage.setItem("user_token", data.enterClientPassword.token);
             navigation.navigate("Auth", { screen: "PersonalData" });

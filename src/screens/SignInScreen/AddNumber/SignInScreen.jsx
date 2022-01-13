@@ -19,13 +19,13 @@ import { useMutation } from "@apollo/client";
 import LogoSvg from "../../../../assets/svg/logo";
 
 const LOGIN = gql`
-    mutation ($phoneNumber: String!) {
-        enterClientPhone(phoneNumber: $phoneNumber) {
-            status
-            data
-            token
-            message
-        }
+    mutation($mainContact:Contact!){
+	    enterClientPhone(mainContact:$mainContact){
+		    status
+		    message
+		    registered
+		    token
+	    }
     }
 `;
 
@@ -38,10 +38,11 @@ export default function ({ navigation }) {
         setSend(true);
         login({
             variables: {
-                phoneNumber: phoneNumber,
+                mainContact: parseInt(phoneNumber),
             },
         })
             .then(async ({ data }) => {
+                console.log(data);
                 if (data.enterClientPhone.status == 200) {
                     navigation.navigate("ConfirmCode", {
                         phoneToken: data.enterClientPhone.token,

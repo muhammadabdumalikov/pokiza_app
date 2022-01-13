@@ -8,7 +8,7 @@ import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from "@ap
 import { setContext } from '@apollo/client/link/context';
 
 const httpLink = createHttpLink({
-    uri: 'https://pokiza.herokuapp.com/graphql',
+    uri: 'https://pokiza-rebuilding.herokuapp.com/graphql',
 });
 
 const authLink = setContext(async (_, { headers }) => {
