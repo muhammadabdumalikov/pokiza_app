@@ -22,25 +22,6 @@ import styles from "./styles";
 import gql from "graphql-tag";
 import { useMutation } from "@apollo/client";
 
-const CODE_QUERY = `
-    mutation ($password: String!) {
-        enterClientPassword(password: $password) {
-            status
-            message
-            data
-            token
-            permissions {
-                branchId
-                branchName
-                permissionsList {
-                    permissionAction
-                    permissionModel
-                }
-            }
-        }
-    }
-`;
-
 const CELL_COUNT = 4;
 
 const ConfirmCode = ({ navigation, route }) => {
@@ -51,30 +32,41 @@ const ConfirmCode = ({ navigation, route }) => {
         value,
         setValue,
     });
+    const token = route.params.phoneToken;
     const { setUser, setAddressId } = useContext(AuthContext);
 
-    const GET_ADDRESS_ID_QUERY = `
-        mutation($password:Code!){
-            enterClientPassword(password:$password){
-                status
-                message
-                registered
-                data{
-                    ... on Client{
-                        clientId
-                    }
+    const CODE_QUERY = `mutation($password:Code!){
+        enterClientPassword(password:$password){
+            status
+            message
+            registered
+            data{
+                ... on Client{
+                    clientId
                 }
-                token
+            }
+            token
+        }
+    }`;
+
+    const GET_ADDRESS_ID_QUERY = `{
+        address{
+            addressId
+            state{
+                stateId
+                stateName
+            }
+            region{
+                regionId
+                regionName
             }
         }
-    `;
+    }`;
 
     const handleSubmit = async () => {
-        let data = await request(
-            CODE_QUERY,
-            { password: value },
-            route.params.phoneToken
-        );
+        let data = await request(CODE_QUERY, { password: value }, token);
+
+        console.log(data);
 
         if (data.enterClientPassword.registered) {
             setAddressId(

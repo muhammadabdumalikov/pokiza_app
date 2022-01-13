@@ -13,5 +13,6 @@ export const request = async (query, variables, token) => {
         }),
     });
     let jsonData = await data.json();
+    console.log(jsonData);
     return jsonData.data;
 };

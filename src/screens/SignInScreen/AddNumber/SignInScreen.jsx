@@ -48,6 +48,7 @@ export default function ({ navigation }) {
                         phoneToken: data.enterClientPhone.token,
                     });
                 }
+                console.log(data.enterClientPhone.message)
                 setSend(false);
             })
             .catch((err) => {
