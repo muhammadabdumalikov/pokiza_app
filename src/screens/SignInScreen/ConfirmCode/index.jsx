@@ -19,35 +19,26 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { AuthContext } from "../../../navigation/AuthProvider";
 import { request } from "../../../helpers/request";
 import styles from "./styles";
-import gql from "graphql-tag";
-import { useMutation } from "@apollo/client";
+import { gql, useMutation } from "@apollo/client";
 
 const CELL_COUNT = 4;
 
 const ConfirmCode = ({ navigation, route }) => {
-    // const [verify, { loading }] = useMutation(CODE_QUERY);
-    const [value, setValue] = useState("");
-    const ref = useBlurOnFulfill({ value, cellCount: CELL_COUNT });
-    const [props, getCellOnLayoutHandler] = useClearByFocusCell({
-        value,
-        setValue,
-    });
-    const token = route.params.phoneToken;
-    const { setUser, setAddressId } = useContext(AuthContext);
-
-    const CODE_QUERY = `mutation($password:Code!){
-        enterClientPassword(password:$password){
-            status
-            message
-            registered
-            data{
-                ... on Client{
-                    clientId
+    const CODE_QUERY = gql`
+        mutation ($password: Code!) {
+            enterClientPassword(password: $password) {
+                status
+                message
+                registered
+                data {
+                    ... on Client {
+                        clientId
+                    }
                 }
+                token
             }
-            token
         }
-    }`;
+    `;
 
     const GET_ADDRESS_ID_QUERY = `{
         address{
@@ -63,42 +54,53 @@ const ConfirmCode = ({ navigation, route }) => {
         }
     }`;
 
+    const [mutateFunction, { data, loading, error }] = useMutation(CODE_QUERY);
+    const [value, setValue] = useState("");
+    const ref = useBlurOnFulfill({ value, cellCount: CELL_COUNT });
+    const [props, getCellOnLayoutHandler] = useClearByFocusCell({
+        value,
+        setValue,
+    });
+    const token = route.params.phoneToken;
+    const { setUser, setAddressId } = useContext(AuthContext);
+
     const handleSubmit = async () => {
-        let data = await request(CODE_QUERY, { password: value }, token);
+        // let data = await request(CODE_QUERY, { password: value }, token);
+        mutateFunction({ variables: { password: value } });
 
-        console.log(data);
+        console.log(data, loading, error);
 
-        if (data.enterClientPassword.registered) {
-            setAddressId(
-                await request(
-                    GET_ADDRESS_ID_QUERY,
-                    null,
-                    data.enterClientPassword.token
-                )
-            );
-            setUser(data.enterClientPassword.data);
+        // if (data.enterClientPassword.registered) {
+        //     setAddressId(
+        //         await request(
+        //             GET_ADDRESS_ID_QUERY,
+        //             null,
+        //             data.enterClientPassword.token
+        //         )
+        //     );
+        //     setUser(data.enterClientPassword.data);
 
-            await AsyncStorage.removeItem("phone_token");
-            await AsyncStorage.setItem(
-                "user_token",
-                data.enterClientPassword.token
-            );
-            navigation.reset({
-                index: 0,
-                routes: [
-                    {
-                        name: "App",
-                    },
-                ],
-            });
-        }
-        if (
-            data.enterClientPassword.status == 200 &&
-            data.enterClientPassword.registered == false
-        ) {
-            AsyncStorage.setItem("user_token", data.enterClientPassword.token);
-            navigation.navigate("Auth", { screen: "PersonalData" });
-        }
+        //     await AsyncStorage.removeItem("phone_token");
+        //     await AsyncStorage.setItem(
+        //         "user_token",
+        //         data.enterClientPassword.token
+        //     );
+        //     navigation.reset({
+        //         index: 0,
+        //         routes: [
+        //             {
+        //                 name: "App",
+        //             },
+        //         ],
+        //     });
+        // }
+        // if (
+        //     data.enterClientPassword.status == 200 &&
+        //     data.enterClientPassword.registered == false
+        // ) {
+        //     AsyncStorage.setItem("user_token", data.enterClientPassword.token);
+        //     navigation.navigate("Auth", { screen: "PersonalData" });
+        // }
     };
 
     return (
